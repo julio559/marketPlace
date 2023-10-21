@@ -10,7 +10,7 @@ if( isset($_POST['nome']) && isset($_POST['senha'])){
 
     $sql = "INSERT INTO clientes (nome, senha, email, endereco, numero) VALUES ('$nome', '$senha', '$email', '$endereco', '$numero')";  
 $query = $mysqli -> query($sql);
-header("location: login.php");
+header("location: logred.php");
 
 }
 

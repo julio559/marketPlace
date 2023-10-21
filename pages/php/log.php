@@ -2,43 +2,41 @@
 
 session_start();
 
-
-include("php\conexao.php");
-
-$error = false;
+include("conexao.php");
+$error = "";
 
 if (isset($_POST['enviar'])) {
-    $emailOrNome = $_POST['nomeLogin'];
-    $senha = $_POST['senhaLogin'];
+    if (empty($_POST['nomeLogin']) || empty($_POST['senhaLogin'])) {
+        $error = "<p class='error'>Por favor, preencha todos os campos.</p>";
+    } else {
+        $emailOrNome = $_POST['nomeLogin'];
+        $senha = $_POST['senhaLogin'];
 
-    $sql_code = "SELECT id, nome, senha FROM clientes WHERE email = ? OR nome = ? LIMIT 1";
-    if ($stmt = $mysqli->prepare($sql_code)) {
-        
-        $stmt->bind_param("ss", $emailOrNome, $emailOrNome);
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
+        $sql_code = "SELECT id, nome, senha FROM clientes WHERE email = ? OR nome = ? LIMIT 1";
+        if ($stmt = $mysqli->prepare($sql_code)) {
 
-        if ($result->num_rows > 0) {
-            $usuario = $result->fetch_assoc();
+            $stmt->bind_param("ss", $emailOrNome, $emailOrNome);
+            $stmt->execute();
 
-            if (password_verify($senha, $usuario['senha'])) {
-                $_SESSION['usuario'] = $usuario['id'];
-                $_SESSION['img'] = $usuario['img'];
+            $stmt->bind_result($id, $nome, $hashedSenha);
+            if ($stmt->fetch()) {
+                if (password_verify($senha, $hashedSenha)) {
+                    $_SESSION['usuario'] = $id;
+                    $_SESSION['img'] = $img;
 
-                header("Location: dashboard2.php?nome=" . urlencode($usuario['nome']) .  "&id=" . urlencode($usuario['id']));
-                exit;
-
+                    header("Location: dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
+                    exit;
+                } else {
+                    $error = "<p class='error'>Senha incorreta.</p>";
+                }
             } else {
-            $error = true;
-$error = "<p class='error'> Não achamos sua conta </p>";
-
+                $error = "<p class='error'>Não achamos sua conta.</p>";
             }
 
-        } 
-
-    } else {
-        die("Erro ao preparar a consulta: " . $mysqli->error);
+            $stmt->close();
+        } else {
+            die("Erro ao preparar a consulta: " . $mysqli->error);
+        }
     }
 }
 ?>
