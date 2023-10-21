@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #34495E;
+    transition: background 0.5s;
+}
+
+#loginContainer {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%; /* Use para fazer a box responsiva, ajustando para o tamanho desejado */
+}
+
+h2 {
+    border-bottom: 3px solid #2980b9;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #34495E; /* Alterado para ser visível contra o fundo branco */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    transition: all 0.4s;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #bdc3c7;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 15px rgba(41, 128, 185, 0.4);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    color: #ecf0f1;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: box-shadow 0.4s, transform 0.4s;
+    font-weight: 600;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+    transform: translateY(-2px);
+}
+
+#toggleForm {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #2980b9;
+    transition: color 0.4s;
+}
+
+#toggleForm:hover {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error{
+
+color: red;
+
+}
+
+.register-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 7px; /* Adicionado para que os botões tenham bordas arredondadas consistentes */
+    margin-left: 7.5vw;
+
+}
+
+.register-button:hover {
+    background-color: #45a049;
+}
+
+

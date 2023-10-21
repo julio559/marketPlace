@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #2C3E50;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #34495E;
+}
+
+#container {
+    max-width: 450px;
+    padding: 40px;
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+h2 {
+    border-bottom: 2px solid #bdc3c7;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #bdc3c7;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 10px rgba(41, 128, 185, 0.5);
+    outline: none;
+}
+
+#enviar {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #2980b9;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#enviar:hover {
+    background-color: #3498db;
+}
+
+
+
+#toggleForm {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #2980b9;
+    transition: color 0.2s;
+}
+
+#toggleForm:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+#senha {
+    width: 100%;
+    padding-right: 50px; /* Espaço para o botão/ícone */
+}
+
+
+.toggle-password {
+
+    position: absolute;
+    top: 43%;
+    right: 18px;  /* Ajuste o valor para posicionar o ícone corretamente */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    font-size: 1.2rem;  /* Ajustando o tamanho do ícone */
+    color: #bdc3c7; /* Definindo a cor do ícone */
+}
+
+
+#back {
+
+    border-radius: 1vw;
+    display: inline-block;
+    padding: 15px 20px;
+    background-color: #2980b9;
+    color: #ecf0f1;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px; /* Espaçamento entre o botão e os elementos acima, se houver */
+    transition: background-color 0.3s;
+}
+
+#back:hover {
+    background-color: #3498db;
+    text-decoration: none;
+}
+
+
+.inlie{
+
+display: flex;
+align-items: baseline;
+
+
+}
+
+.mar{
+
+margin: 3vw;
+
+}
