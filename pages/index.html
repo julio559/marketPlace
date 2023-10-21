@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login e Criação de Conta</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #toggleForm {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+            color: #007BFF;
+            transition: color 0.2s;
+        }
+
+        #toggleForm:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        #signupForm {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <form id="loginForm">
+            <h2>Login</h2>
+            <input type="text" placeholder="Nome de usuário" required>
+            <input type="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <form id="signupForm">
+            <h2>Criar Conta</h2>
+            <input type="text" placeholder="Nome de usuário" required>
+            <input type="password" placeholder="Senha" required>
+            <input type="password" placeholder="Confirmar Senha" required>
+            <button type="submit">Registrar</button>
+        </form>
+
+        <span id="toggleForm">Criar Conta</span>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const toggleFormButton = document.getElementById('toggleForm');
+
+        toggleFormButton.addEventListener('click', () => {
+            if (signupForm.style.display === 'none') {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                toggleFormButton.textContent = 'Voltar ao Login';
+            } else {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                toggleFormButton.textContent = 'Criar Conta';
+            }
+        });
+    </script>
+</body>
+
+</html>
