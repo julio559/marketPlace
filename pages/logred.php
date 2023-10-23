@@ -11,49 +11,12 @@ include("php\criar.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace</title>
-<link rel="stylesheet" href="css\logred.css">
+
+<link rel="stylesheet" href="css\login.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
    
-<style>
-
-
-.inline {
- 
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Isso garante que os itens estejam verticalmente centralizados */
-}
-
-.form-container {
-    flex: 1; 
-    margin-left: 50vw;
-}
-#img2{
-
-
-    border-radius: 0 35px 335px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 40%; 
-    height: 100vh; 
-    object-fit: cover; 
-
-}
-
-@media (max-width: 768px) {
-    #img2 {
-        display: none;
-    }
-    .form-container {
-        margin-left: 5vw; 
-    }
-}
-
-</style>
-
+   
 <body>
 
 <div class="inline">
@@ -104,8 +67,28 @@ include("php\criar.php");
 
 
                     <input type="text" placeholder="endereço" name="endereco" required>
-                    <button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>
+<br><br>
+<button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>
                 </form>
+<br>
+<p class="para"> ou conecte-se com: </p>
+<div class="es">
+    
+                    <button class="google-login" type="button">
+                    
+   <img src="google.png" width="30px" alt="" srcset="">
+
+</button>
+
+<button class="google-login" type="button">
+                    
+                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px" alt="" srcset="">
+                 
+                 </button>
+
+</div>
+<br><br>
+                 
             </div>
         </div>
     </div>
