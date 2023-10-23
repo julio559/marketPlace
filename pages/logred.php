@@ -9,7 +9,7 @@ include("php\criar.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Registro - Marketplace</title>
+    <title>Marketplace</title>
     <link rel="stylesheet" href="css\logred.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -54,7 +54,9 @@ include("php\criar.php");
                             <i id="toggleIcon" class="bi bi-eye-slash-fill"></i>
                         </button>
                     </div>
-                    <input type="text" placeholder="numero de telefone" name="numero" required>
+                    <input type="text" placeholder="55dddNumero" name="numero" pattern="55[0-9]{2}[0-9]{9}" title="O número deve seguir o padrão: 55 seguido de um DDD de 2 dígitos e depois 9 dígitos para o número" required>
+
+
                     <input type="text" placeholder="endereço" name="endereco" required>
                     <button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>
                 </form>

@@ -1,7 +1,10 @@
 <?php
 
 session_start();
+if(isset($_SESSION["usuario"])){
+header("location: php\dashboard2.php");
 
+}
 include("conexao.php");
 $error = "";
 
@@ -24,7 +27,7 @@ if (isset($_POST['enviar'])) {
                     $_SESSION['usuario'] = $id;
                     $_SESSION['img'] = $img;
 
-                    header("Location: dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
+                    header("Location: php\dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
                     exit;
                 } else {
                     $error = "<p class='error'>Senha incorreta.</p>";
