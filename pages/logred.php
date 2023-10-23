@@ -1,6 +1,7 @@
 <?php  
 include("php\log.php");
 include("php\criar.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -10,13 +11,58 @@ include("php\criar.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace</title>
-    <link rel="stylesheet" href="css\logred.css">
+<link rel="stylesheet" href="css\logred.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
    
-</head>
+<style>
+
+
+.inline {
+ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Isso garante que os itens estejam verticalmente centralizados */
+}
+
+.form-container {
+    flex: 1; 
+    margin-left: 50vw;
+}
+#img2{
+
+
+    border-radius: 0 35px 335px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 40%; 
+    height: 100vh; 
+    object-fit: cover; 
+
+}
+
+@media (max-width: 768px) {
+    #img2 {
+        display: none;
+    }
+    .form-container {
+        margin-left: 5vw; 
+    }
+}
+
+</style>
 
 <body>
+
+<div class="inline">
+
+
+<img  id="img2" src="https://img.freepik.com/vetores-premium/pessoas-comprando-online_131454-458.jpg"  alt="" srcset="">
+
+
+
     <div class="form-container">
         
         <!-- Formulário de Login -->
@@ -62,6 +108,7 @@ include("php\criar.php");
                 </form>
             </div>
         </div>
+    </div>
     </div>
 
 <script src="js\criar.js">

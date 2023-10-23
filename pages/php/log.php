@@ -1,10 +1,7 @@
 <?php
 
 session_start();
-if(isset($_SESSION["usuario"])){
-header("location: php\dashboard2.php");
 
-}
 include("conexao.php");
 $error = "";
 

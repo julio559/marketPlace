@@ -1,3 +1,6 @@
+
+
+
 * {
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
@@ -6,7 +9,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+ 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -178,4 +181,15 @@ margin-top: 13px;
     transition: box-shadow 0.4s, transform 0.4s;
     font-weight: 600;
 
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Isso garante que os itens estejam verticalmente centralizados */
+}
+
+.form-container {
+    flex: 1; /* Isso fará com que o form-container ocupe todo o espaço restante após a imagem */
+    margin-left: 20px; /* Adicionando um pouco de espaço entre a imagem e o formulário */
 }
