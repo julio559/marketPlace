@@ -5,6 +5,14 @@ session_start();
 include("conexao.php");
 $error = "";
 
+if(isset($_SESSION['usuario'])){
+
+header("location: index.php");
+
+}
+
+       
+
 if (isset($_POST['enviar'])) {
     if (empty($_POST['nomeLogin']) || empty($_POST['senhaLogin'])) {
         $error = "<p class='error'>Por favor, preencha todos os campos.</p>";
@@ -22,7 +30,7 @@ if (isset($_POST['enviar'])) {
             if ($stmt->fetch()) {
                 if (password_verify($senha, $hashedSenha)) {
                     $_SESSION['usuario'] = $id;
-                    $_SESSION['img'] = $img;
+                  
 
                     header("Location: php\dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
                     exit;

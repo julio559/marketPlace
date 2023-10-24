@@ -2,6 +2,8 @@
 include("php\log.php");
 include("php\criar.php");
 
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +18,25 @@ include("php\criar.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
    
-   
+<style>
+
+.log2{
+
+
+    color: #34495E;
+
+}
+
+.tp{
+
+margin-top: 35px;
+text-align: center;
+
+}
+
+</style>
+
+</head>
 <body>
 
 <div class="inline">
@@ -43,6 +63,9 @@ include("php\criar.php");
                     <br>
                     <button type="submit" id="" class="button" name="enviar">Entrar</button>
                     <button type="button" class="button"  id="showCreateForm">Criar Usuário</button>
+<div class="tp">
+                   <a class="log2" href="php\index-4.php"> continuar sem cadastro </a>  
+                   </div>
                 </form>
             </div>
         </div>
