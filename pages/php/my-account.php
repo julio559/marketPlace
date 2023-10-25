@@ -1,21 +1,51 @@
+<?php  
+include("conexao.php");
+
+session_start();
+
+if(!isset($_SESSION["usuario"])){
+
+header("location: ../logred.php");
+
+}
+$id = $_SESSION["usuario"];
+
+$sql  = "SELECT nome, endereco FROM clientes WHERE id = $id";
+$query = $mysqli -> query($sql);  
+while($row = $query -> fetch_assoc()) {
+
+ $endereco = $row['endereco'];
+$nome = $row['nome'];   
+}
+
+if( isset($_POST['endereco'])) {
+
+$endereco = $_POST['endereco'];   
+
+$sql = "UPDATE clientes SET endereco = '$endereco' WHERE id = $id";
+$query = $mysqli -> query($sql);
+header("location: my-account.php");
+}
+
+?>
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Cigar - 404</title>
+        <title>Cigar - my account</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 		
-		<!-- all css here -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/bundle.css">
-        <link rel="stylesheet" href="assets/css/plugins.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/responsive.css">
-        <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/bundle.css">
+        <link rel="stylesheet" href="../assets/css/plugins.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="../assets/css/responsive.css">
+        <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
             <!-- Add your site or application content here -->
@@ -28,26 +58,57 @@
                     <div class="container">   
                         <div class="row align-items-center">
 
-                            <div class="col-lg-6 col-md-6">
-                                <div class="welcome_text">
-                                    <p>England's Fastest Online Shopping Destination</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                                 <div class="top_right text-right">
+                        
                                     <ul>
-                                       <li class="top_links"><a href="#">My Account <i class="ion-chevron-down"></i></a>
+                                       <li class="top_links"><a href="#">
+                                        
+                                       <?php 
+                                       if(isset($_SESSION['usuario'])){
+                                        echo "Conta do  $nome ";
+                                       }else{
+
+echo "Fazer login";
+
+                                       }
+                                       ?> <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_links">
-                                                <li><a href="wishlist.html">My Wish List </a></li>
-                                                <li><a href="my-account.html">My Account </a></li>
-                                                <li><a href="#">Sign In</a></li>
-                                                <li><a href="#">Compare Products  </a></li>
+
+
+                                            <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='cart.php'> Meu carrinho </a></li>";
+                                       }
+
+                                       ?>
+                                                <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo    " <li><a href='my-account.php?id=$id'> conta de $nome </a></li>";
+
+
+                                       }else{
+
+                                        echo "<li><a href='../logred.php'> fazer login </a></li>";
+
+                                       }
+                                       ?>
+                                               <?php 
+
+
+                                            if(isset($_SESSION["usuario"])){
+                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
+                                            }
+                                                ?>
+                                                
                                             </ul>
                                         </li> 
-                                        <li class="currency"><a href="#">USD <i class="ion-chevron-down"></i></a>
+                                        <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_currency">
                                                 <li><a href="#">EUR</a></li>
-                                                <li><a href="#">BRL</a></li>
+                                                <li><a href="#">USD</a></li>
                                             </ul>
                                         </li>
                                         <li class="language"><a href="#"><img src="assets/img/logo/language.png" alt=""> English <i class="ion-chevron-down"></i></a>
@@ -61,6 +122,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <!--header top start-->
                 
@@ -83,13 +145,8 @@
                             </div>
                             <div class="col-lg-2 col-md-3">
                                 <div class="cart_area">
-                                    <div class="wishlist_link">
-                                        <a href="#"><i class="ion-ios-heart-outline"></i></a>
-                                    </div>
-                                    <div class="cart_link">
-                                        <a href="javascript:void(0)"><i class="ion-ios-cart-outline"></i>My Cart</a>
-                                        <span class="cart_count">2</span>
-                                        <!--mini cart-->
+                                 
+                                 
                                          <div class="mini_cart">
                                             <div class="items_nunber">
                                                 <span>2 Items in Cart</span>
@@ -306,86 +363,22 @@
                                 <div class="main_menu_inner">
                                     <div class="main_menu d-none d-lg-block"> 
                                         <ul>
-                                            <li><a href="index.html">Home <i class="fa fa-angle-down"></i></a>
+                                            <li><a href="index-4.php">Home <i class="fa fa-angle-down"></i></a>
                                                 <ul class="sub_menu">
                                                     <li><a href="index.html">Home 1</a></li>
-                                                    <li><a href="index-2.html">Home 2</a></li>
-                                                    <li><a href="index-3.html">Home 3</a></li>
-                                                    <li><a href="index-4.html">Home 4</a></li>
+                                                    
                                                 </ul>
                                             </li>
                                             <li><a href="shop.html">shop <i class="fa fa-angle-down"></i></a>
                                                 <ul class="mega_menu">
                                                     <li><a href="#">Shop Layouts</a>
                                                         <ul>
-                                                            <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                            <li><a href="shop-fullwidth-list.html">Full Width list</a></li>
-                                                            <li><a href="shop-right-sidebar.html">Right Sidebar </a></li>
-                                                            <li><a href="shop-right-sidebar-list.html"> Right Sidebar list</a></li>
-                                                            <li><a href="shop-list.html">List View</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">other Pages</a>
-                                                        <ul>
-                                                            <li><a href="portfolio.html">portfolio</a></li>
-                                                            <li><a href="portfolio-details.html">portfolio details</a></li>
-                                                            <li><a href="cart.html">cart</a></li>
-                                                            <li><a href="checkout.html">Checkout</a></li>
-                                                            <li><a href="my-account.html">my account</a></li>
-                                                            
-
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Product Types</a>
-                                                        <ul>
-                                                            <li><a href="product-details.html">product details</a></li>
-                                                            <li><a href="product-sidebar.html">product sidebar</a></li>
-                                                            <li><a href="product-gallery.html">product gallery</a></li>
-                                                            <li><a href="product-slider.html">product slider</a></li>
-                                                            
+                                                            <li><a href="../shop-fullwidth.html">Full Width</a></li>
+                                                         
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </li>
-                                            <li><a href="blog.html">blog <i class="fa fa-angle-down"></i></a>
-                                                <ul class="mega_menu">
-                                                    <li><a href="#">Blog Layouts</a>
-                                                        <ul>
-
-                                                            <li><a href="blog-details.html">blog details</a></li>
-                                                            <li><a href="blog-sidebar.html">blog  Sidebar</a></li>
-                                                            <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">blog Pages</a>
-                                                        <ul>
-                                                            <li><a href="#">Author</a></li>
-                                                            <li><a href="blog-sidebar.html">Category</a></li>
-                                                            <li><a href="#">Blog tag</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Post Formats</a>
-                                                        <ul>
-                                                            <li><a href="blog-sidebar.html">blog sidebar</a></li>
-                                                            <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                                            <li><a href="blog-sidebar.html">Gallery Format</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="active"><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                                <ul class="sub_menu pages">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="services.html">services</a></li>
-                                                    <li><a href="faq.html">Frequently Questions</a></li>
-                                                    <li><a href="login.html">login</a></li>
-                                                    <li><a href="my-account.html">my account</a></li>
-                                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                                    <li><a href="404.html">Error 404</a></li>
-                                                    <li><a href="compare.html">Compare</a></li>
-                                                    <li><a href="coming-soon.html">Coming soon</a></li>
-                                                </ul>
-                                            </li>
+                                            
                                             <li><a href="contact.html">Contact Us</a></li>
                                         </ul>
 
@@ -473,7 +466,7 @@
                                                     <li><a href="coming-soon.html">Coming soon</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Contact Us</a></li>
+                                            <li><a href="contact.html">converse com nosco</a></li>
                                         </ul>
                                         </nav>      
                                     </div>
@@ -496,29 +489,175 @@
                 <!--header bottom end-->
             </header>
             <!--header area end-->
-    
-      
-             <!--error section area start-->
-            <div class="error_section">
+            
+            <!--breadcrumbs area start-->
+            <div class="breadcrumbs_area commun_bread">
                 <div class="container">   
                     <div class="row">
                         <div class="col-12">
-                            <div class="error_form">
-                                <h1>404</h1>
-                                <h2>Opps! PAGE NOT BE FOUND</h2>
-                                <p>Sorry but the page you are looking for does not exist, have been<br> removed, name changed or is temporarily unavailable.</p>
-                                <form action="#">
-                                    <input placeholder="Search..." type="text">
-                                    <button type="submit">search</button>
-                                </form>
-                                <a href="index.html">Back to home page</a>
+                            <div class="breadcrumb_content">
+                                <h3>conta de <?php echo $nome; ?></h3>
+                                <ul>
+                                    <li><a href="index.html">home</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>my account</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>         
             </div>
-            <!--error section area end--> 
-            
+            <!--breadcrumbs area end-->
+      
+             <!-- my account start  -->
+            <section class="main_content_area">
+                <div class="container">   
+                    <div class="account_dashboard">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3 col-lg-3">
+                                <!-- Nav tabs -->
+                                <div class="dashboard_tab_button">
+                                    <ul role="tablist" class="nav flex-column dashboard-list">
+                                      
+                                        <li> <a href="#orders" data-toggle="tab" class="nav-link">Ordens de compra</a></li>
+                                     
+                                        <li><a href="#address" data-toggle="tab" class="nav-link">Addresses</a></li>
+                                        <li><a href="#account-details" data-toggle="tab" class="nav-link">Detalhes da conta</a></li>
+                                        <li><a href="logout.php" class="nav-link">sair</a></li>
+                                    </ul>
+                                </div>    
+                            </div>
+                            <div class="col-sm-12 col-md-9 col-lg-9">
+                                <!-- Tab panes -->
+                                <div class="tab-content dashboard_content">
+                                    <div class="tab-pane fade show active" id="dashboard">
+                                        <h3>minha conta </h3>
+                                        <p>Aqui você podera ver alguns detalhes da sua conta como </br> compras, endereço etc  </p>
+                                    </div>
+                                    <div class="tab-pane fade" id="orders">
+                                        <h3>Orders</h3>
+                                        <div class="coron_table table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Order</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <th>Total</th>
+                                                        <th>Actions</th>	 	 	 	
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>May 10, 2018</td>
+                                                        <td><span class="success">Completed</span></td>
+                                                        <td>$25.00 for 1 item </td>
+                                                        <td><a href="cart.html" class="view">view</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>May 10, 2018</td>
+                                                        <td>Processing</td>
+                                                        <td>$17.00 for 1 item </td>
+                                                        <td><a href="cart.html" class="view">view</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                 
+                                      
+                                    <div class="tab-pane" id="address">
+                                      
+                                        <h4 class="billing-address">endereço de <?php echo $nome;?></h4>
+                                      
+                                        <p><strong><?php echo $endereco;?></strong></p>
+                                        <address>
+                                  <?php echo $endereco;?>
+                                        </address>
+                                        <p>Bangladesh</p>   
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+editar
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form method="post">
+
+      <input type="text" placeholder="altere o endereço" required name="endereco">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                                    </div>
+                                    
+                                    <div class="tab-pane fade" id="account-details">
+                                        <h3>Account details </h3>
+                                        <div class="login">
+                                            <div class="login_form_container">
+                                                <div class="account_login_form">
+                                                    <form action="#">
+                                                       
+                                                        <div class="input-radio">
+                                                            <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mr.</span>
+                                                            <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mrs.</span>
+                                                        </div> <br>
+                                                        <label>First Name</label>
+                                                        <input type="text" name="first-name">
+                                                        <label>Last Name</label>
+                                                        <input type="text" name="last-name">
+                                                        <label>Email</label>
+                                                        <input type="text" name="email-name">
+                                                        <label>Password</label>
+                                                        <input type="password" name="user-password">
+                                                        <label>Birthdate</label>
+                                                        <input type="text" placeholder="MM/DD/YYYY" value="" name="birthday">
+                                                        <span class="example">
+                                                          (E.g.: 05/31/1970)
+                                                        </span>
+                                                        <br>
+                                                        <span class="custom_checkbox">
+                                                            <input type="checkbox" value="1" name="optin">
+                                                            <label>Receive offers from our partners</label>
+                                                        </span>
+                                                        <br>
+                                                        <span class="custom_checkbox">
+                                                            <input type="checkbox" value="1" name="newsletter">
+                                                            <label>Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em></label>
+                                                        </span>
+                                                        <div class="save_button primary_btn default_button">
+                                                            <a href="#">Save</a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>        	
+            </section>			
+            <!-- my account end   --> 
+
               <!--shipping area start-->
             <div class="shipping_area shipping_contact ">
                 <div class="container">
@@ -560,33 +699,7 @@
                         </div>  
                         
                         <!--newsletter area start-->
-                        <div class="newsletter_area">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="field_newsletter">
-                                        <div class="newsletter_text">
-                                            <h3>Sign Up For Newsletter</h3>
-                                            <p>Be the First to Know. Sign up to newsletter today</p>
-                                        </div>
-                                        <div class="subscribe_form">
-                                            <form id="mc-form" class="mc-form footer-newsletter" >
-                                                <input id="mc-email" type="email" autocomplete="off" placeholder="Please enter your email to subscribe" />
-                                                <button id="mc-submit">Subscribe</button>
-                                                <div class="email_icon">
-                                                    <i class="icon-mail"></i>
-                                                </div>
-                                            </form>
-                                            <!-- mailchimp-alerts Start -->
-                                            <div class="mailchimp-alerts text-centre">
-                                                <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                                <div class="mailchimp-success"></div><!-- mailchimp-success end -->
-                                                <div class="mailchimp-error"></div><!-- mailchimp-error end -->
-                                            </div><!-- mailchimp-alerts end -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                     
                         <!--newsletter area end-->
                     </div>    
                 </div>
@@ -615,19 +728,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-4 col-sm-6">
-                                <div class="single_footer">
-                                    <h3>CUSTOMER SERVICE</h3>
-                                    <ul>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Returns</a></li>
-                                        <li><a href="#">Order History</a></li>
-                                        <li><a href="#">Site Map</a></li>
-                                        <li><a href="#">My Account</a></li>
-                                        <li><a href="#">Unsubscribe</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                        
                             <div class="col-lg-2 col-md-4 col-sm-6">
                                 <div class="single_footer">
                                     <h3>Information</h3>
@@ -641,196 +742,25 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-8">
-                                <div class="single_footer">
-                                    <h3>instagram</h3>
-                                    <div class="instagram_active owl-carousel">
-                                        <div class="instagram_items">
-                                            <div class="instagram_list">
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram1.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram1.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram2.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram2.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram3.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram3.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram4.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram4.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="instagram_list">
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram5.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram5.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram6.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram6.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram7.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram7.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram8.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram8.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="instagram_items">
-                                            <div class="instagram_list">
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram1.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram1.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram2.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram2.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram3.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram3.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram4.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram4.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="instagram_list">
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram5.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram5.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram6.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram6.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram7.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram7.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="single_instagram">
-                                                    <a href="#"><img src="assets/img/instagram/instagram8.jpg" alt=""></a>
-                                                    <div class="instagram_icone">
-                                                        <a class="instagram_popup" href="assets/img/instagram/instagram8.jpg"><i class="ion-social-instagram"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer_bottom">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="tag_block">
-                                    <ul>
-                                        <li><a href="#">Online Shopping</a></li>
-                                        <li><a href="#">Promotions</a></li>
-                                        <li><a href="#">My Orders</a></li>
-                                        <li><a href="#">Help</a></li>
-                                        <li><a href="#">Customer Service</a></li>
-                                        <li><a href="#">Discount</a></li>
-                                        <li><a href="#">Support</a></li>
-                                        <li><a href="#">Most Populars</a></li>
-                                        <li><a href="#">New Arrivals</a></li>
-                                        <li><a href="#">Special Products</a></li>
-                                        <li><a href="#">Manufacturers</a></li>
-                                        <li><a href="#">Our Stores</a></li>
-                                        <li><a href="#">Shipping</a></li>
-                                        <li><a href="#">Payments</a></li>
-                                        <li><a href="#">Warantee</a></li>
-                                        <li><a href="#">Refunds</a></li>
-                                        <li><a href="#">Checkout</a></li>
-                                        <li><a href="#">Terms & Conditions</a></li>
-                                        <li><a href="#">Policy</a></li>
-                                        <li><a href="#">Shipping</a></li>
-                                        <li><a href="#">Payments</a></li>
-                                        <li><a href="#">Returns</a></li>
-                                        <li><a href="#">Refunds</a></li>
-                                    </ul>
-                                </div>
-                                <div class="footer_social">
-                                    <ul>
-                                        <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                        <li><a href="#"><i class="ion-social-googleplus-outline"></i></a></li>
-                                        <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                        <li><a href="#"><i class="ion-social-pinterest"></i></a></li>
-                                        <li><a href="#"><i class="ion-social-rss"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="copyright_area">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="copyright_content">
-                                    <p>Copyright &copy; 2018, <a href="#">Cigar</a>. All Rights Reserved</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="footer-payment text-right">
-                                    <a href="#"><img src="assets/img/visha/payment.png" alt=""></a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+                           
             <!--footer area end-->
-            
-       
 
-    
-		
 		<!-- all js here -->
-        <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="assets/js/popper.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/plugins.js"></script>
-        <script src="assets/js/main.js"></script>
+        <script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="../assets/js/popper.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script src="../assets/js/plugins.js"></script>
+        <script src="../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+
+const myModal = document.getElementById('myModal')
+const myInput = document.getElementById('myInput')
+
+myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+})
+</script>
+
     </body>
 </html>

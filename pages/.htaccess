@@ -1,0 +1,1 @@
+errorDocument 404 http://localhost/marketplace/pages/404.php

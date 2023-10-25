@@ -1,13 +1,21 @@
 <?php  
 session_start();
 include("conexao.php");
+
+
+if(isset($_SESSION["usuario"]) ) {	
 $id = $_SESSION['usuario'];
 $SQL = "SELECT nome FROM clientes WHERE id = $id";
 $quet = $mysqli -> query($SQL);
 while($row = $quet -> fetch_assoc()) {
 $nome = $row["nome"];
-}
 
+}
+}else{ 
+
+$notLOG = "Você ainda nao esta logado ";
+
+}
 
 
 ?>
@@ -137,9 +145,16 @@ $nome = $row["nome"];
 </head>
 
 <body>
+<?php   if(isset($_SESSION["usuario"])){
 
-    <h2>Resultado de sua pesquisa <?php echo $nome; ?></h2>
 
+    echo "<h2>Resultado de sua pesquisa $nome</h2>";
+}else{
+
+echo "<h2>$notLOG</h2>";
+
+}
+    ?>
     <div class="search-bar">
         <form action="" method="get">
             <input type="text" name="pesquisa" placeholder="Digite o produto..." required>

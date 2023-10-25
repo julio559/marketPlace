@@ -23,7 +23,7 @@ $nome = $row['nome'];
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Cigar - Mega Shop eCommerce Bootstrap 4 Template</title>
+        <title>MarketPlace do paulo</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -50,7 +50,7 @@ $nome = $row['nome'];
 
                             <div class="col-lg-6 col-md-6">
                                 <div class="welcome_text">
-                                    <p>England's Fastest Online Shopping Destination</p>
+                                  
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
@@ -219,7 +219,7 @@ echo "<a href='../logred.php'>logar</a>";
                                                 <h1> Sejam bem vindo ao<br><strong> Nosso market place</strong></h1>
                                                 <h3>veja mais</h3>
                                                 
-                                                <a href="../shop.html">venha comprar agora</a>
+                                                <a href="../shop.php">venha comprar agora</a>
                                             </div>
                                         </div>
                                     </div>  
@@ -228,10 +228,10 @@ echo "<a href='../logred.php'>logar</a>";
                                     <div class="row align-items-center">
                                         <div class="col-12">
                                             <div class="slider_content">
-                                                <h1><strong>VR2018 IEEE</strong><br> Virtual Reality </h1>
-                                                <h3>get up to</h3>
-                                                <p>20.3 Megapixels plus 80 Megapixel</p>
-                                                <a href="#">shop now</a>
+                                                <h1><strong>Somos o mais diferente </strong><br> e dinamicos do pais </h1>
+                                                <h3>venha com a gente</h3>
+                                                <p>...</p>
+                                                <a href="../shop.php">compre agora</a>
                                             </div>
                                         </div>
                                     </div>
@@ -293,14 +293,10 @@ echo "<a href='../logred.php'>logar</a>";
                                 <div class="product_tab_button">
                                     <ul class="nav" role="tablist">
                                         <li>
-                                            <a class="active" data-toggle="tab" href="#Products" role="tab" aria-controls="Products" aria-selected="true"> New Products</a>
+                                            <a class="active" data-toggle="tab" href="#Products" role="tab" aria-controls="Products" aria-selected="true"> Produtos novos </a>
                                         </li>
-                                        <li>
-                                            <a data-toggle="tab" href="#OnSale" role="tab" aria-controls="OnSale" aria-selected="false"> OnSale</a>
-                                        </li>
-                                        <li>
-                                            <a data-toggle="tab" href="#Feature" role="tab" aria-controls="Feature" aria-selected="false">  Feature Products</a>
-                                        </li>
+                                  
+                                    
                                     </ul>
                                 </div>
                             </div>

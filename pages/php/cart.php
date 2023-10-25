@@ -192,121 +192,6 @@ include("carrinho.php");
 
                                                 </ul>
                                             </li>
-                                            <li><a href="#"> Fashion  <i class="fa fa-angle-right"></i></a>
-                                                <ul class="categories_mega_menu">
-                                                    <li><a href="#">Dresses</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Sweater</a></li>
-                                                                <li><a href="">Evening</a></li>
-                                                                <li><a href="">Day</a></li>
-                                                                <li><a href="">Sports</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Handbags</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Shoulder</a></li>
-                                                                <li><a href="">Satchels</a></li>
-                                                                <li><a href="">kids</a></li>
-                                                                <li><a href="">coats</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">shoes</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Ankle Boots</a></li>
-                                                                <li><a href="">Clog sandals </a></li>
-                                                                <li><a href="">run</a></li>
-                                                                <li><a href="">Books</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Clothing</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Coats  Jackets </a></li>
-                                                                <li><a href="">Raincoats</a></li>
-                                                                <li><a href="">Jackets</a></li>
-                                                                <li><a href="">T-shirts</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                            <li><a href="#"> Furnitured & Decor <i class="fa fa-angle-right"></i></a>
-                                                <ul class="categories_mega_menu column_3">
-                                                    <li><a href="#">Chair</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Dining room</a></li>
-                                                                <li><a href="">bedroom</a></li>
-                                                                <li><a href=""> Home & Office</a></li>
-                                                                <li><a href="">living room</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Lighting</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Ceiling Lighting</a></li>
-                                                                <li><a href="">Wall Lighting</a></li>
-                                                                <li><a href="">Outdoor Lighting</a></li>
-                                                                <li><a href="">Smart Lighting</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Sofa</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Fabric Sofas</a></li>
-                                                                <li><a href="">Leather Sofas</a></li>
-                                                                <li><a href="">Corner Sofas</a></li>
-                                                                <li><a href="">Sofa Beds</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#"> Toys & Hobbies <i class="fa fa-angle-right"></i></a>
-                                                <ul class="categories_mega_menu column_2">
-                                                    <li><a href="#">Boys' Toys</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Building Toys</a></li>
-                                                                <li><a href="">Electronics Toys</a></li>
-                                                                <li><a href="">action figures </a></li>
-                                                                <li><a href="">specialty & boutique toy</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Girls' Toys</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Dolls for Girls</a></li>
-                                                                <li><a href="">Girls' Learning Toys</a></li>
-                                                                <li><a href="">Arts and Crafts for Girls</a></li>
-                                                                <li><a href="">Video Games for Girls</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-
-                                                </ul>
-                                            </li>
-                                            <li><a href="#"> Accessories</a></li>
-                                            <li><a href="#"> Jewelry & Watches</a></li>
-                                            <li><a href="#"> Health & Beauty</a></li>
-                                            <li><a href="#">Books & Office</a></li>
-                                            <li><a href="#"> Sport & Outdoor</a></li>
-                                            <li id="cat_toggle" class="has-sub"><a href="#"> More Categories</a>
-                                                <ul class="categorie_sub">
-                                                    <li><a href="#"> Computer - Laptop</a></li>
-                                                </ul>   
-
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -315,9 +200,9 @@ include("carrinho.php");
                                 <div class="main_menu_inner">
                                     <div class="main_menu d-none d-lg-block"> 
                                         <ul>
-                                            <li><a href="index-4.html">Home <i class="fa fa-angle-down"></i></a>
+                                            <li><a href="index-4.php">Home <i class="fa fa-angle-down"></i></a>
                                                 <ul class="sub_menu">
-                                                    <li><a href="index-4.html">Home 1</a></li>
+                                                    <li><a href="index-4.php">Home 1</a></li>
                                                  
                                                 </ul>
                                             </li>
