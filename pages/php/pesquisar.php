@@ -2,22 +2,18 @@
 session_start();
 include("conexao.php");
 
+$nome = "";
+$notLOG = "Você ainda nao esta logado";
 
-if(isset($_SESSION["usuario"]) ) {	
-$id = $_SESSION['usuario'];
-$SQL = "SELECT nome FROM clientes WHERE id = $id";
-$quet = $mysqli -> query($SQL);
-while($row = $quet -> fetch_assoc()) {
-$nome = $row["nome"];
-
+if(isset($_SESSION["usuario"])) {    
+    $id = $_SESSION['usuario'];
+    $stmt = $mysqli->prepare("SELECT nome FROM clientes WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($nome);
+    $stmt->fetch();
+    $stmt->close();
 }
-}else{ 
-
-$notLOG = "Você ainda nao esta logado ";
-
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -141,20 +137,24 @@ $notLOG = "Você ainda nao esta logado ";
             font-size: 20px;
         }
 
+
+        .product-link {
+    text-decoration: none;
+    color: inherit;  /* Para manter a cor do texto original */
+}
+
     </style>
 </head>
 
 <body>
-<?php   if(isset($_SESSION["usuario"])){
-
-
-    echo "<h2>Resultado de sua pesquisa $nome</h2>";
-}else{
-
-echo "<h2>$notLOG</h2>";
-
-}
-    ?>
+<?php   
+    if(!empty($nome)){
+        echo "<h2>Resultado de sua pesquisa, $nome</h2>";
+    } else {
+        echo "<h2>$notLOG</h2>";
+    }
+?>
+  
     <div class="search-bar">
         <form action="" method="get">
             <input type="text" name="pesquisa" placeholder="Digite o produto..." required>
@@ -167,39 +167,33 @@ echo "<h2>$notLOG</h2>";
     </button>
 
     <?php 
-    include("conexao.php");
 
+if (isset($_GET['pesquisa'])) {
+    $pesq = $_GET['pesquisa'];
+    $stmt = $mysqli->prepare("SELECT id, nome, tipo, descricao, preco, imagem FROM produto WHERE nome LIKE ?");
+    $searchString = "%" . $pesq . "%";
+    $stmt->bind_param("s", $searchString);
+    $stmt->execute();
 
+    $result = $stmt->get_result();
 
-
-    if (isset($_GET['pesquisa'])) {
-        $pesq = $_GET['pesquisa'];
-        $stmt = $mysqli->prepare("SELECT nome, tipo, descricao, preco FROM produto WHERE nome LIKE ?");
-        $searchString = "%" . $pesq . "%";
-        $stmt->bind_param("s", $searchString);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-
-        if($result->num_rows > 0) {
-    ?>
-
-    <div class="container">
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <div class="produto">
-            <div class="produto-imagem"></div>
-
-            <div class="produto-info">
-                <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
-                <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo']); ?></p>
-            <p><?php echo htmlspecialchars($row['descricao']); ?></p>
-            <p class="preco"><?php echo number_format($row['preco'], 2, ',', '.'); ?> R$</p>
-        </div>
-    </div>
-    <?php endwhile; ?>
-</div>
-
-<?php 
+    if($result->num_rows > 0) {
+        // ... exiba seus produtos ...
+        while ($row = $result->fetch_assoc()): ?>
+            <a href="../product-details.html?product_id=<?php echo $row['id']; ?>" class="product-link">
+                <div class="produto">
+                    <div class="produto-imagem">
+                        <img src="../uploads/<?php echo $row['imagem']; ?>" width="150px" height="150px">
+                    </div>
+                    <div class="produto-info">
+                        <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
+                        <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo']); ?></p>
+                        <p><?php echo htmlspecialchars($row['descricao']); ?></p>
+                        <p class="preco"><?php echo number_format($row['preco'], 2, ',', '.'); ?> R$</p>
+                    </div>
+                </div>
+            </a>
+        <?php endwhile; 
     } else {
         echo '<div class="not-found">Desculpe, não encontramos nenhum produto com esse nome.</div>';
     }
@@ -207,6 +201,7 @@ echo "<h2>$notLOG</h2>";
     $stmt->close();
 } else {
     header("location: index-4.php");
+    exit;
 }
 ?>
 </body>

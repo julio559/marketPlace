@@ -33,6 +33,7 @@ $nome = $row['nome'];
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="../assets/css/bundle.css">
         <link rel="stylesheet" href="../assets/css/plugins.css">
+        <link rel="stylesheet" href="../css/index-4.css">
         <link rel="stylesheet" href="../assets/css/style.css">
         <link rel="stylesheet" href="../assets/css/responsive.css">
         <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -131,31 +132,13 @@ echo "Fazer login";
                             <div class="col-lg-3 col-md-7">
                                 <div class="categories_menu">
                                     <div class="categories_title">
-                                        <h2 class="categori_toggle"> All categories</h2>
+                                        <h2 class="categori_toggle"> Todas cartegorias</h2>
                                     </div>
                                     <div class="categories_menu_inner">
                                         <ul>
                                        
-                                                    <li><a href="#">Laptop & Computers</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Digital Cameras</a></li>
-                                                             
-                                                                <li><a href="">Photo Accessories</a></li>
-                                                                <li><a href="">Memory Cards</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Camera & Photos</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Apple Phones</a></li>
-                                                                <li><a href="">Samsung Phones</a></li>
-                                                                <li><a href="">Motorola Phones</a></li>
-                                                                <li><a href="">Lenovo Phones</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
+                                                    <li><a href="#">Eletronicos</a>
+                                                     
                                                     <li><img src="assets/img/categorie/categorie.png" alt=""></li>
 
 
@@ -302,36 +285,58 @@ echo "<a href='../logred.php'>logar</a>";
                             </div>
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="Products" role="tabpanel">
-                               <div class="row">
-                                    <div class="product_active_four owl-carousel">
-                                        <div class="col-lg-3">
-                                            <div class="single_product"> 
-                                                <div class="product_thumb">
-                                                     <a href="product-details.html"><img src="assets/img/product/product47.jpg" alt=""></a>
-                                                   
-                                                </div > 
-                                                <div class="product_content">   
-                                                    <div class="product_ratting">
-                                                
-                                                    </div>
-                                                    <h3><a href="product-details.html">PRODUTO TAL</a></h3>
-                                                    <div class="product_price">
-                                                        <span class="current_price"> R$25,00</span>
-                                                    </div>
-                                                    <div class="product_action">
-                                                        <ul>
+    <div class="tab-pane fade show active" id="Products" role="tabpanel">
+       <div class="row">
+            <div class="product_active_four owl-carousel">
+                
+                <?php 
+                // Preparar a consulta SQL
+                $stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 10");
+                $stmt->execute();
 
-                                                        <?php if(isset($_SESSION["usuario"])){
-                                                        echo   "<li class='product_cart'><a href='cart.php?idProd=$id' title='Adicionar ao carrinho '> + carrinho</a></li>";
-                                                        }
-                                                         ?>
-                                                        </ul>
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                   
+                // Armazenar o resultado
+                $result = $stmt->get_result();
+
+                // Loop através dos resultados
+                while ($row = $result->fetch_assoc()):
+                ?>
+
+                <div class="col-lg-3">
+                    <div class="single_product"> 
+                        <div class="product_thumb">
+                             <a href="product-details.html"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
+                        </div > 
+                        <div class="product_content">   
+                            <div class="product_ratting">
+                            
+                            </div>
+                            <h3><a href="product-details.html"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
+                            <div class="product_price">
+                                <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
+                            </div>
+                            <div class="product_action">
+                                <ul>
+                                <?php if(isset($_SESSION["usuario"])): ?>
+                                    <li class='product_cart'>
+                                        <a href='cart.php?idProd=<?php echo $row['id']; ?>' title='Adicionar ao carrinho '> + carrinho</a>
+                                    </li>
+                                <?php endif; ?>
+                                </ul>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+
+                <?php 
+                endwhile; 
+                $stmt->close();
+                ?>
+                
+            </div>
+       </div> 
+   </div>   
+</div>
+
                                                     </div>
                                                 </div>    
                                             </div>
@@ -431,9 +436,9 @@ echo "<a href='../logred.php'>logar</a>";
     <div class="single_footer">
         <h3>ATENDIMENTO AO CLIENTE</h3>
         <ul>
-            <li><a href="#">Fale Conosco</a></li>
-            <li><a href="#">Histórico de Pedidos</a></li>
-            <li><a href="#">Minha Conta</a></li>
+            <li><a href="../contact.html">Fale Conosco</a></li>
+          
+            <li><a href="my-account.php">Minha Conta</a></li>
         </ul>
     </div>
 </div>
@@ -444,7 +449,7 @@ echo "<a href='../logred.php'>logar</a>";
             <li><a href="#">Sobre Nós</a></li>
             <li><a href="#">Informações de Entrega</a></li>
             <li><a href="#">Política de Privacidade</a></li>
-            <li><a href="#">Termos & Condições</a></li>
+            <li><a href="termos.html">Termos & Condições</a></li>
             <li><a href="#">Perguntas Frequentes</a></li>
         </ul>
     </div>
@@ -584,7 +589,7 @@ echo "<a href='../logred.php'>logar</a>";
 
 		<!-- all js here -->
         <script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="../assets/js/popper.js"></script>
+       
         <script src="../assets/js/bootstrap.min.js"></script>
         <script src="../assets/js/plugins.js"></script>
         <script src="../assets/js/main.js"></script>
