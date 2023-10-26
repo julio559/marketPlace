@@ -106,12 +106,7 @@ echo "Fazer login";
                                                 <li><a href="#">USD</a></li>
                                             </ul>
                                         </li>
-                                        <li class="language"><a href="#"><img src="assets/img/logo/language.png" alt=""> English <i class="ion-chevron-down"></i></a>
-                                            <ul class="dropdown_language">
-                                                <li><a href="#"><img src="assets/img/logo/cigar.jpg" alt=""> French</a></li>
-                                                <li><a href="#"><img src="assets/img/logo/language2.png" alt="">German</a></li>
-                                            </ul>
-                                        </li>
+                                      
                                     </ul>
                                 </div>   
                             </div>
@@ -126,7 +121,7 @@ echo "Fazer login";
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-md-5">
                                 <div class="logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo4.png" alt=""></a>
+                                    <a href="index-4.php"><img src="assets/img/logo/logo4.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-7">
@@ -159,11 +154,11 @@ echo "Fazer login";
                             </div> 
                             <div class="col-lg-2 col-md-5">
                                 <div class="cart_area">
-                                 
+                                <button class="blue" onclick="red()"><i class='ion-ios-cart-outline'></i> Venha comprar</button>
                                     <div class="cart_link">
                                         <?php
                                         if(isset($_SESSION["usuario"])){
-                                        echo "<a href='cart.php?id=$id'><i class='ion-ios-cart-outline'></i>My Cart</a>";
+                                        echo "<a href='cart.php?idd=$id'><i class='ion-ios-cart-outline'></i>My Cart</a>";
                                         }else{
 
 echo "<a href='../logred.php'>logar</a>";
@@ -285,13 +280,13 @@ echo "<a href='../logred.php'>logar</a>";
                             </div>
                         </div>
                         <div class="tab-content">
-    <div class="tab-pane fade show active" id="Products" role="tabpanel">
+    
        <div class="row">
-            <div class="product_active_four owl-carousel">
+          
                 
                 <?php 
                 // Preparar a consulta SQL
-                $stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 10");
+                $stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 4");
                 $stmt->execute();
 
                 // Armazenar o resultado
@@ -304,13 +299,11 @@ echo "<a href='../logred.php'>logar</a>";
                 <div class="col-lg-3">
                     <div class="single_product"> 
                         <div class="product_thumb">
-                             <a href="product-details.html"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
+                             <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
                         </div > 
                         <div class="product_content">   
-                            <div class="product_ratting">
-                            
-                            </div>
-                            <h3><a href="product-details.html"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
+                       
+                            <h3><a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
                             <div class="product_price">
                                 <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
                             </div>
@@ -318,7 +311,7 @@ echo "<a href='../logred.php'>logar</a>";
                                 <ul>
                                 <?php if(isset($_SESSION["usuario"])): ?>
                                     <li class='product_cart'>
-                                        <a href='cart.php?idProd=<?php echo $row['id']; ?>' title='Adicionar ao carrinho '> + carrinho</a>
+                                        <a href='cart.php?id=<?php echo $row['id']; ?>' title='Adicionar ao carrinho '> + carrinho</a>
                                     </li>
                                 <?php endif; ?>
                                 </ul>
@@ -341,65 +334,14 @@ echo "<a href='../logred.php'>logar</a>";
                                                 </div>    
                                             </div>
                                         </div>
-                                    </div>
-                               </div> 
-                           </div>   
-                        </div>
-                    </div>
+                  
                     <!--product area end-->
                     <!--home banner sction start-->
                  
                     <!--consoles product end-->
 
                     <!--brand area start-->
-                    <div class="brand_area brand_four">
-                        <div class="brand_inner">  
-                            <div class="row">
-                                <div class="brand_active_four owl-carousel">
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra1.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra2.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra3.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra4.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra5.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra6.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra7.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets/img/brand/bra8.png" alt=""></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>     
-                    </div>
+                   
                     <!--brand area end-->
 
               
@@ -593,5 +535,17 @@ echo "<a href='../logred.php'>logar</a>";
         <script src="../assets/js/bootstrap.min.js"></script>
         <script src="../assets/js/plugins.js"></script>
         <script src="../assets/js/main.js"></script>
+
+
+        <script>
+
+function red(){
+
+window.location.href = "../shop.php";
+
+}
+
+
+        </script>
     </body>
 </html>

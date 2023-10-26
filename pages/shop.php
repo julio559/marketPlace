@@ -28,6 +28,22 @@ if (isset($_SESSION['usuario'])) {
 } else {
     $itemCount = 0;  // ou algum valor padrão se $_SESSION['usuario'] não estiver definido
 }
+if (isset($_SESSION['usuario'])) {
+$id = $_SESSION['usuario'];
+
+$sql = "SELECT nome FROM clientes WHERE id = $id";
+$query = $mysqli -> query($sql);
+while ($row = $query -> fetch_assoc()) {
+
+$nome = $row['nome'];
+
+}
+}else{
+
+
+
+}
+
 
 
 
@@ -59,36 +75,68 @@ if (isset($_SESSION['usuario'])) {
             <!--header area start-->
             <header class="header_area">
                 <!--header top start-->
-                <div class="header_top">
-                    <div class="container">   
+                <div class="header_top top_four">
+                    <div class="container-fluid">   
                         <div class="row align-items-center">
 
                             <div class="col-lg-6 col-md-6">
-                              
+                                <div class="welcome_text">
+                                  
+                                </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="top_right text-right">
                                     <ul>
-                                       <li class="top_links"><a href="#">My Account <i class="ion-chevron-down"></i></a>
+                                       <li class="top_links"><a href="#">
+                                        
+                                       <?php 
+                                       if(isset($_SESSION['usuario'])){
+                                        echo "Conta do  $nome ";
+                                       }else{
+
+echo "Fazer login";
+
+                                       }
+                                       ?> <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_links">
-                                           
-                                                <li><a href="my-account.html">My Account </a></li>
-                                                <li><a href="#">Sign In</a></li>
-                                                <li><a href="#">Compare Products  </a></li>
+
+
+                                            <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='php   /cart.php'> Meu carrinho </a></li>";
+                                       }
+
+                                       ?>
+                                                <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo    " <li><a href='php/my-account.php?id=$id'> conta de $nome </a></li>";
+
+
+                                       }else{
+
+                                        echo "<li><a href='../logred.php'> fazer login </a></li>";
+
+                                       }
+                                       ?>
+                                               <?php 
+
+
+                                            if(isset($_SESSION["usuario"])){
+                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
+                                            }
+                                                ?>
+                                                
                                             </ul>
                                         </li> 
-                                        <li class="currency"><a href="#">USD <i class="ion-chevron-down"></i></a>
+                                        <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_currency">
                                                 <li><a href="#">EUR</a></li>
-                                                <li><a href="#">BRL</a></li>
+                                                <li><a href="#">USD</a></li>
                                             </ul>
                                         </li>
-                                        <li class="language"><a href="#"><img src="assets/img/logo/language.png" alt=""> English <i class="ion-chevron-down"></i></a>
-                                            <ul class="dropdown_language">
-                                                <li><a href="#"><img src="assets/img/logo/cigar.jpg" alt=""> French</a></li>
-                                                <li><a href="#"><img src="assets/img/logo/language2.png" alt="">German</a></li>
-                                            </ul>
-                                        </li>
+                                      
                                     </ul>
                                 </div>   
                             </div>
@@ -121,43 +169,7 @@ if (isset($_SESSION['usuario'])) {
 
                                         <a href="php/cart.php"><i class="ion-ios-cart-outline"></i>My Cart</a>
                                         <span class="cart_count"><?php echo $itemCount; ?></span>
-                                        <!--mini cart-->
-                                         <div class="mini_cart">
-                                            <div class="items_nunber">
-                                                <span>2 Items in Cart</span>
-                                            </div>
-                                            <div class="cart_button checkout">
-                                                <a href="checkout.html">Proceed to Checkout</a>
-                                            </div>
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/cart/cart1.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Mr.Coffee 12-Cup</a>
-                                                    <form action="#">
-                                                        <input min="0" max="100" type="number">
-                                                        <span>$60.00</span>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/cart/cart2.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Lid Cover Cookware</a>
-                                                    <form action="#">
-                                                        <input min="0" max="100" type="number">
-                                                        <span>$160.00</span>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="cart_button view_cart">
-                                                <a href="#">View and Edit Cart</a>
-                                            </div>
-                                        </div>
-                                        <!--mini cart end-->
+                                 
                                     </div>
                                 </div>
                             </div>
@@ -284,32 +296,8 @@ if (isset($_SESSION['usuario'])) {
                                    
                                     </ul>
                                 </div>
-                                <div class="select_option number">
-                                    <form action="#">
-                                        <label>Show:</label>
-                                        <select name="orderby" id="short">
-                                            <option selected value="1">9</option>
-                                            <option value="1">19</option>
-                                            <option value="1">30</option>
-                                        </select>
-                                    </form>
-                                </div>
-                                <div class="select_option">
-                                    <form action="#">
-                                        <label>Sort By</label>
-                                        <select name="orderby" id="short1">
-                                            <option selected value="1">Position</option>
-                                            <option value="1">Price: Lowest</option>
-                                            <option value="1">Price: Highest</option>
-                                            <option value="1">Product Name:Z</option>
-                                            <option value="1">Sort by price:low</option>
-                                            <option value="1">Product Name: Z</option>
-                                            <option value="1">In stock</option>
-                                            <option value="1">Product Name: A</option>
-                                            <option value="1">In stock</option>
-                                        </select>
-                                    </form>
-                                </div>
+                              
+                                            
                             </div>
                         </div>
                     </div>        
@@ -322,73 +310,163 @@ if (isset($_SESSION['usuario'])) {
             <div class="row">
 
             <?php
-            // Suponho que você já tenha estabelecido a conexão $mysqli
-            include("php/conexao.php");
-            $query = "SELECT * FROM produto";
-            $result = $mysqli->query($query);
+// Suponho que você já tenha estabelecido a conexão $mysqli
+include("php/conexao.php");
 
-            if ($result->num_rows > 0) {
-                // percorrer cada linha de resultado
-                while ($row = $result->fetch_assoc()) {
-                 
-                    ?>
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'position';
 
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="single_product"> 
-                            <div class="product_thumb">
-                            <a href="product-details.html"><img src="uploads/<?php  echo $row['imagem'] ?>" width="250px" height="250px" alt=""></a>
-                          
-                            </div> 
-                            <div class="product_content">   
-                                <div class="product_ratting">
-                                  
-                                </div>
-                                <h3><a href="product-details.html"><?php echo $row['nome']; ?></a></h3>
-                                <div class="product_price">
-                                    <span class="current_price">R$<?php echo $row['preco']; ?></span>
-                                </div>
-                                <div class="product_action">
-                                    <ul>
-                                        <li class="product_cart"><a href="php/cart.php?id=<?php echo $row['id']; ?>" title="Add to Cart">Add to Cart</a></li>
-                                    </ul>
-                                </div>
-                            </div>    
-                        </div>
-                    </div>
+switch ($orderby) {
+    case 'price_low':
+        $orderStatement = "ORDER BY preco ASC";
+        break;
+    case 'price_high':
+        $orderStatement = "ORDER BY preco DESC";
+        break;
+    case 'name_desc':
+        $orderStatement = "ORDER BY nome DESC";
+        break;
+    case 'name_asc':
+        $orderStatement = "ORDER BY nome ASC";
+        break;
+    case 'in_stock':
+        $orderStatement = "ORDER BY stock DESC";
+        break;
+    default:
+        $orderStatement = "";
+}
 
-                    <?php
-                }
-            } else {
-                echo "Nenhum produto encontrado!";
-            }
-            ?>
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$perPage = 8;
+$offset = ($page - 1) * $perPage;
 
-            </div>
-        </div>
+$totalQuery = "SELECT COUNT(*) as total FROM produto";
+$totalResult = $mysqli->query($totalQuery);
+$totalRows = $totalResult->fetch_assoc()['total'];
+$totalPages = ceil($totalRows / $perPage);
+
+$query = "SELECT * FROM produto $orderStatement LIMIT $perPage OFFSET $offset";
+$result = $mysqli->query($query);
+?>
+
+<!--shop toolbar start-->
+<div class="shop_toolbar">
+    <div class="select_option">
+        <label>Sort By</label>
+        <select name="orderby" id="short1" onchange="location.href='?orderby='+this.value">
+            <option value="position">Position</option>
+            <option value="price_low">Price: Lowest</option>
+            <option value="price_high">Price: Highest</option>
+            <option value="name_desc">Product Name: Z to A</option>
+            <option value="name_asc">Product Name: A to Z</option>
+            <option value="in_stock">In stock</option>
+        </select>
     </div>
 </div>
+<!--shop toolbar end-->
 
-                    <!--shop tab product end-->
-                    
-                    <!--pagination style start--> 
-                    <div class="row">
-                        <div class="col-12">  
-                            <div class="pagination_style fullwidth">
-                                <ul>
-                                    <li class="current_number">1</li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">»</a></li>
-                                </ul>
-                            </div>
-                        </div>      
+<!--shop tab product-->
+<div class="shop_tab_product">   
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="large" role="tabpanel">
+            <div class="row">
+
+<?php
+include("php/conexao.php");
+
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'position';
+
+switch ($orderby) {
+    case 'price_low':
+        $orderStatement = "ORDER BY preco ASC";
+        break;
+    case 'price_high':
+        $orderStatement = "ORDER BY preco DESC";
+        break;
+    case 'name_desc':
+        $orderStatement = "ORDER BY nome DESC";
+        break;
+    case 'name_asc':
+        $orderStatement = "ORDER BY nome ASC";
+        break;
+    case 'in_stock':
+        $orderStatement = "ORDER BY stock DESC";
+        break;
+    default:
+        $orderStatement = "";
+}
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$perPage = 8;
+$offset = ($page - 1) * $perPage;
+
+$totalQuery = "SELECT COUNT(*) as total FROM produto";
+$totalResult = $mysqli->query($totalQuery);
+$totalRows = $totalResult->fetch_assoc()['total'];
+$totalPages = ceil($totalRows / $perPage);
+
+$query = "SELECT * FROM produto $orderStatement LIMIT $perPage OFFSET $offset";
+$result = $mysqli->query($query);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+?>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="single_product"> 
+                <div class="product_thumb">
+                <a href="product-details.php?id_prod=<?php echo $row['id'] ?>"><img src="uploads/<?php  echo $row['imagem'] ?>" width="250px" height="250px" alt=""></a>
+                </div> 
+                <div class="product_content">   
+                    <div class="product_ratting">
                     </div>
-                    <!--pagination style end-->    
-                </div>
+                    <h3><a href="product-details.php"><?php echo $row['nome']; ?></a></h3>
+                    <div class="product_price">
+                        <span class="current_price">R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
+                    </div>
+                    <div class="product_action">
+                        <ul>
+                            <?php  
+
+                            if(isset($_SESSION['usuario'])){ 
+                               
+                          echo  "<li class='product_cart'><a href='php/cart.php?id=$id ?>' title='Add to Cart'>Add to Cart</a></li>";
+                            }else{
+                                echo "<li class='product_cart'><a href='product-details.php?id_prod=" . $row['id'] . "' title='ver detalhes'>ver detalhes</a></li>";
+
+
+                            }
+                            
+                            ?>
+                        </ul>
+                    </div>
+                </div>    
             </div>
-            <!--shop wrapper end-->
-    
+        </div>
+<?php
+    }
+} else {
+    echo "Nenhum produto encontrado!";
+}
+?>
+
+<div class="row">
+    <div class="col-12">  
+        <div class="pagination_style fullwidth">
+            <ul>
+                <?php
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    if ($i == $page) {
+                        echo '<li class="current_number">' . $i . '</li>';
+                    } else {
+                        echo '<li><a href="?page=' . $i . '&orderby=' . $orderby . '">' . $i . '</a></li>';
+                    }
+                }
+                ?>
+            </ul>
+        </div>
+    </div>      
+</div>
    
               <!--shipping area start-->
             <div class="shipping_area shipping_contact ">

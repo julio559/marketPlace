@@ -711,14 +711,14 @@
 
 /*slider area css here*/
 .single_slider.slider_one {
-	background: url(../img/slider/slider1.jpg);
+	background: url(../o-que-e-marketplace-1170x780.jpg.optimal.jpg);
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-position: center center;
 	background-size: cover;
 }
 .single_slider.slider_two {
-	background: url(../img/slider/slider2.jpg);
+	background: url(../o-que-e-marketplace-1170x780.jpg.optimal.jpg);
     background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-position: center center;

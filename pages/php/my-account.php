@@ -193,7 +193,7 @@ echo "Fazer login";
                 <td><?php echo $row["data"]; ?></td>
                 <td><span class="<?php echo ($row["status"] == 'Completed' ? 'success' : 'processing'); ?>"><?php echo $row["status"]; ?></span></td>
                 <td>R$<?php echo $row["total"]; ?></td> 
-                <td><a href="nf.php?id=<?php echo $row["id_prod"]; ?>" class="view">view</a></td> 
+                <td><a href="nf.php?id=<?php echo $row["id"]; ?>" class="view">view</a></td> 
             </tr>
             <?php endwhile; ?>
         </tbody>

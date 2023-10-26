@@ -1,8 +1,5 @@
 <?php    
 include("carrinho.php");
-
-
-
 ?>
 
 
@@ -93,8 +90,8 @@ border: none;
                             </div>
                             <div class="col-lg-7 col-md-5">
                                 <div class="search_bar">
-                                    <form action="#">
-                                        <input placeholder="Search entire store here..." type="text">
+                                    <form action="pesquisar.php" method="GET">
+                                        <input placeholder="Search entire store here..." name="pesquisa" type="text">
                                         <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                     </form>
                                 </div>

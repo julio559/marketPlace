@@ -170,7 +170,7 @@ if(isset($_SESSION["usuario"])) {
 
 if (isset($_GET['pesquisa'])) {
     $pesq = $_GET['pesquisa'];
-    $stmt = $mysqli->prepare("SELECT id, nome, tipo, descricao, preco, imagem FROM produto WHERE nome LIKE ?");
+    $stmt = $mysqli->prepare("SELECT id, nome, cartegoria, descricao, sub_descricao,preco, imagem FROM produto WHERE nome LIKE ?");
     $searchString = "%" . $pesq . "%";
     $stmt->bind_param("s", $searchString);
     $stmt->execute();
@@ -180,15 +180,15 @@ if (isset($_GET['pesquisa'])) {
     if($result->num_rows > 0) {
         // ... exiba seus produtos ...
         while ($row = $result->fetch_assoc()): ?>
-            <a href="../product-details.html?product_id=<?php echo $row['id']; ?>" class="product-link">
+            <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>" class="product-link">
                 <div class="produto">
                     <div class="produto-imagem">
                         <img src="../uploads/<?php echo $row['imagem']; ?>" width="150px" height="150px">
                     </div>
                     <div class="produto-info">
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
-                        <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['tipo']); ?></p>
-                        <p><?php echo htmlspecialchars($row['descricao']); ?></p>
+                        <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['cartegoria']); ?></p>
+                        <p><strong>descrição:</strong> <?php echo htmlspecialchars($row['sub_descricao']); ?></p>
                         <p class="preco"><?php echo number_format($row['preco'], 2, ',', '.'); ?> R$</p>
                     </div>
                 </div>
