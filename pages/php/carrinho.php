@@ -54,10 +54,39 @@ $quer = $mysqli -> query($sql);
 }
 
 }
-
+// DELETE logic
 if(isset($_POST["id_cart"])){
-$id_cart = $_POST["id_cart"];
-$sql = "DELETE * FROM carrinho WHERE id_cart";
-}
-?>
+  $id_cart = $_POST["id_cart"];
+  
+  // Usando prepared statement
+  $stmt = $mysqli->prepare("DELETE FROM carrinho WHERE id_cart = ?");
+  $stmt->bind_param("i", $id_cart);  // "i" significa que estamos vinculando uma variável do tipo inteiro
+  
+  if ($stmt->execute()) {
+      echo json_encode(['success' => true]);
+  } else {
+      echo json_encode(['success' => false]);
+  }
 
+  header("location: cart.php");
+  exit;
+}
+
+// UPDATE logic
+if(isset($_POST['product_id']) && isset($_POST['numero'])) {
+  $id_cart = $_POST['product_id'];
+  $numero = $_POST['numero'];
+
+  // Usando prepared statement
+  $stmt = $mysqli->prepare("UPDATE carrinho SET quantidade = ? WHERE id = ?");
+  $stmt->bind_param("ii", $numero, $id_cart);
+
+  if ($stmt->execute()) {
+      header("location: cart.php");
+      exit;
+  } else {
+      die("Erro ao atualizar a quantidade.");
+  }
+}
+
+?>

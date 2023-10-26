@@ -1,5 +1,8 @@
 <?php    
 include("carrinho.php");
+
+
+
 ?>
 
 
@@ -41,31 +44,68 @@ border: none;
             <!--header area start-->
             <header class="header_area">
                 <!--header top start-->
-                <div class="header_top">
-                    <div class="container">   
+                <div class="header_top top_four">
+                    <div class="container-fluid">   
                         <div class="row align-items-center">
 
                             <div class="col-lg-6 col-md-6">
-                         
+                                <div class="welcome_text">
+                                  
+                                </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="top_right text-right">
                                     <ul>
-                                       <li class="top_links"><a href="#">Conta do <?php echo $nome; ?> <i class="ion-chevron-down"></i></a>
+                                       <li class="top_links"><a href="#">
+                                        
+                                       <?php 
+                                       if(isset($_SESSION['usuario'])){
+                                        echo "Conta do  $nome ";
+                                       }else{
+
+echo "Fazer login";
+
+                                       }
+                                       ?> <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_links">
-                                                <li><a href="wishlist.html">My Wish List </a></li>
-                                                <li><a href="my-account.html">My Account </a></li>
-                                                <li><a href="#">Sign In</a></li>
-                                                <li><a href="#">Compare Products  </a></li>
+
+
+                                            <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='cart.php'> Meu carrinho </a></li>";
+                                       }
+
+                                       ?>
+                                                <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo    " <li><a href='my-account.php?id=$id'> conta de $nome </a></li>";
+
+
+                                       }else{
+
+                                        echo "<li><a href='../logred.php'> fazer login </a></li>";
+
+                                       }
+                                       ?>
+                                               <?php 
+
+
+                                            if(isset($_SESSION["usuario"])){
+                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
+                                            }
+                                                ?>
+                                                
                                             </ul>
                                         </li> 
-                                        <li class="currency"><a href="#">USD <i class="ion-chevron-down"></i></a>
+                                        <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_currency">
                                                 <li><a href="#">EUR</a></li>
-                                                <li><a href="#">BRL</a></li>
+                                                <li><a href="#">USD</a></li>
                                             </ul>
                                         </li>
-                                        <li class="language"><a href="#"><img src="assets/img/logo/language.png" alt=""> English <i class="ion-chevron-down"></i></a>
+                                        <li class="language"><a href="#"><img src="assets/img/logo/language.png" alt=""> Português <i class="ion-chevron-down"></i></a>
                                             <ul class="dropdown_language">
                                                 <li><a href="#"><img src="assets/img/logo/cigar.jpg" alt=""> French</a></li>
                                                 <li><a href="#"><img src="assets/img/logo/language2.png" alt="">German</a></li>
@@ -151,36 +191,50 @@ border: none;
                                         <th class="product_total">Total</th>
                                     </tr>
                                 </thead>
-                                <?php while($row = $query->fetch_assoc()): ?>
+                                <?php
+                                $isEmpty = true;
+                                while($row = $query->fetch_assoc()):
+                                    $isEmpty = false;
+    $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
+    $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
+    $total = $quantidade * $preco;
+?>
+<tr>
+    <td class="product_remove">
         <form method="POST" action="cart.php">
-        <tr>
-
-
-
             <input type="hidden" name="id_cart" value="<?php echo $row['id']; ?>">
-            <td class="product_remove">
-                <button type="button" class="Ola" name="delete_item"><i class="fa fa-trash-o"></i></button>
-            </td>
-                <td class="product_thumb">
-                    <a href="#"><img src="../uploads/<?php echo $row['imagem']; ?>" width="250px" alt=""></a>
-                </td>
-                <td class="product_name">
-                    <a href="#"><?php echo $row['produto_nome']; ?></a>
-                </td>
-                <td class="product-price">
-                    R$<?php echo $row['preco']; ?>
-                </td>
-                <td class="product_quantity">
-                    <input min="1" max="100" value="<?php echo $row['quantidade']; ?>" type="number" disabled>
-                </td>
-                <td class="product_total">
-                    R$<?php echo $row['quantidade'] * $row['preco']; ?>
-                </td>
-         
-        </tr>
-
+            <button type="submit" class="Ola" name="delete_item"><i class="fa fa-trash-o"></i></button>
         </form>
-    <?php endwhile; ?>
+    </td>
+    <td class="product_thumb">
+        <a href="#"><img src="../uploads/<?php echo $row['imagem']; ?>" width="250px" alt=""></a>
+    </td>
+    <td class="product_name">
+        <a href="#"><?php echo $row['produto_nome']; ?></a>
+    </td>
+    <td class="product-price">
+        <span class="current_price">R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
+    </td>
+    <td class="product_quantity">
+    <form method="POST" action="cart.php">
+    <input min="1" max="100" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
+    <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+    <input type="submit" value="Atualizar">
+</form>
+
+    </td>
+    <td class="product_total">
+        R$<?php echo  number_format($total, 2, ',', '.'); ?>
+    </td>
+</tr>
+<?php endwhile; ?>
+<?php if ($isEmpty): ?>
+        <tr>
+            <td colspan="6" style=" font-size: 20px; text-align: center; padding: 20px;">SEU CARRINHO AINDA ESTÁ VAZIO</td>
+        </tr>
+    <?php endif; ?>
+</table>
+
 </tbody>
                             </table>   
                         </div>  
@@ -275,6 +329,39 @@ border: none;
         <script src="../assets/js/main.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
+
+    function updateQuantity(event, formElement) {
+        event.preventDefault();
+        
+        var form = $(formElement);
+        var numero = form.find("input[name='numero']").val();
+        var product_id = form.find("input[name='product_id']").val();
+
+        $.ajax({
+    url: 'carrrinho.php',
+    type: 'POST',  // Mudar para POST
+    data: {
+        id_cart: product_id,
+        numero: numero
+    },
+            success: function(response) {
+                if(response.success) {
+                    alert('Quantidade atualizada com sucesso!');
+                } else {
+                    alert('Erro ao atualizar a quantidade.');
+                }
+            },
+            error: function(error) {
+                alert('Erro ao atualizar a quantidade.');
+            }
+        });
+        return false;
+    }
+
+
+
+
+            
   $(document).off('click', '.Ola').on('click', '.Ola', function(e) {
     e.preventDefault();
 

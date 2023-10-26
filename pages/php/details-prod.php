@@ -21,7 +21,7 @@ while ($row = $query -> fetch_assoc()) {
 }
 }else{
 
-header("location: index-4.php");
+header("location: php/index-4.php");
 
 }
 function limitCharsPerLine($text, $limit = 70) {
@@ -30,5 +30,18 @@ function limitCharsPerLine($text, $limit = 70) {
 }
 
 $limitedText = limitCharsPerLine($descricao);
+
+
+if(isset($_POST['comment']) && isset($_POST['rating'])){
+
+$comment = $_POST['comment'];
+$rating = $_POST['rating'];
+$sql = "INSERT INTO avaliacao_prod (id_usuario, id_prod, nota, desc_avaliacao) VALUES ('$id', '$id_prod', '$rating', '$comment')";
+$query = $mysqli -> query($sql);
+
+
+
+}
+
 
 ?>

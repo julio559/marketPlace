@@ -136,7 +136,7 @@ echo "Fazer login";
                             <div class="breadcrumb_content">
                                 <h3>conta de <?php echo $nome; ?></h3>
                                 <ul>
-                                    <li><a href="index.html">home</a></li>
+                                    <li><a href="index-4.php">home</a></li>
                                     <li><i class="fa fa-angle-right"></i></li>
                                     <li>my account</li>
                                 </ul>

@@ -67,6 +67,13 @@ $nome = $row['nome'];
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+        <style>
+    .disabled-link {
+        pointer-events: none; /* Evita que seja clicável */
+        cursor: default; /* Muda o cursor para o padrão */
+        color: #aaa; /* Torna a cor cinza para parecer inativo */
+    }
+</style>
     </head>
     <body>
             <!-- Add your site or application content here -->
@@ -336,6 +343,7 @@ switch ($orderby) {
         $orderStatement = "";
 }
 
+
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = 8;
 $offset = ($page - 1) * $perPage;
@@ -352,21 +360,21 @@ $result = $mysqli->query($query);
 <!--shop toolbar start-->
 <div class="shop_toolbar">
     <div class="select_option">
-        <label>Sort By</label>
-        <select name="orderby" id="short1" onchange="location.href='?orderby='+this.value">
-            <option value="position">Position</option>
-            <option value="price_low">Price: Lowest</option>
-            <option value="price_high">Price: Highest</option>
-            <option value="name_desc">Product Name: Z to A</option>
-            <option value="name_asc">Product Name: A to Z</option>
-            <option value="in_stock">In stock</option>
-        </select>
+    <label>Ordenar Por</label>
+    <select name="orderby" id="short1" onchange="location.href='?orderby='+this.value">
+    <option value="position" <?php echo ($orderby == 'position') ? 'selected' : ''; ?>>Posição</option>
+    <option value="price_low" <?php echo ($orderby == 'price_low') ? 'selected' : ''; ?>>Preço: Menor</option>
+    <option value="price_high" <?php echo ($orderby == 'price_high') ? 'selected' : ''; ?>>Preço: Maior</option>
+    <option value="name_desc" <?php echo ($orderby == 'name_desc') ? 'selected' : ''; ?>> Z para A</option>
+    <option value="name_asc" <?php echo ($orderby == 'name_asc') ? 'selected' : ''; ?>> A para Z</option>
+    <option value="in_stock" <?php echo ($orderby == 'in_stock') ? 'selected' : ''; ?>>Em Estoque</option>
+</select>
     </div>
 </div>
-<!--shop toolbar end-->
+<!--barra de ferramentas da loja termina-->
 
-<!--shop tab product-->
-<div class="shop_tab_product">   
+<!--produtos da aba da loja-->
+<div class="produtos_aba_loja">   
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="large" role="tabpanel">
             <div class="row">
@@ -376,7 +384,7 @@ include("php/conexao.php");
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'position';
-
+$whereStatement = "";
 switch ($orderby) {
     case 'price_low':
         $orderStatement = "ORDER BY preco ASC";
@@ -391,11 +399,13 @@ switch ($orderby) {
         $orderStatement = "ORDER BY nome ASC";
         break;
     case 'in_stock':
+        $whereStatement = "WHERE stock > 1";
         $orderStatement = "ORDER BY stock DESC";
         break;
     default:
         $orderStatement = "";
 }
+
 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = 8;
@@ -406,7 +416,8 @@ $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-$query = "SELECT * FROM produto $orderStatement LIMIT $perPage OFFSET $offset";
+
+$query = "SELECT * FROM produto $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";
 $result = $mysqli->query($query);
 
 if ($result->num_rows > 0) {
@@ -427,15 +438,17 @@ if ($result->num_rows > 0) {
                     <div class="product_action">
                         <ul>
                             <?php  
+if (isset($_SESSION['usuario'])) { 
+    $id = $row['id'];
+    if ($row['stock'] <= 0) {
+        echo "<li class='product_cart'><a href='#' class='disabled-link' disabled title='sem estoque'>Sem estoque</a></li>";
+    } else {
+        echo "<li class='product_cart'><a href='php/cart.php?id=$id' title='Add to Cart'>Add to Cart</a></li>";
+    }
+} else {
+    echo "<li class='product_cart'><a href='product-details.php?id_prod=" . $row['id'] . "' title='ver detalhes'>ver detalhes</a></li>";
+}
 
-                            if(isset($_SESSION['usuario'])){ 
-                               
-                          echo  "<li class='product_cart'><a href='php/cart.php?id=$id ?>' title='Add to Cart'>Add to Cart</a></li>";
-                            }else{
-                                echo "<li class='product_cart'><a href='product-details.php?id_prod=" . $row['id'] . "' title='ver detalhes'>ver detalhes</a></li>";
-
-
-                            }
                             
                             ?>
                         </ul>

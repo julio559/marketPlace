@@ -35,6 +35,16 @@ border-radius: 7px;
     }
     
     
+    .stars-rating span {
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .stars-rating span:hover, .stars-rating span.active {
+        color: gold;
+    }
+   
     </style>
     </head>
     <body>
@@ -364,7 +374,11 @@ echo "Fazer login";
                                         <li >
                                             <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">descriçao</a>
                                         </li>
-                           
+                                                           <li><a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Ficha de Dados</a>   
+                                                        
+                                                        </li>                                       
+                                                         <li> <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Avaliações</a>                                         </li>
+
                                 </div>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="info" role="tabpanel" >
@@ -372,13 +386,490 @@ echo "Fazer login";
                                             <p><?php echo  $descricao?></p>
                                         </div>    
                                     </div>
+                                    <div class="tab-pane fade" id="sheet" role="tabpanel" >
+                                        <div class="product_d_table">
+                                           <form action="#">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="first_child">Composições</td>
+                                                            <td>Poliéster</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="first_child">Estilos</td>
+                                                            <td>Feminino</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="first_child">Propriedades</td>
+                                                            <td>Vestido Curto</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                        </div>
+                                        <div class="product_info_content">
+                                            <p>A moda tem criado coleções bem projetadas desde 2010. A marca oferece designs femininos que entregam roupas elegantes e vestidos statement, que evoluíram para uma coleção pronta para vestir completa, na qual cada item é uma parte vital do guarda-roupa de uma mulher. O resultado? Looks legais, fáceis e elegantes com juventude e estilo inconfundível. Todas as peças bonitas são feitas na Itália e fabricadas com a maior atenção. Agora, a moda se estende a uma variedade de acessórios, incluindo sapatos, chapéus, cintos e muito mais!</p>
+                                        </div>    
+                                    </div>
+                                    <div class="tab-pane fade" id="reviews" role="tabpanel" >
+                                        <div class="product_info_content">
+                                            <p>A moda tem criado coleções bem projetadas desde 2010. A marca oferece designs femininos que entregam roupas elegantes e vestidos statement, que evoluíram para uma coleção pronta para vestir completa, na qual cada item é uma parte vital do guarda-roupa de uma mulher. O resultado? Looks legais, fáceis e elegantes com juventude e estilo inconfundível. Todas as peças bonitas são feitas na Itália e fabricadas com a maior atenção. Agora, a moda se estende a uma variedade de acessórios, incluindo sapatos, chapéus, cintos e muito mais!</p>
+                                        </div>
+                                        <div class="product_info_inner">
+                                            <div class="product_ratting mb-10">
+                                              
+                                                <strong>Posthemes</strong> 
+                                                <p>09/07/2018</p>
+                                            </div>
+                                            <div class="product_demo">
+                                                <strong>demo</strong>
+                                                <p>That's OK!</p>
+                                            </div>
+                                        </div> 
+                                        <div class="product_review_form">
+                                        <form action="product-details.php" method="GET">
+    <h2>Deixe sua AVALIAÇÃO</h2>
+    
+    <div class="stars-rating">
+        <span data-value="1"><i class="ion-star"></i></span>
+        <span data-value="2"><i class="ion-star"></i></span>
+        <span data-value="3"><i class="ion-star"></i></span>
+        <span data-value="4"><i class="ion-star"></i></span>
+        <span data-value="5"><i class="ion-star"></i></span>
+        <input type="hidden" name="rating" id="rating-value" value="0">
+        <input type="hidden" name="id_prod" value="<?php echo $id_prod ?>">
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label for="review_comment">Sua avaliação</label>
+            <textarea name="comment" id="review_comment"></textarea>
+        </div>
+    </div>
 
+    <button type="submit">Enviar</button>
+</form>
+                                    </div>     
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>
+                    </div>
+                </div>    
+            </div>  
+            <!--product info end-->
+        
+            <!--product area start-->
+            <div class="produtc_area related_Product">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="consoles_product_title">
+                                <h3>Produtos relacionados</h3>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="product_active owl-carousel">
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product6.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Nonstick Dishwasher PFOA</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$23.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product7.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Cutlery Knife Set</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$20.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product8.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Aicok Stand Mixet</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$28.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product9.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Cuisinart DCC-3200</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$27.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                        <a href="product-details.html"><img src="assets/img/product/product10.jpg" alt=""></a>
+                                        <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Classic 17-Piece Tool	</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$24.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>      
+
+                   </div>  
+
+                </div>
+            </div>
+            <!--product area end-->
+            <!--product area start-->
+            <div class="produtc_area upsell_Products">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="consoles_product_title">
+                                <h3>Produtos que você pode gostar</h3>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <div class="product_active owl-carousel">
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Motorola Moto 360r</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$23.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Cutlery Knife Set</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$20.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Motorola Moto 360r</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$28.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                         <a href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
+                                         <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Cuisinart DCC-3200</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$27.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="single_product"> 
+                                    <div class="product_thumb">
+                                        <a href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
+                                        <div class="btn_quickview">
+                                             <a href="#" data-toggle="modal" data-target="#modal_box"  title="Quick View"><i class="ion-ios-eye"></i></a>
+                                        </div>
+
+                                    </div> 
+                                    <div class="product_content">   
+                                        <div class="product_ratting">
+                                            <ul>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-star"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <h3><a href="product-details.html">Classic 17-Piece Tool	</a></h3>
+                                        <div class="product_price">
+                                            <span class="current_price">$24.00</span>
+                                        </div>
+                                        <div class="product_action">
+                                            <ul>
+                                                <li class="product_cart"><a href="cart.html" title="Add to Cart">Por no carrinho</a></li>
+                                                <li class="add_links"><a href="wishlist.html" title="Add to Wishlist"><i class="ion-ios-heart-outline"></i></a></li>
+                                                <li class="add_links"><a href="compare.html" title="Add to Compare"><i class="ion-loop"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>      
+
+                   </div>  
+
+                </div>
+            </div>
+            <!--product area end-->
+
+
+            <!--brand area start-->
+            <div class="brand_area">
+                <div class="container">
+                    <div class="brand_inner">  
+                        <div class="row">
+                            <div class="brand_active owl-carousel">
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra1.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra2.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra3.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra4.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra5.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="single_brand">
+                                        <a href="#"><img src="assets/img/brand/bra6.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+
+                                    
                                
                             </div>     
                         </div>
                     </div>
                 </div>    
             </div>  
+            
             <!--product info end-->
         
             <!--product area start-->
@@ -449,7 +940,26 @@ echo "Fazer login";
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
-        
+            const stars = document.querySelectorAll('.stars-rating span');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            document.getElementById('rating-value').value = this.getAttribute('data-value');
+            updateStars(this.getAttribute('data-value'));
+        });
+    });
+
+    function updateStars(value) {
+        stars.forEach(star => {
+            if(star.getAttribute('data-value') <= value) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
+        });
+    }
+
+
+
         function copyURLToClipboard() {
     // Crie um elemento <textarea> temporário
     var textarea = document.createElement("textarea");
