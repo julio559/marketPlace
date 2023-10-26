@@ -19,10 +19,24 @@ while ($row = $query -> fetch_assoc()) {
     $sub_descricao = $row["sub_descricao"];
     $preco = $row["preco"];
 }
-}else{
+
+$sqnew = "SELECT * FROM produto WHERE cartegoria = $cartegoria";
+$quet = $mysqli -> query($sqnew);
+
+while ($row = $quet -> fetch_assoc()) {
+
+$nome = $row['nome'];
+$descricao = $row['descricao'];
+$id_prod = $row['id'];
+$preco = $row['preco'];
+
+}
+
+}
+
+if(!isset($_GET["id_prod"])) {
 
 header("location: php/index-4.php");
-
 }
 function limitCharsPerLine($text, $limit = 70) {
     $lines = str_split($text, $limit);
@@ -42,6 +56,8 @@ $query = $mysqli -> query($sql);
 
 
 }
+
+
 
 
 ?>

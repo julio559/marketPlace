@@ -324,6 +324,8 @@ echo "Fazer login";
                                 
                                <div class="product_description">
                                <p><?php echo $sub_descricao ?></p>
+                               <p><stong>Cartegoria: </strong><?php echo $cartegoria ?></p>
+
                                </div>
                                 <div class="product_details_action">
                                   <form method="get" action="php/cart.php">
@@ -377,7 +379,7 @@ echo "Fazer login";
                                                            <li><a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Ficha de Dados</a>   
                                                         
                                                         </li>                                       
-                                                         <li> <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Avaliações</a>                                         </li>
+                                                      
 
                                 </div>
                                 <div class="tab-content">
@@ -407,48 +409,7 @@ echo "Fazer login";
                                                 </table>
                                             </form>
                                         </div>
-                                        <div class="product_info_content">
-                                            <p>A moda tem criado coleções bem projetadas desde 2010. A marca oferece designs femininos que entregam roupas elegantes e vestidos statement, que evoluíram para uma coleção pronta para vestir completa, na qual cada item é uma parte vital do guarda-roupa de uma mulher. O resultado? Looks legais, fáceis e elegantes com juventude e estilo inconfundível. Todas as peças bonitas são feitas na Itália e fabricadas com a maior atenção. Agora, a moda se estende a uma variedade de acessórios, incluindo sapatos, chapéus, cintos e muito mais!</p>
-                                        </div>    
-                                    </div>
-                                    <div class="tab-pane fade" id="reviews" role="tabpanel" >
-                                        <div class="product_info_content">
-                                            <p>A moda tem criado coleções bem projetadas desde 2010. A marca oferece designs femininos que entregam roupas elegantes e vestidos statement, que evoluíram para uma coleção pronta para vestir completa, na qual cada item é uma parte vital do guarda-roupa de uma mulher. O resultado? Looks legais, fáceis e elegantes com juventude e estilo inconfundível. Todas as peças bonitas são feitas na Itália e fabricadas com a maior atenção. Agora, a moda se estende a uma variedade de acessórios, incluindo sapatos, chapéus, cintos e muito mais!</p>
-                                        </div>
-                                        <div class="product_info_inner">
-                                            <div class="product_ratting mb-10">
-                                              
-                                                <strong>Posthemes</strong> 
-                                                <p>09/07/2018</p>
-                                            </div>
-                                            <div class="product_demo">
-                                                <strong>demo</strong>
-                                                <p>That's OK!</p>
-                                            </div>
-                                        </div> 
-                                        <div class="product_review_form">
-                                        <form action="product-details.php" method="GET">
-    <h2>Deixe sua AVALIAÇÃO</h2>
-    
-    <div class="stars-rating">
-        <span data-value="1"><i class="ion-star"></i></span>
-        <span data-value="2"><i class="ion-star"></i></span>
-        <span data-value="3"><i class="ion-star"></i></span>
-        <span data-value="4"><i class="ion-star"></i></span>
-        <span data-value="5"><i class="ion-star"></i></span>
-        <input type="hidden" name="rating" id="rating-value" value="0">
-        <input type="hidden" name="id_prod" value="<?php echo $id_prod ?>">
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <label for="review_comment">Sua avaliação</label>
-            <textarea name="comment" id="review_comment"></textarea>
-        </div>
-    </div>
-
-    <button type="submit">Enviar</button>
-</form>
-                                    </div>     
+                           
                                     </div>
                                 </div>
                             </div>     
