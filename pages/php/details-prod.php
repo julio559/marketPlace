@@ -8,7 +8,7 @@ if(isset($_GET["id_prod"])) {
 $id_prod = $_GET['id_prod'];
 
 
-$sql = "SELECT nome, imagem, imagem2, imagem3, imagem4, cartegoria, descricao, sub_descricao, preco FROM produto WHERE id = $id_prod";
+$sql = "SELECT nome, imagem, imagem2, imagem3, imagem4, cartegoria, descricao, sub_descricao, preco, stock FROM produto WHERE id = $id_prod";
 $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
 
@@ -18,19 +18,11 @@ while ($row = $query -> fetch_assoc()) {
     $descricao = $row["descricao"];
     $sub_descricao = $row["sub_descricao"];
     $preco = $row["preco"];
+    $stock = $row["stock"];
 }
 
-$sqnew = "SELECT * FROM produto WHERE cartegoria = $cartegoria";
-$quet = $mysqli -> query($sqnew);
 
-while ($row = $quet -> fetch_assoc()) {
 
-$nome = $row['nome'];
-$descricao = $row['descricao'];
-$id_prod = $row['id'];
-$preco = $row['preco'];
-
-}
 
 }
 
