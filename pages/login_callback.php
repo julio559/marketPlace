@@ -5,6 +5,17 @@ session_start();
 require_once 'google_config.php';
 require_once 'php/conexao.php';
 
+
+
+if (!isset($_GET['code'])) {
+header("location: logred.php");
+}
+
+if(isset($_SESSION['usuario'])){
+
+header("location: dashboard2.php");
+
+}
 if (isset($_GET['code'])) {
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
 
@@ -39,6 +50,8 @@ if (isset($_GET['code'])) {
     }
 }
 
+
+
 if (isset($_POST['registrar'])) {
     $senha = $_POST['senha'];
     $numero = $_POST['numero'];
@@ -48,8 +61,20 @@ if (isset($_POST['registrar'])) {
     $email = $_SESSION['email'];
     $name = $_SESSION['name'];
     $complemento = $_POST['complemento'];
-    $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $name, $senha, $email, $endereco, $numero, $CEP, $CPF, $complemento);
+
+    if (isset($_FILES['file']) && $stmt->num_rows == 0) {
+        $arquivo = $_FILES['file'];
+        $pasta = "uploads/";
+        $nomeA = $arquivo['name'];
+        $novo = uniqid();
+        $extensao = strtolower(pathinfo($nomeA, PATHINFO_EXTENSION));
+        $path = $pasta . $novo . "." . $extensao;
+        $caminho_completo = $path;
+        move_uploaded_file($arquivo['tmp_name'], $caminho_completo);
+    }
+
+    $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssss", $name, $senha, $email, $endereco, $numero, $CEP, $CPF, $complemento, $caminho_completo);
 
     if ($stmt->execute()) {
         $_SESSION['usuario'] = $mysqli->insert_id;
@@ -78,6 +103,27 @@ if (isset($_POST['registrar'])) {
 <meta name="google-signin-client_id" content="561052168672-k4fcftc5ec0t7c45kjln252j54jibtv2.apps.googleusercontent.com">
 
 <style>
+#foto {
+    display: none; /* Esconde o input original */
+}
+
+#foto + label {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#foto + label:hover {
+    background-color: #0056b3;
+}
+
+#foto:checked + label {
+    background-color: #004192;
+}
 
 
 .error{
@@ -126,7 +172,7 @@ display: ;
       
         <div id="loginForm">
                 <div id="container">
-                <form method="post" id="LoginForm">
+                <form method="post" id="LoginForm" enctype="multipart/form-data">
                     <div class="inlie">
                       
                         <h2 class="mar">Finalizar registro</h2>
@@ -143,6 +189,9 @@ display: ;
 <input type="text" placeholder="CEP" name="CEP" id="CEP" required>
                     <input type="text" id="endereco" placeholder="endereço" name="endereco" required>
                     <input type="text"  placeholder="complemento" name="complemento" required>
+                    <input type="file" name="file" id="foto" accept="image/*" required>
+<label for="foto">Enviar Documento com foto</label>
+
 <br><br>
 <button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>
                 </form>

@@ -321,47 +321,60 @@ echo "<a href='../logred.php'>logar</a>";
     
        <div class="row">
           
-                
-                <?php 
-                // Preparar a consulta SQL
-                $stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 4");
-                $stmt->execute();
+       <?php 
+// Prepare the SQL query
+$stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 4");
+$stmt->execute();
 
-                // Armazenar o resultado
-                $result = $stmt->get_result();
+// Store the result
+$result = $stmt->get_result();
 
-                // Loop através dos resultados
-                while ($row = $result->fetch_assoc()):
-                ?>
+// Loop through the results
+while ($row = $result->fetch_assoc()):
 
-                <div class="col-lg-3">
-                    <div class="single_product"> 
-                        <div class="product_thumb">
-                             <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
-                        </div > 
-                        <div class="product_content">   
-                       
-                            <h3><a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
-                            <div class="product_price">
-                                <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
-                            </div>
-                            <div class="product_action">
-                                <ul>
-                                <?php if(isset($_SESSION["usuario"])): ?>
-                                    <li class='product_cart'>
-                                        <a href='cart.php?id=<?php echo $row['id']; ?>' title='Adicionar ao carrinho '> + carrinho</a>
-                                    </li>
-                                <?php endif; ?>
-                                </ul>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
+    $id = $row['id'];
+?>
 
-                <?php 
-                endwhile; 
-                $stmt->close();
-                ?>
+<div class="col-lg-3">
+    <div class="single_product"> 
+        <div class="product_thumb">
+            <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
+        </div> 
+        <div class="product_content">   
+            <h3><a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
+            <div class="product_price">
+                <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
+            </div>
+            <div class="product_action">
+                <ul>
+                <?php if(isset($_SESSION["usuario"])): ?>
+
+                    <?php  
+                    $estoque = $row['stock'];
+
+                    if ($estoque > 0) {
+                        echo "<li class='product_cart'>
+                            <a href='cart.php?id=$id' title='Adicionar ao carrinho'> + carrinho</a>
+                        </li>";
+                    } else {
+                        echo "<li class='product_cart'>
+                            <button class='not' disabled title='Adicionar ao carrinho'> SEM ESTOQUE </button>
+                        </li>";
+                    }
+                    ?>
+
+                <?php endif; ?>
+                </ul>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<?php 
+endwhile; 
+$stmt->close();
+?>
+
                 
             </div>
        </div> 

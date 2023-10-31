@@ -97,7 +97,7 @@ margin-left: 8vw;
             <div id="loginContainer">
                 <h2>Login - Marketplace</h2>
                 <form method="post">
-                    <input type="text" placeholder="Email ou Nome de usuario" name="nomeLogin" required>
+                    <input type="Email" placeholder=" Digite seu Email" name="nomeLogin" required>
                     <input type="password" placeholder="Senha" name="senhaLogin" required>
 
                     <p class="error"> 
@@ -145,10 +145,12 @@ echo "<p class='error'> $exit </p>";
                         }
                     ?>
                     </p>
+                    <span id="validation_message"></span>
                     <input type="text" name="email" placeholder="email" id="email" autocomplete="off">
-                    <input type="text" placeholder="nome" name="nome" id="nome" autocomplete="off">
+                  
+                    <input type="text" placeholder="nome" name="nome" id="nome" autocomplete="On">
 
-<span id="validation_message"></span>
+
 
 
                     <div class="password-container">
@@ -251,17 +253,16 @@ document.getElementById('google-login-btn').addEventListener('click', function()
     });
 
     $(document).ready(function(){
-    $("#nome, #email").blur(function(){ 
-        var nome = $("#nome").val();
+    $("#email").blur(function(){ 
         var email = $("#email").val();
 
-        if (nome && email) {
-            $.get("php/check_user.php", {nome: nome, email: email}, function(data){
-                if(data.status === 'indisponivel') {
-                    $("#validation_message").text("E-mail ou Nome já está em uso!");
-                    $("#buttonContainer").html("<button type='submit' id='enviar' class='button' name='registrar' disabled>Nome ou Email ja estão em uso</button>");
+        if (email) {
+            $.get("php/check_user.php", {email: email}, function(data){
+                if(data.email_status === 'indisponivel') {
+                    $("#validation_message").text("E-mail já está em uso!");
+                    $("#buttonContainer").html("<button type='submit' id='enviar' class='button' name='registrar' disabled>E-mail já está em uso</button>");
                 } else {
-                    $("#validation_message").text("Disponível");
+                    $("#validation_message").text("E-mail disponível");
                     $("#buttonContainer").html("<button type='submit' id='enviar' class='button' name='registrar'>Registrar</button>");
                 }
                 
@@ -269,6 +270,7 @@ document.getElementById('google-login-btn').addEventListener('click', function()
         }
     });
 });
+
 
 
 

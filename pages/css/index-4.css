@@ -30,3 +30,11 @@ font-size: 18px;
 	background-position: center center;
 	background-size: cover;
 }
+
+
+.not{
+
+border: none;
+border: 10px;
+
+}

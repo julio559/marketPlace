@@ -14,8 +14,9 @@ if (isset($_POST['nome']) && isset($_POST['senha'])) {
     $cpf = $_POST['CPF'];
     $complemento = $_POST['complemento'];
 
-    $stmt = $mysqli->prepare("SELECT id FROM clientes WHERE email = ? AND nome = ?");
-    $stmt->bind_param("ss", $email, $nome);
+    // Apenas verifique o email
+    $stmt = $mysqli->prepare("SELECT id FROM clientes WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
@@ -33,7 +34,7 @@ if (isset($_POST['nome']) && isset($_POST['senha'])) {
     }
 
     if ($stmt->num_rows > 0) {
-        $error_message = "E-mail ou Nome já está em uso!";
+        $error_message = "E-mail já está em uso!";
     } else {
         $stmt->close();
         $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
