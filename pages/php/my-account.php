@@ -10,13 +10,15 @@ header("location: ../logred.php");
 }
 $id = $_SESSION["usuario"];
 
-$sql  = "SELECT nome, endereco, email FROM clientes WHERE id = $id";
+$sql  = "SELECT nome, endereco, cep, email, cpf FROM clientes WHERE id = $id";
 $query = $mysqli -> query($sql);  
 while($row = $query -> fetch_assoc()) {
 
  $endereco = $row['endereco'];
 $nome = $row['nome'];   
 $email = $row['email'];   
+$cep = $row['cep'];  
+$cpf = $row['cpf'];  
 }
 
 if( isset($_POST['endereco'])) {
@@ -208,9 +210,15 @@ echo "Fazer login";
                                         <h4 class="billing-address">endereço de <?php echo $nome;?></h4>
                                       
                                         <p><strong><?php echo $endereco;?></strong></p>
-                                        <address>
-                                  <?php echo $endereco;?>
-                                        </address>
+                                      
+                                 
+
+                                        <h4 class="billing-address">cep de <?php echo $nome;?></h4>
+                                      
+                                      <p><strong><?php echo $cep;?></strong></p>
+                                    
+                                 
+                                    
                                       
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -256,6 +264,8 @@ editar
                                                       
                                                         <label>Email</label>
                                                         <input type="text" value="<?php echo $email; ?>" name="email-name" disabled >
+                                                        <label>CPF </label>
+                                                        <input type="text" value="<?php echo $cpf; ?>" name="email-name" disabled >
                                                        
                                                        
                                                   

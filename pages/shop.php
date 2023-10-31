@@ -47,6 +47,9 @@ $nome = $row['nome'];
 
 
 
+
+
+
 ?>
 
 <!doctype html>
@@ -406,18 +409,22 @@ switch ($orderby) {
         $orderStatement = "";
 }
 
-
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = 8;
 $offset = ($page - 1) * $perPage;
 
-$totalQuery = "SELECT COUNT(*) as total FROM produto";
+$whereStatement = '';  // Adicionamos isso para inicializar a variável
+if(isset($_GET['categoria'])) {
+    $categoria = $mysqli->real_escape_string($_GET['categoria']);  // Proteção contra SQL Injection
+    $whereStatement = "WHERE categoria = '$categoria'";
+}
+
+$totalQuery = "SELECT COUNT(*) as total FROM produto $whereStatement";  // Modificamos aqui para considerar a categoria
 $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-
-$query = "SELECT * FROM produto $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";
+$query = "SELECT * FROM produto $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";  // Modificamos aqui também
 $result = $mysqli->query($query);
 
 if ($result->num_rows > 0) {
@@ -468,13 +475,16 @@ if (isset($_SESSION['usuario'])) {
         <div class="pagination_style fullwidth">
             <ul>
                 <?php
-                for ($i = 1; $i <= $totalPages; $i++) {
-                    if ($i == $page) {
-                        echo '<li class="current_number">' . $i . '</li>';
-                    } else {
-                        echo '<li><a href="?page=' . $i . '&orderby=' . $orderby . '">' . $i . '</a></li>';
-                    }
-                }
+          $orderbyLink = isset($orderby) ? '&orderby=' . $orderby : ''; // Verifica se $orderby está definido.
+          $categoryLink = isset($_GET['categoria']) ? '&categoria=' . $_GET['categoria'] : ''; // Verifica se categoria está no URL.
+          
+          for ($i = 1; $i <= $totalPages; $i++) {
+              if ($i == $page) {
+                  echo '<li class="current_number">' . $i . '</li>';
+              } else {
+                  echo '<li><a href="?page=' . $i . $orderbyLink . $categoryLink . '">' . $i . '</a></li>';
+              }
+          }
                 ?>
             </ul>
         </div>

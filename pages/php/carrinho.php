@@ -48,7 +48,7 @@ $imagem = $row['imagem'];
 }
 
 if(isset($_GET['id'])){ 
-$sql =  "INSERT INTO carrinho (imagem, produto_nome, preco, quantidade, id_usuario) VALUES ('$imagem', '$nome', '$preco', '$quantidade', '$id_usuario')";
+$sql = "INSERT INTO carrinho (imagem, produto_nome, preco, quantidade, id_usuario, id_prod) VALUES ('$imagem', '$nome', '$preco', '$quantidade', '$id_usuario', '$id_prod')";
 $quer = $mysqli -> query($sql);
   header("location: cart.php");
 }

@@ -1,6 +1,12 @@
 <?php 
 session_start();
 include("conexao.php");
+
+
+if(!isset($_SESSION['usuario'])){ 
+
+    header("location: ../logred.php");
+}
 if(isset($_SESSION['usuario'])){ 
 
 $id = $_SESSION['usuario'];
@@ -12,8 +18,17 @@ $nome = $row['nome'];
 
 }
 
-}
+$sql = "SELECT tipe FROM clientes WHERE id = $id";
+$query = $mysqli -> query($sql);
+while ($row = $query -> fetch_assoc()) {
 
+    $tipe = $row['tipe'];
+if($tipe == '1'){
+header("location: dashboardAdmin.php");
+
+}
+}
+}
 
 ?>
 
@@ -134,7 +149,7 @@ echo "Fazer login";
  
 
 
-                                                    <li class="seila"><a id="red" href="../shop.php?cartegoria='eletronico'">Eletronicos</a>
+                                                    <li class="seila"><a id="red" href="../shop.php?cartegoria=eletronico">Eletronicos</a>
                                                         
                                         </li>
 

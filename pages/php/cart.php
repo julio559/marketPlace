@@ -15,7 +15,8 @@ include("carrinho.php");
         <title>Cigar - cart page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Favicon -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 		
 		<!-- all css here -->
@@ -27,6 +28,15 @@ include("carrinho.php");
         <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
 
         <style> 
+
+.submit-button{
+
+border: none;
+background-color: #007bff;
+color: white;
+padding: 7px;
+}
+
     .Ola{
 
 background: none;
@@ -189,6 +199,7 @@ echo "Fazer login";
                                         <th class="product-price">Price</th>
                                         <th class="product_quantity">Quantity</th>
                                         <th class="product_total">Total</th>
+                                        <th class="product_total">area de pagamento</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -219,12 +230,22 @@ echo "Fazer login";
     <form method="POST" action="cart.php">
     <input min="1" max="100" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
     <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
-    <input type="submit" value="Atualizar">
+    <button type="submit" class="submit-button">
+        <i class="bi bi-arrow-clockwise"></i> 
+    </button>
 </form>
 
     </td>
     <td class="product_total">
         R$<?php echo  number_format($total, 2, ',', '.'); ?>
+    </td>
+    <td class="product_total">
+        <form action="../mercado_pago.php" method="GET">
+        <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
+            <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
+            <input type="hidden" name="total_value" value="<?php echo $total; ?>">
+            <button type="submit" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">comprar</button>
+        </form>
     </td>
 </tr>
 <?php endwhile; ?>
@@ -236,16 +257,19 @@ echo "Fazer login";
 </table>
 
 </tbody>
+
+
                             </table>   
+                            
                         </div>  
                     </div>
+                    
                 </div>
             </div>
         </form>
     </div>
 </div>
-                         <!--coupon code area start-->
-                      
+             
                         <!--coupon code area end-->
                     </form> 
                 </div>     

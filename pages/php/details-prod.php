@@ -50,6 +50,10 @@ $query = $mysqli -> query($sql);
 }
 
 
+$sql = "SELECT nome FROM clientes WHERE id = $id";
+$query = $mysqli -> query($sql);
+while( $row = $query -> fetch_assoc() ) {
+$nome1 = $row["nome"];
 
-
+}
 ?>

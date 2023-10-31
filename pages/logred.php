@@ -3,6 +3,10 @@ include("php\log.php");
 include("php\criar.php");
 
 
+require_once 'google_config.php';
+
+$login_url = $client->createAuthUrl();
+
 
 ?>
 
@@ -17,9 +21,17 @@ include("php\criar.php");
 <link rel="stylesheet" href="css\login.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-   
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<meta name="google-signin-client_id" content="561052168672-k4fcftc5ec0t7c45kjln252j54jibtv2.apps.googleusercontent.com">
+
 <style>
 
+
+.error{
+color: red;
+
+}
 .log2{
 
 
@@ -34,6 +46,38 @@ text-align: center;
 
 }
 
+
+#google1-login-btn{
+margin-left: 8vw;
+
+
+}
+
+
+/* Estilização básica para o botão de upload de imagem */
+#foto {
+    display: none; /* Esconde o input original */
+}
+
+#foto + label {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#foto + label:hover {
+    background-color: #0056b3;
+}
+
+#foto:checked + label {
+    background-color: #004192;
+}
+
+
 </style>
 
 </head>
@@ -42,7 +86,7 @@ text-align: center;
 <div class="inline">
 
 
-<img  id="img2" src="https://img.freepik.com/vetores-premium/pessoas-comprando-online_131454-458.jpg"  alt="" srcset="">
+<img id="img2" src="https://img.freepik.com/vetores-premium/pessoas-comprando-online_131454-458.jpg" alt="" srcset="">
 
 
 
@@ -53,18 +97,25 @@ text-align: center;
             <div id="loginContainer">
                 <h2>Login - Marketplace</h2>
                 <form method="post">
-                    <input type="text" placeholder="Nome de usuário" name="nomeLogin" required>
+                    <input type="text" placeholder="Email ou Nome de usuario" name="nomeLogin" required>
                     <input type="password" placeholder="Senha" name="senhaLogin" required>
+
+                    <p class="error"> 
                     <?php   
-                        if($error) {
-                            echo $error;
+                        if( $error_message) {
+                            echo  $error_message;
                         }
                     ?>
+                    </p>
                     <br>
                     <button type="submit" id="" class="button" name="enviar">Entrar</button>
                     <button type="button" class="button"  id="showCreateForm">Criar Usuário</button>
 <div class="tp">
-                   <a class="log2" href="php\index-4.php"> continuar sem cadastro </a>  
+<p class="p"> entre com google: </p>
+
+<button class="google-login" type="button" id="google1-login-btn">
+    <img src="google.png" width="30px" alt="" srcset="">
+</button>
                    </div>
                 </form>
             </div>
@@ -73,13 +124,33 @@ text-align: center;
         <!-- Formulário de Criação de Conta -->
         <div id="createForm">
             <div id="container">
-                <form method="post" id="LoginForm">
+                <form method="post" id="LoginForm" enctype="multipart/form-data">
                     <div class="inlie">
                         <button type="button" class="button1"  id="showLoginForm"><i class="bi bi-arrow-left"></i></button> 
                         <h2 class="mar">Criar Conta</h2>
                     </div>
-                    <input type="text" placeholder="Nome de usuário" name="nome" required>
-                    <input type="email" placeholder="email" name="email" required>
+                    <?php   
+                    if(isset($exit)) {
+
+echo "<p class='error'> $exit </p>";
+                    }
+                    
+                    ?>
+
+
+<p class="error"> 
+                    <?php   
+                        if( $error_message) {
+                            echo  $error_message;
+                        }
+                    ?>
+                    </p>
+                    <input type="text" name="email" placeholder="email" id="email" autocomplete="off">
+                    <input type="text" placeholder="nome" name="nome" id="nome" autocomplete="off">
+
+<span id="validation_message"></span>
+
+
                     <div class="password-container">
                         <input type="password" placeholder="Senha" id="senha" name="senha" required>
                         <button type="button" class="toggle-password" id="toggle">
@@ -87,27 +158,27 @@ text-align: center;
                         </button>
                     </div>
                     <input type="text" placeholder="55dddNumero" name="numero" pattern="55[0-9]{2}[0-9]{9}" title="O número deve seguir o padrão: 55 seguido de um DDD de 2 dígitos e depois 9 dígitos para o número" required>
-
-
-                    <input type="text" placeholder="endereço" name="endereco" required>
+                  
+<input type="text" placeholder="CPF" name="CPF" id="CPF" required>
+<input type="text" placeholder="CEP" name="CEP" id="CEP" required>
+                    <input type="text" id="endereco" placeholder="endereço" name="endereco" required>
+                    <input type="text" id=" " placeholder="complemento" name="complemento" required>
+                    <input type="file" name="file" id="foto" accept="image/*" required>
+<label for="foto">Enviar Documento com foto</label>
 <br><br>
-<button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>
+
+<div id="buttonContainer">
+    <!-- O botão será inserido aqui pelo jQuery -->
+</div>
+
                 </form>
 <br>
 <p class="para"> ou conecte-se com: </p>
 <div class="es">
-    
-                    <button class="google-login" type="button">
-                    
-   <img src="google.png" width="30px" alt="" srcset="">
 
+<button class="google-login" type="button" id="google-login-btn">
+    <img src="google.png" width="30px" alt="" srcset="">
 </button>
-
-<button class="google-login" type="button">
-                    
-                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px" alt="" srcset="">
-                 
-                 </button>
 
 </div>
 <br><br>
@@ -119,5 +190,90 @@ text-align: center;
 
 <script src="js\criar.js">
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+function buscarEndereco(cep) {
+    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+        if (!("erro" in dados)) {
+            // Atualizar campos com os valores da consulta.
+            $("input[name='endereco']").val(dados.logradouro + " " + dados.bairro + " " + dados.localidade);
+        } else {
+            alert("CEP não encontrado.");
+        }
+    });
+}
+
+// Máscaras
+$("#CEP").mask("00000-000");
+$("#CPF").mask("000.000.000-00");
+
+// Atualização do endereço pelo CEP
+let timeout; // Variável para controlar o delay da função
+
+$("#CEP").on('input', function() {
+    clearTimeout(timeout); // Limpar timeout anterior
+    const cep = $(this).val().replace(/\D/g, '');
+
+    if (cep.length === 8) {
+        timeout = setTimeout(() => buscarEndereco(cep), 500); // Adiciona um delay de 500ms
+    }
+});
+
+
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;
+
+    // Você pode enviar o id_token para o servidor para verificação usando XMLHttpRequest ou Fetch API
+    fetch('login_google.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'idtoken=' + id_token
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            console.error("Erro no login");
+        }
+    });
+}
+
+document.getElementById('google-login-btn').addEventListener('click', function() {
+        window.location.href = "<?= $login_url; ?>";
+    });
+
+    document.getElementById('google1-login-btn').addEventListener('click', function() {
+        window.location.href = "<?= $login_url; ?>";
+    });
+
+    $(document).ready(function(){
+    $("#nome, #email").blur(function(){ 
+        var nome = $("#nome").val();
+        var email = $("#email").val();
+
+        if (nome && email) {
+            $.get("php/check_user.php", {nome: nome, email: email}, function(data){
+                if(data.status === 'indisponivel') {
+                    $("#validation_message").text("E-mail ou Nome já está em uso!");
+                    $("#buttonContainer").html("<button type='submit' id='enviar' class='button' name='registrar' disabled>Nome ou Email ja estão em uso</button>");
+                } else {
+                    $("#validation_message").text("Disponível");
+                    $("#buttonContainer").html("<button type='submit' id='enviar' class='button' name='registrar'>Registrar</button>");
+                }
+                
+            }, 'json');
+        }
+    });
+});
+
+
+
+</script>
+
+
 </body>
 </html>

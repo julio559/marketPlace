@@ -7,7 +7,7 @@ $error = "";
 
 if(isset($_SESSION['usuario'])){
 
-header("location: php/index.php");
+header("location: php/index-4.php");
 
 }
 

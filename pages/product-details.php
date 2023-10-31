@@ -71,8 +71,8 @@ border-radius: 7px;
                                        <li class="top_links"><a href="#">
                                         
                                        <?php 
-                                       if(isset($_SESSION['usuario'])){
-                                        echo "Conta do  $nome ";
+                                       if(isset($_SESSION['usuario'])){                              
+                                        echo "Conta do  $nome1  ";
                                        }else{
 
 echo "Fazer login";

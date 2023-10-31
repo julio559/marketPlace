@@ -1,0 +1,281 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+#loginContainer, #container {
+    background-color: #ecf0f1;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+}
+
+h2 {
+    border-bottom: 3px solid #2980b9;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #34495E;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    transition: all 0.4s;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #bdc3c7;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 15px rgba(41, 128, 185, 0.4);
+    outline: none;
+}
+
+.button {
+    width: 100%;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    color: #ecf0f1;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: box-shadow 0.4s, transform 0.4s;
+    font-weight: 600;
+}
+
+.button:hover {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+    transform: translateY(-2px);
+}
+
+#toggleForm {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    color: #2980b9;
+    transition: color 0.4s;
+}
+
+#toggleForm:hover {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.error {
+    color: red;
+}
+
+.register-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-left: 7.5vw;
+}
+
+.register-button:hover {
+    background-color: #45a049;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+    display: inline-block; /* Isso garante que o contêiner tenha o tamanho do input de senha */
+}
+
+#senha {
+    width: 100%;
+    padding-right: 50px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 5px; /* Isso vai colocar o botão próximo ao fim do input de senha */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    font-size: 1.2rem;
+    color: #bdc3c7;
+}
+
+#back {
+    border-radius: 1vw;
+    display: inline-block;
+    padding: 15px 20px;
+    background-color: #2980b9;
+    color: #ecf0f1;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+#back:hover {
+    background-color: #3498db;
+    text-decoration: none;
+}
+
+.inlie {
+    display: flex;
+    align-items: baseline;
+}
+
+.mar {
+    margin: 3vw;
+}
+#showCreateForm{
+
+margin-top: 13px;
+
+}
+
+
+.button1{
+
+    
+   padding: 20px;
+   border-radius: 1vw;
+    background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+    color: #ecf0f1;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: box-shadow 0.4s, transform 0.4s;
+    font-weight: 600;
+
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Isso garante que os itens estejam verticalmente centralizados */
+}
+
+.form-container {
+    flex: 1; /* Isso fará com que o form-container ocupe todo o espaço restante após a imagem */
+    margin-left: 20px; /* Adicionando um pouco de espaço entre a imagem e o formulário */
+}
+
+
+.google-login {
+    background-color: white;
+    box-shadow: 3px 3px 5px #357ABD;
+    border: none;
+    color: white;
+padding: 5px 10px 5px 10px;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  align-items: center;
+
+  margin-right: 10px;
+    margin-top: 5px;
+
+}
+
+.google-login:hover{
+padding: 7px 13px 7px 13px;
+transition: 0.4s;
+
+}
+
+.google-icon {
+    margin-right: 10px;
+}
+
+
+.inline {
+ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Isso garante que os itens estejam verticalmente centralizados */
+}
+
+.form-container {
+    flex: 1; 
+    margin-left: 50vw;
+}
+#img2{
+
+
+    border-radius: 0 35px 355px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 40%; 
+    height: 100vh; 
+    object-fit: cover; 
+
+}
+
+@media (max-width: 768px) {
+    #img2 {
+        display: none;
+    }
+    .form-container {
+        margin-left: 5vw; 
+    }
+}
+
+body {
+    background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #34495E;
+    transition: background 0.5s;
+}
+
+
+
+
+.es{
+  
+ display: flex;
+    align-items: center;
+    justify-content: start; 
+padding-bottom: 2px;
+padding-top: 2px;
+padding-left: 6.5vw ;
+}
+.para{
+
+margin-left: 5vw;
+
+}
+
+
