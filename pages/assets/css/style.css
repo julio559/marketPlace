@@ -2907,20 +2907,7 @@
 	padding: 0 70px 104px;
 }
 
-.slider_four_area .single_slider.slider_one {
-	background: url(https://blog.dolado.com.br/wp-content/uploads/2022/02/como-vender-em-marketplaces.png);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-position: center center;
-	background-size: cover;
-}
-.slider_four_area .single_slider.slider_two {
-	background: url(https://blog.dolado.com.br/wp-content/uploads/2022/02/como-vender-em-marketplaces.png);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-position: center center;
-	background-size: cover;
-}
+
 .slider_four_area .slider_content {
 	padding-left: 80px;
 }

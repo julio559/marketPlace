@@ -14,3 +14,19 @@ color: white;
 font-size: 18px;
 
 }
+
+
+.slider_four_area .single_slider.slider_one {
+	background: url(https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widexl.jpg);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	background-size: cover;
+}
+.slider_four_area .single_slider.slider_two {
+	background: url(https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widexl.jpg);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-position: center center;
+	background-size: cover;
+}

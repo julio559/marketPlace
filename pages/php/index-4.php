@@ -52,6 +52,17 @@ header("location: dashboardAdmin.php");
         <link rel="stylesheet" href="../assets/css/style.css">
         <link rel="stylesheet" href="../assets/css/responsive.css">
         <script src="../assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
+        <style>
+
+
+
+
+#escrita{
+color: white;
+
+}
+            </style>
     </head>
     <body>
             <!-- Add your site or application content here -->
@@ -215,11 +226,13 @@ echo "<a href='../logred.php'>logar</a>";
                                 <div class="single_slider slider_one">
                                     <div class="row align-items-center">
                                         <div class="col-12">
+                                          
                                             <div class="slider_content">
-                                                <h1> Sejam bem vindo ao<br><strong> Nosso market place</strong></h1>
-                                                <h3>veja mais</h3>
+                                  
+                                                <h1 id="escrita"> Sejam bem vindo ao<br><strong> Nosso market place</strong></h1>
+                                      
+                                                <a id="escrita" href="../shop.php">venha comprar agora</a>
                                                 
-                                                <a href="../shop.php">venha comprar agora</a>
                                             </div>
                                         </div>
                                     </div>  
@@ -227,11 +240,14 @@ echo "<a href='../logred.php'>logar</a>";
                                 <div class="single_slider slider_two">
                                     <div class="row align-items-center">
                                         <div class="col-12">
+                                      
                                             <div class="slider_content">
-                                                <h1><strong>Somos o mais diferente </strong><br> e dinamicos do pais </h1>
+                                  
+                                                <h1 id="escrita"><strong>Somos o mais diferente </strong><br> e dinamicos do pais </h1>
                                                 <h3>venha com a gente</h3>
-                                                <p>...</p>
-                                                <a href="../shop.php">compre agora</a>
+                                         
+                                                <a id="escrita" href="../shop.php">compre agora</a>
+                                             
                                             </div>
                                         </div>
                                     </div>
