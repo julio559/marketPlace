@@ -5,11 +5,23 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+
+
+
 // Garanta que $_SESSION['usuario'] esteja definido
 if (isset($_SESSION['usuario'])) {
     $userId = $_SESSION['usuario'];
 
-    // Prepare a consulta
+$ver = "SELECT tipe FROM clientes WHERE id = $userId";
+$q = $mysqli->query("$ver");
+while ($row = $q->fetch_assoc()) {
+if($row['tipe'] !== '1' ){
+header("location: index-4.php");
+
+}
+}
+
+
     $stmt = $mysqli->prepare("SELECT COUNT(*) as item_count FROM carrinho WHERE id_usuario = ?");
     $stmt->bind_param("i", $userId);  // "i" indica que estamos passando um valor inteiro
 
@@ -46,7 +58,13 @@ $nome = $row['nome'];
 
 
 
+$sql = "SELECT faturamento, valor_meta FROM faturamento_mensal WHERE id_usuario = $id";
+$query = $mysqli->query($sql);
+while ($row = $query -> fetch_assoc()) {
+$fat = $row["faturamento"];
+$valor_meta = $row["valor_meta"];
 
+}
 
 
 
@@ -81,6 +99,19 @@ $nome = $row['nome'];
     <style>
 
 
+
+.floating-icon {
+	background-color: #28a745;
+	padding: 5px;
+	border-radius: 30px;
+	color: white;
+    position: fixed;      /* Make the icon's position fixed to the viewport */
+    bottom: 20px;         /* Position it 20px above the bottom edge */
+    right: 20px;          /* Position it 20px from the right edge */
+    width: 50px;          /* Set the icon's width (adjust as needed) */
+    height: 50px;         /* Set the icon's height (adjust as needed) */
+    z-index: 1000;        /* Ensure the icon stays on top of other elements */
+}
 
         body {
             font-family: Arial, sans-serif;
@@ -187,7 +218,10 @@ width: 36px;
   
 
   <!-- Add your site or application content here -->
-            
+  <a href="https://1518.3cx.cloud/instapet" target="_blank">
+    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/live-chat-2388830-2011859.png" class="floating-icon" alt="Icon Link">
+</a>
+    
             
             <!--header area start-->
             <header class="header_area">
@@ -300,38 +334,19 @@ echo "Fazer login";
                                     </div>
                                     <div class="categories_menu_inner">
                                         <ul>
-                                            <li class="categorie_list"><a href="#">Laptop & Computer <i class="fa fa-angle-right"></i></a>
+                                            <li class="categorie_list"><a href="#"> Ver usuarios <i class="fa fa-angle-right"></i></a>
                                                 <ul class="categories_mega_menu">
-                                                    <li><a href="#">Headphoness</a>
+                                                    <li><a href="#">Todos usuarios</a>
                                                         <div class="categorie_sub_menu">
                                                             <ul>
-                                                                <li><a href="">Dell Laptops</a></li>
-                                                                <li><a href="">HP Laptops</a></li>
-                                                                <li><a href="">Lenovo Laptops</a></li>
-                                                                <li><a href="">Apple Laptops</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "1"?>">Administrativos</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "0"?>">Usuarios padrões da plataforma</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "full"?>">todos usuarios</a></li>
+                                                              
                                                             </ul>
                                                         </div>
                                                     </li>
-                                                    <li><a href="#">Laptop & Computers</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Digital Cameras</a></li>
-                                                                <li><a href="">Camcorders</a></li>
-                                                                <li><a href="">Photo Accessories</a></li>
-                                                                <li><a href="">Memory Cards</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Camera & Photos</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Apple Phones</a></li>
-                                                                <li><a href="">Samsung Phones</a></li>
-                                                                <li><a href="">Motorola Phones</a></li>
-                                                                <li><a href="">Lenovo Phones</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
+                                                  
                                                     <li><img src="assets/img/categorie/categorie.png" alt=""></li>
                                                         
                                                     
@@ -378,11 +393,12 @@ echo "Fazer login";
             <div class="stat-box">
                 
                 <h2>Faturamento:</h2>
-                 <p> <img src="cofrinho.png"  id="imgP"> R$: 18.794.201</p>
+                <p> <img src="cofrinho.png" id="imgP"> R$: <?php echo number_format($fat, 2, ',', '.'); ?></p>
+
             </div>
             <div class="stat-box">
                 <h2>Valor Meta:</h2>
-                <p><img src="alvo.png"  id="imgP2"> R$: 21.159.170</p>
+                <p><img src="alvo.png"  id="imgP2"> R$: <?php echo number_format($valor_meta, 2, ',', '.'); ?></p>
             </div>
             <div class="stat-box">
                 <h2>Qtd Vendas:</h2>
@@ -401,22 +417,33 @@ echo "Fazer login";
         <script src="../assets/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script>
+
+
+
+fetch('dataAPI.php')
+    .then(response => response.json())
+    .then(data => {
+        const labels = data.map(item => item.mes);
+        const faturamento = data.map(item => item.faturamento);
+        const valor_meta = data.map(item => item.valor_meta);
+
         const barCtx = document.getElementById('barChart').getContext('2d');
         new Chart(barCtx, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                labels: labels,
                 datasets: [{
                     label: 'Faturamento',
-                    data: [500000, 700000, 600000, 800000, 750000, 850000, 900000, 920000, 930000, 950000, 960000, 980000],
+                    data: faturamento,
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                 }, {
                     label: 'Valor Meta',
-                    data: [600000, 800000, 700000, 850000, 820000, 900000, 950000, 970000, 980000, 1000000, 1020000, 1050000],
+                    data: valor_meta,
                     backgroundColor: 'rgba(255, 206, 86, 0.5)',
                 }]
             }
         });
+    });
 
       
     </script>

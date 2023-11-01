@@ -53,7 +53,7 @@ if (isset($_GET['code'])) {
 
 
 if (isset($_POST['registrar'])) {
-    $senha = $_POST['senha'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
     $numero = $_POST['numero'];
     $CEP = $_POST['CEP'];
     $CPF = $_POST['CPF'];
@@ -65,6 +65,7 @@ if (isset($_POST['registrar'])) {
     if (isset($_FILES['file']) && $stmt->num_rows == 0) {
         $arquivo = $_FILES['file'];
         $pasta = "uploads/";
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
         $nomeA = $arquivo['name'];
         $novo = uniqid();
         $extensao = strtolower(pathinfo($nomeA, PATHINFO_EXTENSION));

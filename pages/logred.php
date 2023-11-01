@@ -207,6 +207,7 @@ function buscarEndereco(cep) {
     });
 }
 
+
 // Máscaras
 $("#CEP").mask("00000-000");
 $("#CPF").mask("000.000.000-00");

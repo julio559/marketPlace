@@ -395,8 +395,10 @@ $stmt->close();
                    
                     <!--brand area end-->
 
-              
-            <!--home four wrapper start-->
+                    <a href="https://1518.3cx.cloud/instapet" target="_blank">
+    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/live-chat-2388830-2011859.png" class="floating-icon" alt="Icon Link">
+</a>
+
             
             <!--footer area start-->
             <div class="footer_area footer_four">
