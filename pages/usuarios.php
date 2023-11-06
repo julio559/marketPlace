@@ -211,7 +211,7 @@ echo "Fazer login";
                                                     <ul>
                                                         <li><a href="usuarios.php?very=<?php echo '1' ?>">Administrativos</a></li>
                                                         <li><a href="usuarios.php?very=<?php echo '0' ?>">Usuarios padrões da plataforma</a></li>
-                                                        <li><a href="usuarios.php?very=<?php echo 'full' ?>">todos usuarios</a></li>
+                                                        <li><a href="usuarios.php">todos usuarios</a></li>
                                                     </ul>
                                                 </div>
                                             </li>

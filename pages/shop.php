@@ -50,6 +50,7 @@ $nome = $row['nome'];
 
 
 
+
 ?>
 
 <!doctype html>
@@ -62,8 +63,8 @@ $nome = $row['nome'];
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
-		<!-- all css here -->
+	
+		<link rel="stylesheet" href="css/buttonLike.css">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/bundle.css">
         <link rel="stylesheet" href="assets/css/plugins.css">
@@ -130,6 +131,16 @@ echo "Fazer login";
 
                                        }
                                        ?>
+
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='desejos.php'> Lista de desejos </a></li>";
+                                       }
+
+                                       ?>
+
                                                <?php 
 
 
@@ -356,7 +367,7 @@ $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-$query = "SELECT * FROM produto $orderStatement LIMIT $perPage OFFSET $offset";
+$query = "SELECT * FROM produto WHERE tipe = 0 $orderStatement LIMIT $perPage OFFSET $offset";
 $result = $mysqli->query($query);
 ?>
 
@@ -424,11 +435,31 @@ $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-$query = "SELECT * FROM produto $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";  // Modificamos aqui também
+$query = "SELECT * FROM produto WHERE tipe = 0 $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";  // Modificamos aqui também
 $result = $mysqli->query($query);
+
+function checkIfProductIsInWishlist($product_id, $user_id) {
+    global $mysqli;
+
+    $query = "SELECT COUNT(*) as count FROM wish WHERE id_prod = ? AND id_usuario = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("ii", $product_id, $user_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    return $row['count'] > 0;
+}
+
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+
+
+
+
+        
 ?>
         <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="single_product"> 
@@ -437,8 +468,15 @@ if ($result->num_rows > 0) {
                 </div> 
                 <div class="product_content">   
                     <div class="product_ratting">
+               <?php echo   $isLiked = checkIfProductIsInWishlist($row['id'], $_SESSION['usuario']);
+$likedClass = $isLiked ? "liked" : "";
+
+echo '<button id="wishButton" class="heart-button ' . $likedClass . '" data-prod-id="' . $row['id'] . '" data-user-id="' . $_SESSION['usuario'] . '">❤</button>';
+ ?>
                     </div>
                     <h3><a href="product-details.php"><?php echo $row['nome']; ?></a></h3>
+                  
+
                     <div class="product_price">
                         <span class="current_price">R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
                     </div>
@@ -538,7 +576,35 @@ if (isset($_SESSION['usuario'])) {
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
-<script>
+
+        <script>
+document.querySelectorAll('.heart-button').forEach(button => {
+    button.addEventListener('click', function() {
+        let productId = this.getAttribute('data-prod-id');
+        let userId = this.getAttribute('data-user-id');
+
+        fetch('addToWishlist.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `product_id=${productId}&user_id=${userId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.liked) {
+                    button.classList.add('liked');
+                } else {
+                    button.classList.remove('liked');
+                }
+            } else {
+                console.error("Erro ao atualizar lista de desejos");
+            }
+        });
+    });
+});
+
 
 function pagesR(){
 

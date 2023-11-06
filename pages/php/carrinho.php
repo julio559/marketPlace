@@ -14,6 +14,9 @@ if(!isset($_SESSION['usuario'])) {
     header("location: index-4.php");
 }
 
+
+
+
 $id = $_SESSION['usuario'];
 $sql = "SELECT nome FROM clientes WHERE id = $id";
 $query = $mysqli -> query($sql);
@@ -44,7 +47,7 @@ $nome = $row["nome"];
 $tipo = $row['cartegoria'];
 $preco = $row['preco'];
 $imagem = $row['imagem'];
-
+$estoque = $row["stock"];
 }
 
 if(isset($_GET['id'])){ 
@@ -88,5 +91,8 @@ if(isset($_POST['product_id']) && isset($_POST['numero'])) {
       die("Erro ao atualizar a quantidade.");
   }
 }
+
+
+
 
 ?>

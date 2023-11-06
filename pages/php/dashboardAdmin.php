@@ -346,13 +346,35 @@ echo "Fazer login";
                                                             </ul>
                                                         </div>
                                                     </li>
-                                                  
-                                                    <li><img src="assets/img/categorie/categorie.png" alt=""></li>
+                                      b 
                                                         
                                                     
 
                                                 </ul>
                                             </li>
+
+                                            <li class="categorie_list"><a href="#"> Produtos <i class="fa fa-angle-right"></i></a>
+                                                <ul class="categories_mega_menu">
+                                                    <li><a href="#"> Tipos de Produtos</a>
+                                                        <div class="categorie_sub_menu">
+                                                            <ul>
+                                                                <li><a href="../usuarios.php?very=<?php echo "1"?>">Cosmeticos</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "0"?>">Eletronico</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "full"?>">Cheiro</a></li>
+                                                                <li><a href="../usuarios.php?very=<?php echo "full"?>">Todos</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                             
+                                                        
+                                                    
+
+                                                </ul>
+                                            </li>
+
+                                            
+
+                                            
 </ul> </div></div> </div>
 <div class="col-lg-7">
     <div class="main_menu_inner">

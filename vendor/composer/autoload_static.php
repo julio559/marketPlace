@@ -37,6 +37,7 @@ class ComposerStaticInit07e33395d78e49928228e08b8f0c0390
         'M' => 
         array (
             'Monolog\\' => 8,
+            'MercadoPago\\' => 12,
         ),
         'G' => 
         array (
@@ -46,6 +47,7 @@ class ComposerStaticInit07e33395d78e49928228e08b8f0c0390
             'Google\\Service\\' => 15,
             'Google\\Auth\\' => 12,
             'Google\\' => 7,
+            'Gerencianet\\' => 12,
         ),
         'F' => 
         array (
@@ -86,6 +88,10 @@ class ComposerStaticInit07e33395d78e49928228e08b8f0c0390
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'MercadoPago\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mercadopago/dx-php/src/MercadoPago',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -109,6 +115,10 @@ class ComposerStaticInit07e33395d78e49928228e08b8f0c0390
         'Google\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/apiclient/src',
+        ),
+        'Gerencianet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gerencianet/gerencianet-sdk-php/src/Gerencianet',
         ),
         'Firebase\\JWT\\' => 
         array (

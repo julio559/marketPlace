@@ -116,6 +116,17 @@ echo "Fazer login";
 
                                        }
                                        ?>
+
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='desejos.php'> Lista de desejos </a></li>";
+                                       }
+
+                                       ?>
+
+
                                                <?php 
 
 
@@ -323,7 +334,7 @@ echo "<a href='../logred.php'>logar</a>";
           
        <?php 
 // Prepare the SQL query
-$stmt = $mysqli->prepare("SELECT * FROM `produto` ORDER BY `id` DESC LIMIT 4");
+$stmt = $mysqli->prepare("SELECT * FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
 $stmt->execute();
 
 // Store the result

@@ -61,6 +61,86 @@
             "install-path": "../firebase/php-jwt"
         },
         {
+            "name": "gerencianet/gerencianet-sdk-php",
+            "version": "5.1.4",
+            "version_normalized": "5.1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gerencianet/gn-api-sdk-php.git",
+                "reference": "5b68d26b9586b2fe5b1ad202dfc03368f37d1789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gerencianet/gn-api-sdk-php/zipball/5b68d26b9586b2fe5b1ad202dfc03368f37d1789",
+                "reference": "5b68d26b9586b2fe5b1ad202dfc03368f37d1789",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4",
+                "php": "^7.2 || ^8.0"
+            },
+            "time": "2023-10-27T19:38:02+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Gerencianet\\": "src/Gerencianet"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cecília Deveza"
+                },
+                {
+                    "name": "Danniel Hugo"
+                },
+                {
+                    "name": "Francisco Thiene"
+                },
+                {
+                    "name": "Talita Campos"
+                },
+                {
+                    "name": "Thomaz Feitoza"
+                },
+                {
+                    "name": "Filipe Mata"
+                },
+                {
+                    "name": "Thiago Resende"
+                },
+                {
+                    "name": "Jéssica Gava"
+                },
+                {
+                    "name": "Guilherme Cota"
+                },
+                {
+                    "name": "Sady Coimbra"
+                },
+                {
+                    "name": "Matheus Rodrigues"
+                },
+                {
+                    "name": "João Oliveira"
+                },
+                {
+                    "name": "Paloma Brito"
+                }
+            ],
+            "description": "GN APIs SDK PHP",
+            "homepage": "https://github.com/gerencianet/gn-api-sdk-php",
+            "support": {
+                "issues": "https://github.com/gerencianet/gn-api-sdk-php/issues",
+                "source": "https://github.com/gerencianet/gn-api-sdk-php/tree/5.1.4"
+            },
+            "install-path": "../gerencianet/gerencianet-sdk-php"
+        },
+        {
             "name": "google/apiclient",
             "version": "v2.10.0",
             "version_normalized": "2.10.0.0",
@@ -562,6 +642,48 @@
                 }
             ],
             "install-path": "../guzzlehttp/psr7"
+        },
+        {
+            "name": "mercadopago/dx-php",
+            "version": "3.0.0",
+            "version_normalized": "3.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mercadopago/sdk-php.git",
+                "reference": "47fc9fd20622af8cce0d9246c0b11d55bd64037c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/47fc9fd20622af8cce0d9246c0b11d55bd64037c",
+                "reference": "47fc9fd20622af8cce0d9246c0b11d55bd64037c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "phpunit/phpunit": "^10.2",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "time": "2023-10-02T20:30:24+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "MercadoPago\\": "src/MercadoPago"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Mercado Pago PHP SDK",
+            "homepage": "https://github.com/mercadopago/sdk-php",
+            "support": {
+                "source": "https://github.com/mercadopago/sdk-php/tree/3.0.0"
+            },
+            "install-path": "../mercadopago/dx-php"
         },
         {
             "name": "monolog/monolog",

@@ -2,6 +2,8 @@
     "require": {
         "google/apiclient": "2.10",
         "guzzlehttp/guzzle": "^7.8",
-        "rmccue/requests": "^2.0"
+        "rmccue/requests": "^2.0",
+        "gerencianet/gerencianet-sdk-php": "^5.1",
+        "mercadopago/dx-php": "^3.0"
     }
 }

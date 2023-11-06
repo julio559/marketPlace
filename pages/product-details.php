@@ -332,8 +332,14 @@ echo "Fazer login";
                                     <div class="product_stock">
                                         
                                     <input type="hidden" value="<?php echo $id_prod; ?>" name="id">
+                                    <input type="hidden" value="<?php echo $stock; ?>" name="estoque">
+                                    <label>Estoque</label>
+                                    <p> Temos <?php echo $stock ?> em estoque <p>
+                                    
+                                    <br>
                                         <label>Quantidade</label>
-                                        <input min="1" value="1" max="100" name="quantidade" type="number">
+                                        
+                                        <input min="1" value="1" max="<?php echo $stock?>" name="quantidade" type="number">
                                     </div>
                                     <div class="product_action_link">
                                         <ul>

@@ -99,6 +99,16 @@ echo "Fazer login";
 
                                        }
                                        ?>
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='desejos.php'> Lista de desejos </a></li>";
+                                       }
+
+                                       ?>
+
+
                                                <?php 
 
 
@@ -206,6 +216,8 @@ echo "Fazer login";
                                 $isEmpty = true;
                                 while($row = $query->fetch_assoc()):
                                     $isEmpty = false;
+                                
+                                    
     $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
     $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
     $total = $quantidade * $preco;
@@ -228,7 +240,9 @@ echo "Fazer login";
     </td>
     <td class="product_quantity">
     <form method="POST" action="cart.php">
-    <input min="1" max="100" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
+
+
+    <input min="1" max="<?php  if(isset($estoque)){echo $estoque;}?> " value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
     <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
     <button type="submit" class="submit-button">
         <i class="bi bi-arrow-clockwise"></i> 

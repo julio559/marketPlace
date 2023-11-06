@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69a3cd45dd9957b78650a951ef89f321",
+    "content-hash": "0fb481acfe998a53403e1ce83a7d0140",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -62,6 +62,83 @@
                 "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
             "time": "2021-11-08T20:18:51+00:00"
+        },
+        {
+            "name": "gerencianet/gerencianet-sdk-php",
+            "version": "5.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gerencianet/gn-api-sdk-php.git",
+                "reference": "5b68d26b9586b2fe5b1ad202dfc03368f37d1789"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gerencianet/gn-api-sdk-php/zipball/5b68d26b9586b2fe5b1ad202dfc03368f37d1789",
+                "reference": "5b68d26b9586b2fe5b1ad202dfc03368f37d1789",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4",
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gerencianet\\": "src/Gerencianet"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cecília Deveza"
+                },
+                {
+                    "name": "Danniel Hugo"
+                },
+                {
+                    "name": "Francisco Thiene"
+                },
+                {
+                    "name": "Talita Campos"
+                },
+                {
+                    "name": "Thomaz Feitoza"
+                },
+                {
+                    "name": "Filipe Mata"
+                },
+                {
+                    "name": "Thiago Resende"
+                },
+                {
+                    "name": "Jéssica Gava"
+                },
+                {
+                    "name": "Guilherme Cota"
+                },
+                {
+                    "name": "Sady Coimbra"
+                },
+                {
+                    "name": "Matheus Rodrigues"
+                },
+                {
+                    "name": "João Oliveira"
+                },
+                {
+                    "name": "Paloma Brito"
+                }
+            ],
+            "description": "GN APIs SDK PHP",
+            "homepage": "https://github.com/gerencianet/gn-api-sdk-php",
+            "support": {
+                "issues": "https://github.com/gerencianet/gn-api-sdk-php/issues",
+                "source": "https://github.com/gerencianet/gn-api-sdk-php/tree/5.1.4"
+            },
+            "time": "2023-10-27T19:38:02+00:00"
         },
         {
             "name": "google/apiclient",
@@ -547,6 +624,45 @@
                 }
             ],
             "time": "2023-04-17T16:00:37+00:00"
+        },
+        {
+            "name": "mercadopago/dx-php",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mercadopago/sdk-php.git",
+                "reference": "47fc9fd20622af8cce0d9246c0b11d55bd64037c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/47fc9fd20622af8cce0d9246c0b11d55bd64037c",
+                "reference": "47fc9fd20622af8cce0d9246c0b11d55bd64037c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "phpunit/phpunit": "^10.2",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MercadoPago\\": "src/MercadoPago"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Mercado Pago PHP SDK",
+            "homepage": "https://github.com/mercadopago/sdk-php",
+            "support": {
+                "source": "https://github.com/mercadopago/sdk-php/tree/3.0.0"
+            },
+            "time": "2023-10-02T20:30:24+00:00"
         },
         {
             "name": "monolog/monolog",

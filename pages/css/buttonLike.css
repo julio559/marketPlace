@@ -1,0 +1,10 @@
+.heart-button {
+    color: grey; /* Cor padrão do botão (não curtido) */
+    transition: color 0.3s ease; /* Efeito de transição para mudança de cor */
+    border: none;
+    background-color: transparent;
+}
+
+.heart-button.liked {
+    color: red; /* Cor do botão quando curtido */
+}
