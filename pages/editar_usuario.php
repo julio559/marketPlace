@@ -317,9 +317,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="buttons">
           
             <button class="save" type="submit" onclick="save()">Salvar</button>
+      
+            </form>
             <button class="cancel" type="button
             " onclick="saveChanges()">Cancelar</button>
-            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

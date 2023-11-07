@@ -47,11 +47,11 @@ $nome = $row["nome"];
 $tipo = $row['cartegoria'];
 $preco = $row['preco'];
 $imagem = $row['imagem'];
-$estoque = $row["stock"];
+$estoque = $row['stock'];
 }
 
 if(isset($_GET['id'])){ 
-$sql = "INSERT INTO carrinho (imagem, produto_nome, preco, quantidade, id_usuario, id_prod) VALUES ('$imagem', '$nome', '$preco', '$quantidade', '$id_usuario', '$id_prod')";
+$sql = "INSERT INTO carrinho (imagem, produto_nome, preco, quantidade, id_usuario, id_prod, stock_prod) VALUES ('$imagem', '$nome', '$preco', '$quantidade', '$id_usuario', '$id_prod', '$estoque')";
 $quer = $mysqli -> query($sql);
   header("location: cart.php");
 }
@@ -91,7 +91,6 @@ if(isset($_POST['product_id']) && isset($_POST['numero'])) {
       die("Erro ao atualizar a quantidade.");
   }
 }
-
 
 
 

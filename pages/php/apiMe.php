@@ -58,8 +58,8 @@ $quantidade = $_GET['quantidade'];
 
 $sql2 = "INSERT INTO ordemcompra (total, status, id_prod, id_cliente, quantidade) VALUES('$total', 'pendente',  '$id_prod', '$id_client', '$quantidade')";
     $query = $mysqli->query($sql2);
-
-    if($data['status'] == 'approved') {
+$data = 'approved';
+    if($data == 'approved') {
         $quantidade = $_GET['quantidade'];
       $sql = "UPDATE produto SET stock = stock - $quantidade WHERE id = $id_prod";
       $quer = $mysqli -> query($sql);

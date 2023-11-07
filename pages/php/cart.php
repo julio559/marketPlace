@@ -29,6 +29,13 @@ include("carrinho.php");
 
         <style> 
 
+#nod{
+
+    border: none;
+    outline: none;
+}
+
+
 .submit-button{
 
 border: none;
@@ -222,6 +229,8 @@ echo "Fazer login";
     $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
     $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
     $total = $quantidade * $preco;
+    $stock = $row['stock_prod'];
+
 ?>
 <tr>
     <td class="product_remove">
@@ -242,8 +251,8 @@ echo "Fazer login";
     <td class="product_quantity">
     <form method="POST" action="cart.php">
 
-
-    <input min="1" max="<?php  if(isset($estoque)){echo $estoque;}?> " value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
+    
+    <input min="1" max="<?php echo $stock?>" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
     <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
     <button type="submit" class="submit-button">
         <i class="bi bi-arrow-clockwise"></i> 
@@ -261,8 +270,8 @@ echo "Fazer login";
     <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
     <input type="hidden" name="total_value" value="<?php echo $total; ?>">
     <select name="paymentMethod" id="paymentMethod">
-        <option value="pix">Pix</option>
-        <option value="cartao">Cartão</option>
+        <option id="nod" value="pix">Pix</option>
+        <option id="nod" value="cartao">Cartão</option>
     </select>
     <button type="submit" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Comprar</button>
 </form>

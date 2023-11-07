@@ -22,6 +22,12 @@ if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'], $_GET['pa
         $nome = $row['nome'];
 
         $id_client = $_SESSION['usuario'];
+$sql2 = "SELECT email FROM clientes WHERE id = $id_client";
+$q = $mysqli->query($sql2);
+while( $row2 = $q->fetch_assoc() ) {
+$email = $row2['email'];
+
+}
 
         if ($paymentMethod === 'pix') {
             // Dados para pagamento com Pix
@@ -30,7 +36,7 @@ if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'], $_GET['pa
                 'description' => "Compra do produto $nome",
                 'payment_method_id' => 'pix',
                 'payer' => [
-                    'email' => 'jcgcampana@gmail.com' // E-mail do comprador
+                    'email' => "$email" // E-mail do comprador
                 ]
             ];
 
@@ -75,7 +81,7 @@ if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'], $_GET['pa
             
                     if ($mysqli->query($sql) === TRUE) {
                         // Redirecionar para uma página de confirmação ou exibir uma mensagem de sucesso
-                        echo "<script>alert('Ordem de compra inserida com sucesso!');</script>";
+                 
                        // No ponto onde você tem o ID da ordem após inserir no banco de dados
 $orderId = $mysqli->insert_id; // Isso vai pegar o último ID inserido na conexão
 
@@ -107,7 +113,7 @@ $orderId = $mysqli->insert_id; // Isso vai pegar o último ID inserido na conex�
     echo 'Parâmetros ausentes.';
 }
 
-var_dump($data['status']);
+
 
 
 if($data['status'] == 'approved') {
