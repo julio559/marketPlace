@@ -34,7 +34,7 @@ include("php/usuario.php");
             padding-top: 7vh;
             margin-left: 7vw;
             margin-right: 10vw;
-            background-color: #D9D9D9;
+            background-color: #2971F5;
         }
 
         h2 {

@@ -34,7 +34,7 @@ include("php/usuario.php");
             padding-top: 7vh;
             margin-left: 7vw;
             margin-right: 10vw;
-            background-color: #D9D9D9;
+            background-color: #2971F5;
         }
 
         h2 {
@@ -259,7 +259,7 @@ echo "Fazer login";
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumb_content">
-                                <h3>Usuarios</h3>
+                                <h3>Produtos</h3>
                                 <ul>
                                     <li><a href="dashboardAdmin.php">Dashboard</a></li>
                                     <li><i class="fa fa-angle-right"></i></li>

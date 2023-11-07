@@ -384,45 +384,7 @@ while($row = $quer->fetch_assoc()) {
 $cep = $row["cep"];
 $endereco = $row["endereco"];
 
-echo "<div class='tab-pane' id='address'>
-
-<h4 class='billing-address'>endereço de  $nome</h4>
-
-<p><strong> $endereco</strong></p>
-
-<h4 class='billing-address'>cep de $nome</h4>
-
-<p><strong> $cep</strong></p>
-
-<!-- Button trigger modal -->
-<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#exampleModal'>
-editar
-</button>
-
-<!-- Modal -->
-<div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-<div class='modal-dialog'>
-<div class='modal-content'>
-  <div class='modal-header'>
-    <h1 class='modal-title fs-5' id='exampleModalLabel'>Modal title</h1>
-    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-  </div>
-  <div class='modal-body'>
-  <form method='post'>
-
-  <input type='text' placeholder='altere o endereço' required name='endereco'>
-
-  </div>
-  <div class='modal-footer'>
-    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-    <button type='submit' class='btn btn-primary'>Save changes</button>
-    </form>
-  </div>
-</div>
-</div>
-</div>
-<br>
-<br>";
+echo "";
 }
 
 

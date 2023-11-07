@@ -1,6 +1,7 @@
 <?php
 
 include("php/apiMe.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -188,6 +189,7 @@ include("php/apiMe.php");
 }
 
 
+
     </style>
 </head>
 
@@ -232,7 +234,71 @@ include("php/apiMe.php");
 </div>
 
 
+<body>
+    
+
+
+
 <script>
+
+function copyToClipboard() {
+    // Obtém o valor do campo de texto
+    var copyText = document.getElementById("code");
+
+    // Habilita o campo de texto para a cópia
+    copyText.disabled = false;
+
+    // Seleciona o texto dentro do campo de texto
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+    try {
+      // Executa a ação de cópia
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'Copiado com sucesso!' : 'Houve um erro ao copiar.';
+
+      // Mostra a mensagem de sucesso
+      var messageBox = document.getElementById('success-message');
+      messageBox.textContent = msg;
+      messageBox.style.display = 'block';
+
+      // Esconde a mensagem de sucesso após 2 segundos
+      setTimeout(function(){
+        messageBox.style.display = 'none';
+      }, 2000);
+
+    } catch (err) {
+      console.log('Oops, não foi possível copiar');
+    }
+
+    // Desabilita o campo de texto novamente
+    copyText.disabled = true;
+  }
+  let totalTime = 30 * 60; // 10 minutos em segundos
+const timerElement = document.getElementById('timer');
+
+const countdown = setInterval(function() {
+  // Convertendo o tempo em minutos e segundos
+  let minutes = parseInt(totalTime / 60); // Aqui estava o erro, removemos o segundo argumento do parseInt
+  let seconds = parseInt(totalTime % 60); // E aqui também
+
+  // Adicionando zero à esquerda se os minutos ou segundos forem menores que 10
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  // Atualizando o cronômetro na página
+  timerElement.textContent = minutes + ":" + seconds;
+
+  // Diminuindo o tempo total
+  totalTime--;
+
+  // Quando o cronômetro chegar a 0, limpe o intervalo
+  if (totalTime < 0) {
+    clearInterval(countdown);
+    timerElement.textContent = "00:00";
+    // Aqui você pode adicionar qualquer ação que gostaria que acontecesse quando o cronômetro chega a zero.
+  }
+}, 1000); // Definindo o intervalo para 1 segundo
 
 
 function updateCardIcon(paymentMethodId) {

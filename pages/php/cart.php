@@ -209,7 +209,8 @@ echo "Fazer login";
                                         <th class="product-price">Price</th>
                                         <th class="product_quantity">Quantity</th>
                                         <th class="product_total">Total</th>
-                                        <th class="product_total">area de pagamento</th>
+                                        <th class="product_total">Forma de pagamento</th>
+                                       
                                     </tr>
                                 </thead>
                                 <?php
@@ -254,12 +255,17 @@ echo "Fazer login";
         R$<?php echo  number_format($total, 2, ',', '.'); ?>
     </td>
     <td class="product_total">
-        <form action="../mercado_pago.php" method="GET">
-        <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
-            <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
-            <input type="hidden" name="total_value" value="<?php echo $total; ?>">
-            <button type="submit" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">comprar</button>
-        </form>
+    <form id="paymentForm" action="../mercado_pago.php" method="GET" onsubmit="return redirectPage(this);">
+
+    <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
+    <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
+    <input type="hidden" name="total_value" value="<?php echo $total; ?>">
+    <select name="paymentMethod" id="paymentMethod">
+        <option value="pix">Pix</option>
+        <option value="cartao">Cartão</option>
+    </select>
+    <button type="submit" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Comprar</button>
+</form>
     </td>
 </tr>
 <?php endwhile; ?>
@@ -368,6 +374,31 @@ echo "Fazer login";
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
 
+
+function redirectPage(form) {
+    var paymentMethod = form.paymentMethod.value; // acessa diretamente do formulário enviado
+    if (paymentMethod === 'pix') {
+        window.location.href = 'qrcode_pix.php?' + buildQueryString(form);
+        return false; // Evita o envio do formulário
+    } else if (paymentMethod === 'cartao') {
+        return true; // Permite o envio do formulário
+    }
+}
+
+function buildQueryString(form) {
+    var elements = form.elements;
+    var queryString = '';
+    for (var i = 0; i < elements.length; i++) {
+        var element = elements[i];
+        if (element.type !== 'submit') {
+            if (queryString !== '') {
+                queryString += '&';
+            }
+            queryString += encodeURIComponent(element.name) + '=' + encodeURIComponent(element.value);
+        }
+    }
+    return queryString;
+}
     function updateQuantity(event, formElement) {
         event.preventDefault();
         
