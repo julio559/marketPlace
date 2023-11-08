@@ -121,19 +121,23 @@ echo "Fazer login";
 <?php 
                                        if(isset($_SESSION['usuario'])){
 
-                                           echo     "<li><a href='desejos.php'> Lista de desejos </a></li>";
+                                           echo     "<li><a href='../desejos.php'> Lista de desejos </a></li>";
                                        }
 
                                        ?>
 
 
-                                               <?php 
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
+
+                                       ?>
 
 
-                                            if(isset($_SESSION["usuario"])){
-                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
-                                            }
-                                                ?>
+                                                
                                                 
                                             </ul>
                                         </li> 

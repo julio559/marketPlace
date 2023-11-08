@@ -2,7 +2,6 @@
 include("carrinho.php");
 
 
-
 ?>
 
 
@@ -51,7 +50,29 @@ border: none;
 
 
     }
-    
+    .coupon-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .coupon {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .coupon:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+  .coupon h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  .coupon p {
+    margin: 5px 0;
+  }   
     </style>
     </head>
     <body>
@@ -116,13 +137,13 @@ echo "Fazer login";
                                        ?>
 
 
-                                               <?php 
+<?php 
+                                       if(isset($_SESSION['usuario'])){
 
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
 
-                                            if(isset($_SESSION["usuario"])){
-                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
-                                            }
-                                                ?>
+                                       ?>
                                                 
                                             </ul>
                                         </li> 
@@ -216,21 +237,20 @@ echo "Fazer login";
                                         <th class="product-price">Price</th>
                                         <th class="product_quantity">Quantity</th>
                                         <th class="product_total">Total</th>
+                                        <th class="product_total">Melhor cupom</th>
                                         <th class="product_total">Forma de pagamento</th>
                                        
                                     </tr>
                                 </thead>
                                 <?php
-                                $isEmpty = true;
-                                while($row = $query->fetch_assoc()):
-                                    $isEmpty = false;
-                                
-                                    
+$isEmpty = true;
+while ($row = $query->fetch_assoc()):
+    $isEmpty = false;
     $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
     $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
     $total = $quantidade * $preco;
     $stock = $row['stock_prod'];
-
+    $itemId = $row['id'];
 ?>
 <tr>
     <td class="product_remove">
@@ -249,26 +269,39 @@ echo "Fazer login";
         <span class="current_price">R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
     </td>
     <td class="product_quantity">
-    <form method="POST" action="cart.php">
-
-    
-    <input min="1" max="<?php echo $stock?>" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
-    <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
-    <button type="submit" class="submit-button">
-        <i class="bi bi-arrow-clockwise"></i> 
-    </button>
-</form>
-
+        <form method="POST" action="cart.php">
+            <input min="1" max="<?php echo $stock ?>" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
+            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+            <button type="submit" class="submit-button">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </form>
     </td>
     <td class="product_total">
-        R$<?php echo  number_format($total, 2, ',', '.'); ?>
+    <span id="total-text-<?= $itemId; ?>"><?php echo  number_format($total, 2, ',', '.'); ?></span>
+    </td>
+    <td>
+        <?php  
+        $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1 ";
+        $quer23 = $mysqli->query($sql23);
+        if ($row22 = $quer23->fetch_assoc()):
+            $nome = $row22['nome'];
+            $porcentagem = $row22['porcentagem'];
+            $couponId = $row22['id'];
+        ?>
+      <div id="coupon-<?= $couponId ?>" class="coupon" onclick="applyDiscount(<?= $itemId ?>, <?= $couponId ?>, <?= $porcentagem ?>)">
+    <h2><?= htmlspecialchars($nome) ?></h2>
+    <p>Desconto: <?= htmlspecialchars($porcentagem) ?>%</p>
+    <p>Valor mínimo: <?= htmlspecialchars($row22['valor_min']) ?> $</p>
+</div>
+        <?php endif; ?>
     </td>
     <td class="product_total">
     <form id="paymentForm" action="../mercado_pago.php" method="GET" onsubmit="return redirectPage(this);">
 
     <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
     <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
-    <input type="hidden" name="total_value" value="<?php echo $total; ?>">
+    <input type="hidden" name="total_value" id="total-value" value="<?php echo $total; ?>">
     <select name="paymentMethod" id="paymentMethod">
         <option id="nod" value="pix">Pix</option>
         <option id="nod" value="cartao">Cartão</option>
@@ -279,12 +312,10 @@ echo "Fazer login";
 </tr>
 <?php endwhile; ?>
 <?php if ($isEmpty): ?>
-        <tr>
-            <td colspan="6" style=" font-size: 20px; text-align: center; padding: 20px;">SEU CARRINHO AINDA ESTÁ VAZIO</td>
-        </tr>
-    <?php endif; ?>
-</table>
-
+<tr>
+    <td colspan="6" style="font-size: 20px; text-align: center; padding: 20px;">SEU CARRINHO AINDA ESTÁ VAZIO</td>
+</tr>
+<?php endif; ?>
 </tbody>
 
 
@@ -293,6 +324,14 @@ echo "Fazer login";
                         </div>  
                     </div>
                     
+                    
+                    <div class="coupon-area">
+
+                    <div class="coupon-container">
+
+
+
+
                 </div>
             </div>
         </form>
@@ -438,6 +477,37 @@ function buildQueryString(form) {
 
 
 
+
+    function applyDiscount(itemId, couponId, discountPercentage) {
+    var totalTextElement = document.getElementById('total-text-' + itemId);
+    var currentTotal = parseFloat(totalTextElement.innerText.replace('R$', '').replace(',', '.'));
+    var discountAmount = currentTotal * (discountPercentage / 100);
+    var newTotal = currentTotal - discountAmount;
+
+    totalTextElement.innerText = 'R$' + newTotal.toFixed(2).replace('.', ',');
+
+    var totalInput = document.getElementById('total-value-' + itemId);
+    if (totalInput) {
+        totalInput.value = newTotal.toFixed(2);
+    }
+
+    var couponDiv = document.getElementById('coupon-' + couponId);
+    if (couponDiv) {
+        couponDiv.parentNode.removeChild(couponDiv);
+    }
+
+    // Envie o novo total para o servidor para atualizar a sessão ou o banco de dados
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Lidar com a resposta se necessário
+        }
+    };
+    xhttp.open("POST", "apply_discount.php", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // Envie os dados do item, o novo total e o ID do cupom para o servidor
+    xhttp.send("itemId=" + itemId + "&newTotal=" + newTotal + "&couponId=" + couponId);
+}
 
             
   $(document).off('click', '.Ola').on('click', '.Ola', function(e) {

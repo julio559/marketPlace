@@ -271,13 +271,13 @@ echo "Fazer login";
 
                                        }
                                        ?>
-                                               <?php 
+                           <?php 
+                                       if(isset($_SESSION['usuario'])){
 
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
 
-                                            if(isset($_SESSION["usuario"])){
-                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
-                                            }
-                                                ?>
+                                       ?>
                                                 
                                             </ul>
                                         </li> 
@@ -415,12 +415,12 @@ echo "Fazer login";
             <div class="stat-box">
                 
                 <h2>Faturamento:</h2>
-                <p> <img src="cofrinho.png" id="imgP"> R$: <?php echo number_format($fat, 2, ',', '.'); ?></p>
+                <p> <img src="cofrinho.png" id="imgP"> R$: <?php if(isset ($fat)){ echo number_format($fat, 2, ',', '.');}else{ echo "nenhuma registro de venda feito"; } ?></p>
 
             </div>
             <div class="stat-box">
                 <h2>Valor Meta:</h2>
-                <p><img src="alvo.png"  id="imgP2"> R$: <?php echo number_format($valor_meta, 2, ',', '.'); ?></p>
+                <p><img src="alvo.png"  id="imgP2"> R$: <?php if(isset ($valor_meta)){ echo number_format($valor_meta, 2, ',', '.');}else{ echo "Nenhum valor meta cadastrado"; } ?></p>
             </div>
             <div class="stat-box">
                 <h2>Qtd Vendas:</h2>

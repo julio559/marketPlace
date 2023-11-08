@@ -54,6 +54,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Inserir primeiro endereço aqui (ajuste conforme sua tabela de endereços)
     // ...
 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // ... existing form processing ...
+    
+        if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
+            $profileImage = $_FILES['profileImage'];
+            
+            // Define the path to the upload directory
+            $uploadDir = '../uploads/';
+            // Generate a unique name for the file before saving it
+            $imageName = $id . '_' . time() . '_' . basename($profileImage['name']);
+            // Create the path where the file will be saved
+            $uploadFile = $uploadDir . $imageName;
+            
+            // Check if the file type is image
+            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+            $detectedType = exif_imagetype($profileImage['tmp_name']);
+            if (in_array($detectedType, $allowedTypes)) {
+                // Move the file from the temporary directory to the upload directory
+                if (move_uploaded_file($profileImage['tmp_name'], $uploadFile)) {
+                    // Update the user's profile image in the database
+                    $stmt = $mysqli->prepare("UPDATE clientes SET img_perfil = ? WHERE id = ?");
+                    $stmt->bind_param("si", $imageName, $id);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    // Handle error - unable to move the file
+                    $_SESSION['mensagem'] = "Erro ao salvar a imagem.";
+                }
+            } else {
+                // Handle error - incorrect file type
+                $_SESSION['mensagem'] = "Formato de imagem não permitido.";
+            }
+        }
+    
     // Coletando e inserindo endereços adicionais
     for ($i = 1; $i <= 3; $i++) {
         if (isset($_POST['address'.$i]) && isset($_POST['cep'.$i])) {
@@ -73,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-
-    // Fechar conexão e redirecionar se necessário
+    }
+header("location: my-account.php");
     $stmt->close();
     $mysqli->close();
 }
@@ -198,14 +232,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
     <div class="container">
         <div class="text-center">
+        <form class="mt-5" method="POST" enctype="multipart/form-data">
             <h2>Editar Perfil</h2>
             <div class="position-relative d-inline-block">
                 <img src="path/to/default/profile.jpg" alt="Foto de Perfil" id="profileImagePreview" class="profile-image">
                 <i class="fa fa-camera" onclick="document.getElementById('profileImage').click();"></i>
+                
             </div>
-            <input type="file" id="profileImage" style="display:none;" />
+            <input type="file" id="profileImage"  name="profileImage" style="display:none;" />
         </div>
-        <form class="mt-5" method="POST">
+      
             <div class="form-group">
                 <label for="name"><i class="fas fa-user mr-2"></i>Nome:</label>
                 <input type="text" class="form-control" id="name" name="nome" value="<?php echo $nome; ?>" placeholder="Digite seu nome" required>

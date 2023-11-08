@@ -137,13 +137,13 @@ echo "Fazer login";
 
                                        }
                                        ?>
-                                               <?php 
+                     <?php 
+                                       if(isset($_SESSION['usuario'])){
 
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
 
-                                            if(isset($_SESSION["usuario"])){
-                                              echo "  <li><a href='logout.php'>LOG OUT</a></li>";
-                                            }
-                                                ?>
+                                       ?>
                                                 
                                             </ul>
                                         </li> 
@@ -238,7 +238,7 @@ echo "Fazer login";
         
         <?php 
 $id33 = $row["id"];
-
+if($row['status'] == 'completa'){
          $sql = "SELECT id_prod FROM ordemcompra WHERE id = $id33";
          $query23 = $mysqli -> query($sql);   
          $row325 = $query23->fetch_assoc();  
@@ -258,7 +258,7 @@ $id33 = $row["id"];
             $queryRef = $mysqli -> query($sqlRef);    
             
             }
-
+        }
         ?>
         <td><?php echo isset($row2512["nome"]) ? $row2512["nome"] : "Nome não encontrado"; ?></td>
         <td>R$<?php echo $row["total"]; ?></td>
