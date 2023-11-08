@@ -249,9 +249,19 @@ while ($row = $query->fetch_assoc()):
     $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
     $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
     $total = $quantidade * $preco;
-    $stock = $row['stock_prod'];
     $itemId = $row['id'];
-?>
+
+    // Tente encontrar um cupom de desconto aplicável
+    $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1";
+    $quer23 = $mysqli->query($sql23);
+    $descontoAplicado = false;
+    $valorComDesconto = $total;
+
+    if ($row22 = $quer23->fetch_assoc()) {
+        $porcentagemDesconto = $row22['porcentagem'] / 100;
+        $valorComDesconto = $total - ($total * $porcentagemDesconto);
+        $descontoAplicado = true;
+    } ?>
 <tr>
     <td class="product_remove">
         <form method="POST" action="cart.php">
@@ -278,30 +288,30 @@ while ($row = $query->fetch_assoc()):
         </form>
     </td>
     <td class="product_total">
-    <span id="total-text-<?= $itemId; ?>"><?php echo  number_format($total, 2, ',', '.'); ?></span>
-    </td>
+    <span id="total-text-<?= $itemId; ?>"><?php echo number_format($total, 2, ',', '.'); ?></span>
+</td>
     <td>
-        <?php  
-        $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1 ";
-        $quer23 = $mysqli->query($sql23);
-        if ($row22 = $quer23->fetch_assoc()):
-            $nome = $row22['nome'];
-            $porcentagem = $row22['porcentagem'];
-            $couponId = $row22['id'];
-        ?>
-      <div id="coupon-<?= $couponId ?>" class="coupon" onclick="applyDiscount(<?= $itemId ?>, <?= $couponId ?>, <?= $porcentagem ?>)">
-    <h2><?= htmlspecialchars($nome) ?></h2>
-    <p>Desconto: <?= htmlspecialchars($porcentagem) ?>%</p>
-    <p>Valor mínimo: <?= htmlspecialchars($row22['valor_min']) ?> $</p>
-</div>
-        <?php endif; ?>
-    </td>
+    <?php  
+    $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1";
+    $quer23 = $mysqli->query($sql23);
+    if ($row22 = $quer23->fetch_assoc()):
+        $nome = $row22['nome'];
+        $porcentagem = $row22['porcentagem'];
+        $couponId = $row22['id'];
+    ?>
+    <div id="coupon-<?= $couponId ?>" class="coupon" onclick="applyDiscount(<?= $itemId ?>, <?= $couponId ?>, <?= $porcentagem ?>)">
+        <h2><?= htmlspecialchars($nome) ?></h2>
+        <p>Desconto: <?= htmlspecialchars($porcentagem) ?>%</p>
+        <p>Valor mínimo: <?= htmlspecialchars($row22['valor_min']) ?> $</p>
+    </div>
+    <?php endif; ?>
+</td>
     <td class="product_total">
     <form id="paymentForm" action="../mercado_pago.php" method="GET" onsubmit="return redirectPage(this);">
 
     <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
     <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
-    <input type="hidden" name="total_value" id="total-value" value="<?php echo $total; ?>">
+    <input type="hidden" name="total_value" id="total-value-<?= $itemId; ?>" value="<?php echo $descontoAplicado ? $valorComDesconto : $total; ?>">
     <select name="paymentMethod" id="paymentMethod">
         <option id="nod" value="pix">Pix</option>
         <option id="nod" value="cartao">Cartão</option>
@@ -423,15 +433,6 @@ while ($row = $query->fetch_assoc()):
         <script>
 
 
-function redirectPage(form) {
-    var paymentMethod = form.paymentMethod.value; // acessa diretamente do formulário enviado
-    if (paymentMethod === 'pix') {
-        window.location.href = 'qrcode_pix.php?' + buildQueryString(form);
-        return false; // Evita o envio do formulário
-    } else if (paymentMethod === 'cartao') {
-        return true; // Permite o envio do formulário
-    }
-}
 
 function buildQueryString(form) {
     var elements = form.elements;
@@ -447,6 +448,19 @@ function buildQueryString(form) {
     }
     return queryString;
 }
+
+
+function redirectPage(form) {
+    var paymentMethod = form.paymentMethod.value; // acessa diretamente do formulário enviado
+    if (paymentMethod === 'pix') {
+        window.location.href = 'qrcode_pix.php?' + buildQueryString(form);
+        return false; // Evita o envio do formulário
+    } else if (paymentMethod === 'cartao') {
+        return true; // Permite o envio do formulário
+    }
+}
+
+
     function updateQuantity(event, formElement) {
         event.preventDefault();
         
@@ -478,36 +492,33 @@ function buildQueryString(form) {
 
 
 
-    function applyDiscount(itemId, couponId, discountPercentage) {
+  
+    function applyDiscount(itemId, couponId, porcentagemDesconto) {
+    var totalElement = document.getElementById('total-value-' + itemId);
+    var total = parseFloat(totalElement.value);
+    
+    // Calcula o valor do desconto
+    var valorDoDesconto = total * (porcentagemDesconto / 100);
+    
+    // Aplica o desconto ao valor total
+    var totalComDesconto = total - valorDoDesconto;
+    
+    // Atualiza o valor do input com o total com desconto
+    totalElement.value = totalComDesconto.toFixed(2);
+
+    // Atualiza o texto do total na tela
     var totalTextElement = document.getElementById('total-text-' + itemId);
-    var currentTotal = parseFloat(totalTextElement.innerText.replace('R$', '').replace(',', '.'));
-    var discountAmount = currentTotal * (discountPercentage / 100);
-    var newTotal = currentTotal - discountAmount;
-
-    totalTextElement.innerText = 'R$' + newTotal.toFixed(2).replace('.', ',');
-
-    var totalInput = document.getElementById('total-value-' + itemId);
-    if (totalInput) {
-        totalInput.value = newTotal.toFixed(2);
+    if (totalTextElement) {
+        totalTextElement.textContent = 'R$' + totalComDesconto.toFixed(2).replace('.', ',');
     }
-
-    var couponDiv = document.getElementById('coupon-' + couponId);
-    if (couponDiv) {
-        couponDiv.parentNode.removeChild(couponDiv);
+    
+    // Oculta o cupom da tela
+    var couponElement = document.getElementById('coupon-' + couponId);
+    if (couponElement) {
+        couponElement.style.display = 'none';
     }
-
-    // Envie o novo total para o servidor para atualizar a sessão ou o banco de dados
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            // Lidar com a resposta se necessário
-        }
-    };
-    xhttp.open("POST", "apply_discount.php", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // Envie os dados do item, o novo total e o ID do cupom para o servidor
-    xhttp.send("itemId=" + itemId + "&newTotal=" + newTotal + "&couponId=" + couponId);
 }
+
 
             
   $(document).off('click', '.Ola').on('click', '.Ola', function(e) {

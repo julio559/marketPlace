@@ -128,18 +128,52 @@ if (!isset($_SESSION["usuario"])) {
             color: #6c757d;
             font-size: 1rem;
         }
+
+
+
+        #pesq {
+        padding: 10px 15px;
+        font-size: 16px;
+        border: 1px solid #ddd; /* Cor da borda cinza claro */
+        border-radius: 5px; /* Bordas arredondadas */
+        margin-bottom: 20px; /* Espaço abaixo do input */
+        width: 100%; /* Largura total dentro do seu contêiner */
+        box-sizing: border-box; /* Para incluir padding na largura total */
+        -webkit-appearance: none; /* Remove estilos padrão do navegador para iOS */
+        -moz-appearance: none; /* Remove estilos padrão do navegador para Firefox */
+        appearance: none; /* Remove estilos padrão do navegador */
+    }
+
+    /* Estilo para o input de pesquisa com foco */
+    #pesq:focus {
+        border-color: #2972f5; /* Cor da borda quando o input está focado */
+        outline: none; /* Remove o contorno padrão do navegador */
+        box-shadow: 0 0 8px rgba(41, 114, 245, 0.5); /* Sombra suave ao redor do input */
+    }
+
+    /* Placeholder do input de pesquisa */
+    #pesq::placeholder {
+        color: #999; /* Cor do texto do placeholder */
+    }
+
     </style>
 </head>
 <body>
 
-<header class="dashboard-header text-center">
-    <h1>Dashboard do Usuário</h1>
-</header>
 
 <div class="container my-5">
+
+
+<form>
+            <input type="number" name="pesquisar" id="pesq" placeholder="Pesquisar Numero de ordem">
+        </form>
+
+
+  
+
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <section class="complaints-section">
+        <section class="complaints-section" id="complaints-container">
                 <h2>Reclamações em Aberto</h2>
                 <?php 
                 if ($query->num_rows > 0) {
@@ -172,8 +206,31 @@ if (!isset($_SESSION["usuario"])) {
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<!-- Scripts -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#pesq').on('input', function() {
+        var pesquisa = $(this).val();
+
+        $.ajax({
+            url: 'pedidoA.php', // Verifique se este é o caminho correto
+            type: 'POST',
+            data: { pesquisa: pesquisa },
+            success: function(data) {
+                $('#complaints-container').html(data); // Atualiza o container com os resultados
+            }
+        });
+    });
+});
+</script>
+
+
+
+
 </body>
 </html>
 <?php 

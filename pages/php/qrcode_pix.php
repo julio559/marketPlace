@@ -223,7 +223,7 @@ body {
             <i class="fas fa-arrow-left"></i> Voltar
         </a>
 <div class="centered-div">
-<p class="ola">  Validade do seu pagamento <br> no valor de R$<?php echo $total ; ?></p>
+<p class="ola">  Validade do seu pagamento <br> no valor de R$<?php echo number_format($total, 2, ',', '.') ; ?></p>
 
 <div class="timer" id="timer">
   30:00

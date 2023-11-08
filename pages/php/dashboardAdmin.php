@@ -259,7 +259,15 @@ echo "Fazer login";
                                        }
 
                                        ?>
-                                                <?php 
+               <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
+
+                                       ?>
+                                              
+<?php 
                                        if(isset($_SESSION['usuario'])){
 
                                            echo    " <li><a href='my-account.php?id=$id'> conta de $nome </a></li>";
@@ -271,14 +279,7 @@ echo "Fazer login";
 
                                        }
                                        ?>
-                           <?php 
-                                       if(isset($_SESSION['usuario'])){
-
-                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
-                                       }
-
-                                       ?>
-                                                
+              
                                             </ul>
                                         </li> 
                                         <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
