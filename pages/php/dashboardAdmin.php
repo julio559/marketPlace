@@ -343,7 +343,7 @@ echo "Fazer login";
                                                                 <li><a href="../usuarios.php?very=<?php echo "1"?>">Administrativos</a></li>
                                                                 <li><a href="../usuarios.php?very=<?php echo "0"?>">Usuarios padrões da plataforma</a></li>
                                                                 <li><a href="../usuarios.php?very=<?php echo "full"?>">todos usuarios</a></li>
-                                                              
+                                                             
                                                             </ul>
                                                         </div>
                                                     </li>
@@ -368,9 +368,10 @@ echo "Fazer login";
                                                     </li>
                                              
                                                         
-                                                    
+                                               
 
                                                 </ul>
+                                                <li> <a href="dashboardPer.php?">Personalizar Tela </a></li>
                                             </li>
 
                                             
@@ -383,6 +384,7 @@ echo "Fazer login";
             <ul>
                 <li><a href="dashboardAdmin.php">Dashboard</a></li>
                 <li><a href="Minha.php">Minha loja</a></li>
+                <li> <a href="dahboardPer.php?">Personalizar Tela </a></li>
             </ul>
         </div>
     </div>
@@ -416,7 +418,7 @@ echo "Fazer login";
             <div class="stat-box">
                 
                 <h2>Faturamento:</h2>
-                <p> <img src="cofrinho.png" id="imgP"> R$: <?php if(isset ($fat)){ echo number_format($fat, 2, ',', '.');}else{ echo "nenhuma registro de venda feito"; } ?></p>
+                <p> <img src="cofrinho.png" id="imgP"> R$: <?php if(isset ($fat)){ echo number_format($fat, 2, ',', '.');}else{ echo "Nenhum registro de venda encontrado"; } ?></p>
 
             </div>
             <div class="stat-box">
