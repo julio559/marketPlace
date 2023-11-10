@@ -58,15 +58,16 @@ if (isset($_POST['box2']) || isset($_POST['desc2'])) {
 
 
 
-$sql23 = "SELECT box1, box2, box3 FROM edit_screen";
+$sql23 = "SELECT * FROM edit_screen";
 $query23 = $mysqli -> query($sql23);
 if ($query23->num_rows > 0) {
     while ($row23 = $query23->fetch_assoc()) {
         $text1 = $row23["box1"];
         $text2 = $row23["box2"];
         $text3 = $row23["box3"];
-
-        // Faça o que precisar com os valores de $text1, $text2 e $text3
+        $desc3 = $row23["desc3"];
+        $desc2 = $row23["desc2"];
+        $desc1 = $row23["desc1"];
     }
 } else {
    

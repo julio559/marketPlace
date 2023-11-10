@@ -17,7 +17,7 @@ $id = $_SESSION['usuario'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Desejos</title>
+    <title>Lista de Produtos curtidos</title>
     <link rel="stylesheet" href="wishlist.css">
 
 <style>
@@ -139,7 +139,7 @@ body {
 
 <div class="wishlist-page">
     <div class="wishlist-container">
-        <h2 class="wishlist-title">Minha Lista de Desejos</h2>
+        <h2 class="wishlist-title">Minha Lista de produtos curtidos</h2>
         <div id="wishlist-items" class="wishlist-grid">
             <?php
             $sql = "SELECT * FROM wish WHERE id_usuario = ?";

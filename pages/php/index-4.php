@@ -24,7 +24,7 @@ while ($row = $query -> fetch_assoc()) {
 
     $tipe = $row['tipe'];
 if($tipe == '1'){
-header("location: dashboardAdmin.php");
+header("location: ../../argon-dashboard-master/pages/dashboard.php");
 
 }
 }
@@ -121,7 +121,7 @@ echo "Fazer login";
 <?php 
                                        if(isset($_SESSION['usuario'])){
 
-                                           echo     "<li><a href='../desejos.php'> Lista de desejos </a></li>";
+                                           echo     "<li><a href='../desejos.php'> Produtos curtidos </a></li>";
                                        }
 
                                        ?>
