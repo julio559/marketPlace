@@ -131,7 +131,7 @@ echo "Fazer login";
 <?php 
                                        if(isset($_SESSION['usuario'])){
 
-                                           echo     "<li><a href='desejos.php'> Lista de desejos </a></li>";
+                                           echo     "<li><a href='../desejos.php'> Produtos curtidos </a></li>";
                                        }
 
                                        ?>

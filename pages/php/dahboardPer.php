@@ -42,17 +42,19 @@ if (isset($_POST['box1']) || isset($_POST['desc1']) || isset($_POST['iconChoice'
 }
 
 
-if (isset($_POST['box3']) || isset($_POST['desc3'])) {
+if (isset($_POST['box3']) || isset($_POST['desc3']) || isset($_POST['iconChoice3'])) {
     $text3 = isset($_POST['box3']) ? $_POST['box3'] : '';
     $desc3 = isset($_POST['desc3']) ? $_POST['desc3'] : '';
-    $sql = "UPDATE edit_screen SET box3 = '$text3', desc3 = '$desc3'";
+    $icon3 = isset($_POST['iconChoice3']) ? $_POST['iconChoice3'] : '';
+    $sql = "UPDATE edit_screen SET box3 = '$text3', desc3 = '$desc3', icon3 ='$icon3'";
     $query = $mysqli->query($sql);
 }
 
-if (isset($_POST['box2']) || isset($_POST['desc2'])) {
+if (isset($_POST['box2']) || isset($_POST['desc2'])|| isset($_POST['iconChoice2'])) {
     $text2 = isset($_POST['box2']) ? $_POST['box2'] : '';
     $desc2 = isset($_POST['desc2']) ? $_POST['desc2'] : '';
-    $sql = "UPDATE edit_screen SET box2 = '$text2', desc2 = '$desc2'";
+    $icon2 = isset($_POST['iconChoice2']) ? $_POST['iconChoice2'] : '';
+    $sql = "UPDATE edit_screen SET box2 = '$text2', desc2 = '$desc2', icon2 ='$icon2' ";
     $query = $mysqli->query($sql);
 }
 
@@ -395,6 +397,9 @@ if ($quer->num_rows > 0) {
                             <div class="col-lg-2 col-md-5">
                                 <div class="cart_area">
                                 <button class="blue" onclick="red()"><i class='ion-ios-cart-outline'></i> Venha comprar</button>
+
+
+                                
                                     <div class="cart_link">
                                         <?php
                                         if(isset($_SESSION["usuario"])){
@@ -494,7 +499,7 @@ while ($row = $query->fetch_assoc()) {
                         <h3><?php echo isset($text1) ? $text1 : "editar box"; ?></h3>
                         <p><?php echo isset($desc1) ? $desc1 : "editar descrição"; ?></p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalBox1">
-                            Editar ícone e texto
+                            Editar texto
                         </button>
                         <!-- Modal Box 1 -->
                         <div class="modal fade" id="exampleModalBox1" tabindex="-1" aria-labelledby="exampleModalLabelBox1" aria-hidden="true">
@@ -517,12 +522,12 @@ while ($row = $query->fetch_assoc()) {
                                             <div class="mb-3">
                                                 <label for="iconSelect">Escolha um ícone:</label>
                                                 <select class="form-select" id="iconSelect" name="iconChoice">
-    <option value="bi-eye">&#128065; Olho</option>
-    <option value="bi-pencil">&#9998; Lápis</option>
-    <option value="bi-cash">&#128176; Dinheiro</option>
-    <option value="bi-cart">&#128722; Carrinho</option>
-    <option value="bi-box-seam">&#128230; Caixa</option>
-    <option value="bi-truck">&#128668; Caminhão</option>
+  
+    <option value="pe-7s-eyedropper">&#9998; Lápis</option>
+    <option value="pe-7s-cash">&#128176; Dinheiro</option>
+    <option value="pe-7s-cart">&#128722; Carrinho</option>
+    <option value="pe-7s-cart">&#128230; Caixa</option>
+   
     <!-- Adicione mais opções de ícones aqui -->
 </select>
                                             </div>
@@ -549,7 +554,17 @@ while ($row = $query->fetch_assoc()) {
             <div class="col-lg-4 col-md-4">
                 <div class="single_shipping">
                     <div class="shipping_icone">
-                        <span class="pe-7s-piggy"></span>
+                    <?php 
+
+$sql = "SELECT icon2 FROM edit_screen";
+$query = $mysqli->query($sql);
+while ($row = $query->fetch_assoc()) {
+    $icon2 = $row["icon2"];  
+    echo "<span class='$icon2'></span>"; // Isso vai renderizar como <span class='bi bi-pencil'></span>
+    // Assumindo que você está usando Bootstrap Icons
+}
+
+?>
                     </div>
                     <div class="shipping_content">
                         <h3><?php echo isset($text2) ? $text2 : "editar box"; ?></h3>
@@ -572,6 +587,18 @@ while ($row = $query->fetch_assoc()) {
                                         </br>
                                         <input type="text" class="form-control" placeholder="Escreva a descrição" name="desc2" required>
                                     </div>
+                                    <div class="mb-3">
+                                                <label for="iconSelect">Escolha um ícone:</label>
+                                                <select class="form-select" id="iconSelect" name="iconChoice2">
+  
+    <option value="pe-7s-eyedropper">&#9998; Lápis</option>
+    <option value="pe-7s-cash">&#128176; Dinheiro</option>
+    <option value="pe-7s-cart">&#128722; Carrinho</option>
+    <option value="pe-7s-cart">&#128230; Caixa</option>
+   
+    <!-- Adicione mais opções de ícones aqui -->
+</select>
+                                            </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
@@ -587,7 +614,18 @@ while ($row = $query->fetch_assoc()) {
             <div class="col-lg-4 col-md-4">
                 <div class="single_shipping column_3">
                     <div class="shipping_icone">
-                        <span class="pe-7s-help2"></span>
+                    <?php 
+
+$sql = "SELECT icon3 FROM edit_screen";
+$query = $mysqli->query($sql);
+while ($row = $query->fetch_assoc()) {
+    $icon3 = $row["icon3"];  
+    echo "<span class='$icon3'></span>"; // Isso vai renderizar como <span class='bi bi-pencil'></span>
+    // Assumindo que você está usando Bootstrap Icons
+}
+
+?>
+     
                     </div>
                     <div class="shipping_content">
                         <h3><?php echo isset($text3) ? $text3 : "editar box"; ?></h3>
@@ -609,6 +647,18 @@ while ($row = $query->fetch_assoc()) {
                                         </br>
                                         <input type="text" class="form-control" placeholder="Escreva a descrição" name="desc3" required>
                                     </div>
+                                    <div class="mb-3">
+                                                <label for="iconSelect">Escolha um ícone:</label>
+                                                <select class="form-select" id="iconSelect" name="iconChoice3">
+  
+    <option value="pe-7s-eyedropper">&#9998; Lápis</option>
+    <option value="pe-7s-cash">&#128176; Dinheiro</option>
+    <option value="pe-7-cart">&#128722; Carrinho</option>
+    <option value="pe-7s-cart">&#128230; Caixa</option>
+   
+    <!-- Adicione mais opções de ícones aqui -->
+</select>
+                                            </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                         <button type="submit" class="btn btn-primary">Salvar</button>

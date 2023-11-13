@@ -8,18 +8,14 @@ if (!isset($_SESSION["usuario"])) {
     header("location: ../../pages/logred.php");
     exit; // Não esqueça de chamar exit após o redirecionamento.
 }
-
-$id = $_SESSION['usuario'];
+if(isset($_GET["id"])) {
+$id =  $_GET["id"];
 $sql = "SELECT * FROM clientes WHERE id = $id";
 $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
 
-    $tipe = $row['tipe'];
-if($tipe != '1'){
-header("location: ../../pages/php/index-4.php");
 
-}else{
-
+$tipe = $row['tipe'];
 $nome = $row['nome'];
 $imagem = $row['img_perfil'];
 $email = $row['email'];
@@ -30,6 +26,15 @@ $numero = $row['numero'];
 }
 }
 
+if($tipe =='1'){
+
+$tipe = "Administrador";
+
+}else{
+
+$tipe = "Usuario padrão";
+
+}
 
 
 
@@ -40,15 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $endereco = $_POST['endereco'] ?? '';
   $numero = $_POST['numero'] ?? '';
   $cep = $_POST['cep'] ?? '';
+  $cpf = $_POST['cpf'] ?? '';
   $id_usuario = $_SESSION['usuario']; // Ou a forma que você tem de obter o ID do usuário
-
+  $sliderValue = $_POST['sliderValue'];
   // Prepara a consulta SQL para atualizar as informações do usuário
-  $sql = "UPDATE clientes SET nome = ?, email = ?, endereco = ?, numero = ?, cep = ? WHERE id = ?";
+  $sql = "UPDATE clientes SET nome = ?, email = ?, endereco = ?, numero = ?, cep = ?, cpf = ?, block = ?  WHERE id = ?";
 
   // Prepara o statement para execução
   if ($stmt = $mysqli->prepare($sql)) {
       // "s" significa que o parâmetro é uma string
-      $stmt->bind_param("sssssi", $nome, $email, $endereco, $numero, $cep, $id);
+      $stmt->bind_param("sssssssi", $nome, $email, $endereco, $numero, $cep, $cpf, $sliderValue, $id);
 
       // Executa a consulta preparada
       if ($stmt->execute()) {
@@ -89,6 +95,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 
 <style>
+
+.slider-container {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.slider {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 15px;
+  position: absolute;
+  transition: 0.3s;
+}
+
+.slider-container.active {
+  background-color: green;
+}
 
 .save{
 
@@ -170,6 +198,7 @@ padding: 10px;
             <span class="nav-link-text ms-1">Tickets abertos</span>
           </a>
         </li>
+       
         <li class="nav-item">
           <a class="nav-link " href="resume.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -179,15 +208,21 @@ padding: 10px;
             <span class="nav-link-text ms-1">Resumo mensal vendedores</span>
           </a>
         </li>
-
-
-
+   
+        <li class="nav-item">
+          <a class="nav-link active" href="../pages/profile.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Editar conta de usuario</span>
+          </a>
+        </li>
 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="../pages/profile.php">
+          <a class="nav-link" href="../pages/profile.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -269,7 +304,7 @@ padding: 10px;
             <?php echo $nome ?>
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
-              Adimistrador
+             <?php echo $tipe ?>
               </p>
             </div>
           </div>
@@ -308,7 +343,7 @@ padding: 10px;
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="example-text-input" class="form-control-label"  >CPF</label>
-                    <input class="form-control" type="text" value="<?php echo $cpf ?>" disabled>
+                    <input class="form-control" type="text" value="<?php echo $cpf ?>  "  name="cpf">
                   </div>
                 </div>
               </div>
@@ -334,6 +369,14 @@ padding: 10px;
   <label for="endereco" class="form-control-label">Endereço</label>
   <input class="form-control" type="text" id="endereco" value="<?php echo $endereco ?>" name="endereco">
 </div>
+
+
+<div class="slider-container" onclick="toggleSlider()">
+    <div class="slider"></div>
+    <input type="hidden" id="sliderValue" name="sliderValue" value="0">
+  </div>
+  <p> Bloquear usuario? </p>
+
 
 <button type="submit" class="save"> Salvar alterações </button>
 
@@ -371,7 +414,7 @@ padding: 10px;
                   <i class="ni location_pin mr-2"></i> <?php echo $endereco ?>
                 </div>
                 <div class="h6 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i>Administrador
+                  <i class="ni business_briefcase-24 mr-2"></i><?php echo $tipe ?>
                 </div>
                
               </div>
@@ -470,6 +513,25 @@ $(document).ready(function() {
 ?>
 
   <script>
+
+
+function toggleSlider() {
+  var slider = document.querySelector('.slider');
+  var container = document.querySelector('.slider-container');
+  var sliderValue = document.getElementById('sliderValue');
+
+  if (slider.style.left === '30px') {
+    slider.style.left = '0px';
+    container.classList.remove('active');
+    sliderValue.value = '0';
+  } else {
+    slider.style.left = '30px';
+    container.classList.add('active');
+    sliderValue.value = '1';
+  }
+}
+
+
 $(document).ready(function() {
 
 // Função para buscar o endereço sempre que o CEP for alterado

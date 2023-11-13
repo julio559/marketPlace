@@ -55,26 +55,6 @@ $nome_usuario = $row["nome"];
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
-<STYLE>
-.add-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 60px;/* Alinha os elementos filhos à direita dentro do contêiner flex */
-}
-
-.add {
-  border: none;
-  border-radius: 20px;
-padding: 10px;
-  color: white;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  background-color: #63B3ED;
-}
-
-
-</style>
-
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -99,7 +79,7 @@ padding: 10px;
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="../pages/tables.html">
+          <a class="nav-link" href="../pages/tables.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
@@ -126,16 +106,14 @@ padding: 10px;
         </li>
        
         <li class="nav-item">
-          <a class="nav-link " href="resume.php">
+          <a class="nav-link active " href="resume.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             <img src="ingressos.png" width="20px"> 
             </div>
            
-            <span class="nav-link-text ms-1">Resumo mensal vendedores</span>
+            <span class="nav-link-text ms-1">Resumo vendedores</span>
           </a>
         </li>
-
- 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>
         </li>
@@ -293,13 +271,11 @@ echo "   <div class='d-flex flex-column justify-content-center'>
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tabela de usuarios da plataforma</h6>
-
-<?php 
+              <?php
 include '../../pages/php/conexao.php';
 
 $sql = "SELECT * FROM clientes";
-$query = $mysqli -> query($sql);
-
+$query = $mysqli->query($sql);
 
 echo '<div class="card-body px-0 pt-0 pb-2">
   <div class="table-responsive p-0">
@@ -309,61 +285,64 @@ echo '<div class="card-body px-0 pt-0 pb-2">
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome do Usuário</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Cep</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">cpf</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Endereço de Entrega</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantidade de vendas</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total de vendas em valor</th>
           <th class="text-secondary opacity-7"></th>
         </tr>
       </thead>
       <tbody>';
 
-while ($row = mysqli_fetch_array($query)) {
-
-    // Substitua 'caminho_para_imagem', 'nome_usuario', 'email_usuario', 'funcao', 'organizacao', 'status', 'data' e 'link_editar' pelos dados reais do banco de dados
-    echo '<tr>
-            <td>
-              <div class="d-flex px-2 py-1">
-                <div>
+      while ($row = $query->fetch_assoc()) {
+        $id = $row['id'];
+        $sql2 = "SELECT * FROM ordemcompra WHERE id_cliente = ? AND status = 'completa'";
+        $stmt = $mysqli->prepare($sql2);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $query2 = $stmt->get_result();
+    
+        $totalVendas = 0;
+        $quantidadeVendas = 0; 
+        while ($row2 = $query2->fetch_assoc()) {
+            $totalVendas += $row2['total']; 
+            // Substitua 'valor' pelo nome correto do campo
+            $quantidadeVendas++; 
+          }
+    
+  echo '<tr>
+          <td>
+            <div class="d-flex px-2 py-1">
+              <div>
                 <img src="../../pages/uploads/' . $row['img_perfil'] . '" class="avatar avatar-sm me-3" alt="avatar">
-
-                </div>
-                <div class="d-flex flex-column justify-content-center">
-                  <h6 class="mb-0 text-sm">' . $row['nome'] . '</h6>
-                 
-                </div>
               </div>
-            </td>
-            <td>
-            <p class="text-xs text-secondary mb-0">' . $row['email'] . '</p>
-          
-            </td>
-            <td>
-              <p class="text-xs font-weight-bold mb-0">' . $row['cep'] . '</p>
-          
-            </td>
-      
-            <td class="align-middle text-center">
-              <span class="text-secondary text-xs font-weight-bold">' . $row['cpf'] . '</span>
-            </td>
-            
-
-            <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-bold">' . $row['endereco'] . '</span>
+              <div class="d-flex flex-column justify-content-center">
+                <h6 class="mb-0 text-sm">' . $row['nome'] . '</h6>
+              </div>
+            </div>
           </td>
-
-            <td class="align-middle">
-              <a href="edita_profile.php?id='. $row['id'] .'" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
-                Editar 
-              </a>
-            </td>
-          </tr>';
+          <td>
+            <p class="text-xs text-secondary mb-0">' . $row['email'] . '</p>
+          </td>
+          <td>
+            <p class="text-xs font-weight-bold mb-0">' . $row['cep'] . '</p>
+          </td>
+          <td class="align-middle text-center">
+            <span class="text-secondary text-xs font-weight-bold">' . $quantidadeVendas   . '</span>
+          </td>
+          <td class="align-middle text-center">
+            <span class="text-secondary text-xs font-weight-bold">' . $totalVendas   . '</span>
+          </td>
+          <td class="align-middle">
+            <!-- Add any additional columns or data here -->
+          </td>
+        </tr>';
 }
 
-// Fecha as tags da tabela e do corpo da tabela após o loop
 echo '      </tbody>
     </table>
   </div>
 </div>';
 ?>
+
 
 
 <div class="fixed-plugin">
@@ -429,74 +408,11 @@ echo '      </tbody>
     </div>
   </div>
 
-  <?php
-$id = $_SESSION['usuario'];
-$sql2 = "SELECT * FROM produto WHERE id_vendedor = $id";
-$query2 = $mysqli->query($sql2);
 
-echo "<div class='row'>
-  <div class='col-12'>
-    <div class='card mb-4'>
-      <div class='card-header pb-0'>
-        <h6>Produtos a venda</h6>
-      </div>
-      <div class='card-body px-0 pt-0 pb-2'>
-        <div class='table-responsive p-0'>
-          <table class='table align-items-center justify-content-center mb-0'>
-            <thead>
-              <tr>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>Produto</th>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Status do produto</th>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Preço</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>";
 
-while ($row2 = $query2->fetch_array()) {
-  $tipe = $row2['tipe'];
+        
 
-  if ($tipe == '1') {
-    $tipe = "Ativo";
-  } else {
-    $tipe = "Desativado";
-  }
 
-  echo "<tr>
-    <td>
-      <div class='d-flex px-2'>
-        <div>
-          <img src='../../pages/uploads/" . $row2['imagem'] . "' class='avatar avatar-sm rounded-circle me-2' alt='produto'>
-        </div>
-        <div class='my-auto'>
-          <h6 class='mb-0 text-sm'>" . $row2['nome'] . "</h6>
-        </div>
-      </div>
-    </td>
-    <td>
-      <p class='text-sm font-weight-bold mb-0'>" . $tipe . "</p>
-    </td>
-    <td>
-      <span class='text-xs font-weight-bold'>R$: " . $row2['preco'] . "</span>
-    </td>
-    <td class='align-middle text-center'>
-      <!-- Outros elementos aqui, se necessário -->
-    </td>
-  </tr>";
-}
-
-echo "</tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-";
-?>
-<div class="add-container">
-<button onclick="add()" class="add"> + </button>
-</div>
- </div>
-</div>
      
                      
   <!--   Core JS Files   -->
@@ -512,15 +428,6 @@ echo "</tbody>
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-
-
-
-function add(){
-
-window.location.href = "add_prod.php";
-
-}
-
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

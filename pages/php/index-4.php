@@ -18,9 +18,65 @@ $nome = $row['nome'];
 
 }
 
-$sql = "SELECT tipe FROM clientes WHERE id = $id";
+$sql = "SELECT tipe, block FROM clientes WHERE id = $id";
 $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
+$block = $row["block"];
+
+if ($block === '1') {
+    die("
+    <style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .blocked-user-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .blocked-user-container h2 {
+        color: #d9534f;
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+    .blocked-user-container p {
+        color: #333;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    </style>
+    <div class='modal-overlay'>
+        <div class='blocked-user-container'>
+            <h2>Usuário Bloqueado</h2>
+            <p>Este usuário foi bloqueado por um administrador do sistema.</p>
+            <p>Por favor, entre em contato com o suporte para mais informações.</p>
+        </div>
+    </div>
+    ");
+}else{
+
+$block = false;
+
+}
+
 
     $tipe = $row['tipe'];
 if($tipe == '1'){
@@ -29,6 +85,32 @@ header("location: ../../argon-dashboard-master/pages/dashboard.php");
 }
 }
 }
+
+
+$sql23 = "SELECT * FROM edit_screen";
+$query23 = $mysqli -> query($sql23);
+if ($query23->num_rows > 0) {
+    while ($row23 = $query23->fetch_assoc()) {
+        $text1 = $row23["box1"];
+        $text2 = $row23["box2"];
+        $text3 = $row23["box3"];
+        $desc3 = $row23["desc3"];
+        $desc2 = $row23["desc2"];
+        $desc1 = $row23["desc1"];
+        $icon1= $row23["icon1"];
+        $icon2= $row23["icon2"];
+        $icon3= $row23["icon3"];
+    }
+} else {
+   
+    $text1 = "Ainda não foi editado";
+    $text2 = "Ainda não foi editado";
+    $text3 = "Ainda não foi editado";
+    $desc3 = "Ainda não foi editado";
+    $desc2 = "Ainda não foi editado";
+    $desc1 = "Ainda não foi editado";
+}
+
 
 ?>
 
@@ -278,33 +360,33 @@ echo "<a href='../logred.php'>logar</a>";
                                     <div class="col-lg-4 col-md-4">
                                         <div class="single_shipping">
                                             <div class="shipping_icone">
-                                                <span class="pe-7s-piggy"></span>
+                                                <span class="<?php echo $icon1 ?>"></span>
                                             </div>
                                             <div class="shipping_content">
-                                                <h3>Envio gratuito para todo o mundo</h3>
-                                                <p> desenvolvido by julio </p>
+                                                <h3><?php echo $text1 ?></h3>
+                                                <p>   <?php echo $desc1 ?></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="single_shipping">
                                             <div class="shipping_icone">
-                                                <span class="pe-7s-rocket"></span>
+                                                <span class="<?php echo $icon2 ?>"></span>
                                             </div>
                                             <div class="shipping_content">
-                                                <h3>Melhor Market place do BRASIL </h3>
-                                                <p> desenvolvido by julio</p>
+                                            <h3><?php echo $text2 ?></h3>
+                                                <p>   <?php echo $desc2 ?></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4">
                                         <div class="single_shipping column_3">
                                             <div class="shipping_icone">
-                                                <span class="pe-7s-help2"></span>
+                                                <span class="<?php echo $icon3 ?>"></span>
                                             </div>
                                             <div class="shipping_content">
-                                                <h3>Somos o Market</h3>
-                                           <p>desenvolvido by julio </p>
+                                            <h3><?php echo $text3 ?></h3>
+                                                <p>   <?php echo $desc3 ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -369,7 +451,7 @@ while ($row = $result->fetch_assoc()):
 
                     if ($estoque > 0) {
                         echo "<li class='product_cart'>
-                            <a href='cart.php?id=$id' title='Adicionar ao carrinho'> + carrinho</a>
+                            <a href='../product-details.php?id_prod=$id' title='Adicionar ao carrinho'> Detalhes </a>
                         </li>";
                     } else {
                         echo "<li class='product_cart'>

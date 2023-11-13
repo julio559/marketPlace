@@ -96,6 +96,10 @@ if (isset($_POST['meta'])) {
 border-radius: 50px;
 
 }
+.white{
+color: white;
+
+}
 
 </style>
 
@@ -130,8 +134,38 @@ border-radius: 50px;
             <span class="nav-link-text ms-1">Tabelas</span>
           </a>
         </li>
-      
+        <li class="nav-item">
+          <a class="nav-link " href="../../pages/php/dahboardPer.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+          <img src="ferramenta-lapis.png" width="20px"> 
+            </div>
+            <span class="nav-link-text ms-1">Editar Tela de vendedor</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link " href="tickets.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <img src="ingressos.png" width="20px"> 
+            </div>
+           
+            <span class="nav-link-text ms-1">Tickets abertos</span>
+          </a>
+        </li>
        
+      
+        <li class="nav-item">
+          <a class="nav-link " href="resume.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <img src="ingressos.png" width="20px"> 
+            </div>
+           
+            <span class="nav-link-text ms-1">Resumo mensal vendedores</span>
+          </a>
+        </li>
+       
+      
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>
         </li>
@@ -189,7 +223,7 @@ border-radius: 50px;
             while( $row332 = $queque -> fetch_assoc() ){
 
 $nome = $row332["nome"];
-echo $nome;
+echo " <a href='profile.php' class='white'> $nome </a>";
 
             } ?> </span>
               </a>
@@ -594,7 +628,8 @@ echo $total_for;
 
 <?php    
 
-$sql34 = "SELECT * FROM ordemcompra WHERE id_vendedor = $id AND status = 'completa' limit 3";
+$sql34 = "SELECT * FROM ordemcompra WHERE id_vendedor = $id AND status = 'completa' ORDER BY id DESC LIMIT 3";
+
 $query34 = $mysqli->query($sql34);
 if($query34 -> num_rows > 0){
 while( $row34 = $query34 -> fetch_assoc()){
@@ -699,16 +734,17 @@ $sql_ticket = "SELECT * FROM refound WHERE id_vendor = $id_usu";
   }
 
 ?>
-
+<a href = "tickets.php ">
                       <h6 class="mb-1 text-dark text-sm">Tickets</h6>
                       <span class="text-xs"> <?php echo $total_tickets ?> </span>
+
                     </div>
                   </div>
                   <div class="d-flex">
                     <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
                   </div>
                 </li>
-           
+                </a>
                 </li>
                 
               </ul>
