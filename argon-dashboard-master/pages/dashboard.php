@@ -101,6 +101,8 @@ color: white;
 
 }
 
+
+
 </style>
 
 </head>
@@ -119,13 +121,24 @@ color: white;
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" href="../pages/dashboard.html">
+          <a class="nav-link active" href="dashboard.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="emergencia.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+            </div>
+            
+            <span class="nav-link-text ms-1">Emergencia</span>
+          </a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link " href="../pages/tables.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -228,6 +241,12 @@ echo " <a href='profile.php' class='white'> $nome </a>";
             } ?> </span>
               </a>
             </li>
+
+         
+            <li class="nav-item d-flex align-items-center">
+
+            </li>
+
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                 <div class="sidenav-toggler-inner">
@@ -511,7 +530,7 @@ echo "<button type=\"button\" class=\"btn btn-primary\" id=\"btn-close\" data-bs
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total de vendas </p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total de vendas realizadas  </p>
                     <h5 class="font-weight-bolder">
                 
 
@@ -679,7 +698,7 @@ echo "
   <td>
     <div class='text-center'>
       <p class='text-xs font-weight-bold mb-0'>Valor total:</p>
-      <h6 class='text-sm mb-0'>$total_for32</h6>
+      <h6 class='text-sm mb-0'>R$$total_for32</h6>
     </div>
   </td>
   <td class='align-middle text-sm'>
@@ -747,12 +766,47 @@ $sql_ticket = "SELECT * FROM refound WHERE id_vendor = $id_usu";
                 </a>
                 </li>
                 
+                <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
+                  <div class="d-flex align-items-center">
+                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
+                      <i class="ni ni-tag text-white opacity-10"></i>
+                    </div>
+                    <div class="d-flex flex-column">
+
+<?php 
+$id_usu = $_SESSION['usuario'];
+$total_ordem = "0";
+
+$sql_ticket = "SELECT * FROM ordemcompra WHERE id_cliente = $id_usu";
+  $query_ticket = $mysqli -> query($sql_ticket);
+  while($row_ticket = $query_ticket->fetch_assoc()){
+    $total_ordem++;
+  }
+
+?>
+<a href = "ordemcompra.php ">
+                      <h6 class="mb-1 text-dark text-sm">Ordens de compras</h6>
+                      <span class="text-xs"> <?php echo $total_ordem ?> </span>
+
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i class="ni ni-bold-right" aria-hidden="true"></i></button>
+                  </div>
+                </li>
+                </a>
+                </li>
+
+                
               </ul>
             </div>
           </div>
         </div>
       </div>
      
+
+
+      
   </main>
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">

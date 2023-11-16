@@ -2,7 +2,7 @@
 
         
         $hostname = 'localhost';
-        $bancodedados = 'marketPlacev1';
+        $bancodedados = 'marketPlaceV2';
         $usuario = 'root';
         $senha = '';
 

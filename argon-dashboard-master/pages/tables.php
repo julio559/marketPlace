@@ -98,6 +98,19 @@ padding: 10px;
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+
+
+
+        <li class="nav-item">
+          <a class="nav-link active" href="emergencia.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+            </div>
+            
+            <span class="nav-link-text ms-1">Emergencia</span>
+          </a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link active" href="../pages/tables.html">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -448,6 +461,7 @@ echo "<div class='row'>
                 <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>Produto</th>
                 <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Status do produto</th>
                 <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Preço</th>
+                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>estoque</th>
                 <th></th>
               </tr>
             </thead>
@@ -480,8 +494,14 @@ while ($row2 = $query2->fetch_array()) {
       <span class='text-xs font-weight-bold'>R$: " . $row2['preco'] . "</span>
     </td>
     <td class='align-middle text-center'>
-      <!-- Outros elementos aqui, se necessário -->
+    <span class='text-xs font-weight-bold'>" . $row2['stock'] . "</span>
     </td>
+
+
+    <td class='align-middle text-center'>
+    <span class='text-xs font-weight-bold'>Alterar produto</span>
+    </td>
+
   </tr>";
 }
 

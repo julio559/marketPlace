@@ -18,6 +18,66 @@ $nome = $row['nome'];
 
 }
 
+
+$sql33 = "SELECT online FROM plataform";
+$query33 = $mysqli -> query($sql33);
+while ($row33 = $query33 -> fetch_assoc()) {
+$on = $row33["online"];
+if( $on === '1'){
+
+    die("
+    <style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .blocked-user-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .blocked-user-container h2 {
+        color: #d9534f;
+        margin-bottom: 20px;
+        font-size: 22px;
+    }
+
+    .blocked-user-container p {
+        color: #333;
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    </style>
+    <div class='modal-overlay'>
+        <div class='blocked-user-container'>
+            <h2>Plataforma fora do ar</h2>
+            <p>A plataforma esta fora do ar ainda sem previsão para voltar</p>
+            <p>Por favor, entre em contato com o suporte para mais informações.</p>
+        </div>
+    </div>
+    ");
+
+
+}
+
+}
+
 $sql = "SELECT tipe, block FROM clientes WHERE id = $id";
 $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
