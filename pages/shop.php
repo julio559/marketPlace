@@ -5,7 +5,11 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Garanta que $_SESSION['usuario'] esteja definido
+if(!isset($_SESSION["usuario"])) {
+
+header("location:logred.php");
+
+}
 if (isset($_SESSION['usuario'])) {
     $userId = $_SESSION['usuario'];
 
@@ -15,11 +19,13 @@ if (isset($_SESSION['usuario'])) {
 
     // Execute a consulta
     $stmt->execute();
-    $result = $stmt->get_result();
+
+    // Associa a coluna do resultado à variável
+    $stmt->bind_result($itemCount);
 
     // Pegue o resultado
-    if ($row = $result->fetch_assoc()) {
-        $itemCount = $row['item_count'];
+    if ($stmt->fetch()) {
+        // $itemCount já está definido pela função bind_result
     } else {
         $itemCount = 0; // ou algum valor padrão se algo der errado
     }
@@ -502,15 +508,18 @@ $result = $mysqli->query($query);
 function checkIfProductIsInWishlist($product_id, $user_id) {
     global $mysqli;
 
-    $query = "SELECT COUNT(*) as count FROM wish WHERE id_prod = ? AND id_usuario = ?";
+    $query = "SELECT COUNT(*) FROM wish WHERE id_prod = ? AND id_usuario = ?";
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param("ii", $product_id, $user_id);
     $stmt->execute();
 
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+    // Vincula o resultado da consulta à variável
+    $stmt->bind_result($count);
+    $stmt->fetch();
 
-    return $row['count'] > 0;
+    $stmt->close();
+
+    return $count > 0;
 }
 
 
@@ -589,6 +598,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
     </div>      
 </div>
+
    
               <!--shipping area start-->
             <div class="shipping_area shipping_contact ">

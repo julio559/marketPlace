@@ -23,7 +23,7 @@ if (isset($_GET['nome'])) {
 
 
 
-header("location: index-4.php");
+header("location: http://www.b2b4u.com.br/pages/php/index-4.php");
 
 
 

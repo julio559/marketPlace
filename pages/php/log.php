@@ -27,7 +27,7 @@ if (isset($_POST['enviar'])) {
                 if (password_verify($senha, $hashedSenha)) {
                     $_SESSION['usuario'] = $id;
 
-                    header("Location: php\dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
+                    header("Location: http://www.b2b4u.com.br/pages/php/dashboard2.php?nome=" . urlencode($nome) . "&id=" . urlencode($id));
                     exit;
                 } else {
                     $error = "<p class='error'>Senha incorreta.</p>";

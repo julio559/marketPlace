@@ -15,7 +15,7 @@ $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
 
   $tipe = $row['tipe'];
-if($tipe != '1'){
+if($tipe < '1'){
 header("location: ../../pages/php/index-4.php");
 
 }
@@ -91,14 +91,22 @@ $nome_usuario = $row["nome"];
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="../pages/tables.html">
+          <a class="nav-link " href="../pages/tables.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Tabelas</span>
+            <span class="nav-link-text ms-1">Tabela de usuarios</span>
           </a>
         </li>
-       
+
+        <li class="nav-item">
+          <a class="nav-link " href="../pages/tables2.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Tabela de produtos</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link " href="../../pages/php/dahboardPer.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -126,6 +134,17 @@ $nome_usuario = $row["nome"];
             <span class="nav-link-text ms-1">Resumo vendedores</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link active " href="total_vendido_plataform.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <img src="ingressos.png" width="20px"> 
+            </div>
+           
+            <span class="nav-link-text ms-1">Resulmo total</span>
+          </a>
+        </li>
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>
         </li>
@@ -286,74 +305,79 @@ echo "   <div class='d-flex flex-column justify-content-center'>
               <?php
 include '../../pages/php/conexao.php';
 
-$sql = "SELECT * FROM clientes";
-$query = $mysqli->query($sql);
 
-echo '<div class="card-body px-0 pt-0 pb-2">
-  <div class="table-responsive p-0">
-    <table class="table align-items-center mb-0">
-      <thead>
-        <tr>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome do Usuário</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Cep</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantidade de vendas</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total de vendas em valor</th>
-          <th class="text-secondary opacity-7"></th>
-        </tr>
-      </thead>
-      <tbody>';
-
-      while ($row = $query->fetch_assoc()) {
-        $id = $row['id'];
-        $sql2 = "SELECT * FROM ordemcompra WHERE id_cliente = ? AND status = 'completa'";
-        $stmt = $mysqli->prepare($sql2);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $query2 = $stmt->get_result();
-    
-        $totalVendas = 0;
-        $quantidadeVendas = 0; 
-        while ($row2 = $query2->fetch_assoc()) {
-            $totalVendas += $row2['total']; 
-            // Substitua 'valor' pelo nome correto do campo
-            $quantidadeVendas++; 
-          }
-    
-  echo '<tr>
-          <td>
-            <div class="d-flex px-2 py-1">
-              <div>
-                <img src="../../pages/uploads/' . $row['img_perfil'] . '" class="avatar avatar-sm me-3" alt="avatar">
-              </div>
-              <div class="d-flex flex-column justify-content-center">
-                <h6 class="mb-0 text-sm">' . $row['nome'] . '</h6>
-              </div>
-            </div>
-          </td>
-          <td>
-            <p class="text-xs text-secondary mb-0">' . $row['email'] . '</p>
-          </td>
-          <td>
-            <p class="text-xs font-weight-bold mb-0">' . $row['cep'] . '</p>
-          </td>
-          <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-bold">' . $quantidadeVendas   . '</span>
-          </td>
-          <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-bold">' . $totalVendas   . '</span>
-          </td>
-          <td class="align-middle">
-            <!-- Add any additional columns or data here -->
-          </td>
-        </tr>';
-}
-
-echo '      </tbody>
-    </table>
-  </div>
-</div>';
-?>
+            
+            $sql = "SELECT * FROM clientes";
+            $query = $mysqli->query($sql);
+            
+            echo '<div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nome do Usuário</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Cep</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantidade de vendas</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Total de vendas em valor</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>';
+            
+                  while ($row = $query->fetch_assoc()) {
+                    $id = $row['id'];
+                    $sql2 = "SELECT id, id_cliente, total, status FROM ordemcompra WHERE id_cliente = ? AND status = 'completa'";
+                    $stmt = $mysqli->prepare($sql2);
+                    $stmt->bind_param("i", $id);
+                    $stmt->execute();
+                // Bind the result variables for the second query
+                $stmt->bind_result($id, $id_cliente, $total, $status ); // Substitua com as colunas reais da tabela ordemcompra
+            
+                $totalVendas = 0;
+                $quantidadeVendas = 0;
+                while ($stmt->fetch()) {
+                    $totalVendas += $total;
+                    $quantidadeVendas++;
+                }
+            
+                echo '<tr>
+                        <td>
+                            <div class="d-flex px-2 py-1">
+                                <div>
+                                    <img src="../../pages/uploads/' . $row['img_perfil'] . '" class="avatar avatar-sm me-3" alt="avatar">
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">' . $row['nome'] . '</h6>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-xs text-secondary mb-0">' . $row['email'] . '</p>
+                        </td>
+                        <td>
+                            <p class="text-xs font-weight-bold mb-0">' . $row['cep'] . '</p>
+                        </td>
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">' . $quantidadeVendas . '</span>
+                        </td>
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">' . $totalVendas . '</span>
+                        </td>
+                        <td class="align-middle">
+                            <!-- Add any additional columns or data here -->
+                        </td>
+                    </tr>';
+                $stmt->close();
+            }
+            
+            echo '      </tbody>
+                  </table>
+                </div>
+              </div>';
+            ?>
+            
+      
 
 
 

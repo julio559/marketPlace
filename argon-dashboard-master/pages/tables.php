@@ -15,7 +15,7 @@ $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
 
   $tipe = $row['tipe'];
-if($tipe != '1'){
+if($tipe < '1'){
 header("location: ../../pages/php/index-4.php");
 
 }
@@ -72,7 +72,21 @@ padding: 10px;
   background-color: #63B3ED;
 }
 
+#searchInput {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    width: 250px; /* Ajuste a largura conforme necessário */
+}
 
+#searchInput:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
 </style>
 
 </head>
@@ -116,10 +130,21 @@ padding: 10px;
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Tabelas</span>
+            <span class="nav-link-text ms-1">Tabela de usuarios</span>
           </a>
         </li>
        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../pages/tables2.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Tabela de produtos</span>
+          </a>
+        </li>
+       
+
         <li class="nav-item">
           <a class="nav-link " href="../../pages/php/dahboardPer.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -148,7 +173,15 @@ padding: 10px;
           </a>
         </li>
 
- 
+        <li class="nav-item">
+          <a class="nav-link active " href="total_vendido_plataform.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <img src="ingressos.png" width="20px"> 
+            </div>
+           
+            <span class="nav-link-text ms-1">Resulmo total</span>
+          </a>
+        </li>
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>
         </li>
@@ -305,6 +338,8 @@ echo "   <div class='d-flex flex-column justify-content-center'>
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
+
+            <input type="text" id="searchInput" placeholder="Pesquisar por nome...">
               <h6>Tabela de usuarios da plataforma</h6>
 
 <?php 
@@ -332,7 +367,7 @@ echo '<div class="card-body px-0 pt-0 pb-2">
 while ($row = mysqli_fetch_array($query)) {
 
     // Substitua 'caminho_para_imagem', 'nome_usuario', 'email_usuario', 'funcao', 'organizacao', 'status', 'data' e 'link_editar' pelos dados reais do banco de dados
-    echo '<tr>
+    echo '<tr id=ola>
             <td>
               <div class="d-flex px-2 py-1">
                 <div>
@@ -442,88 +477,33 @@ echo '      </tbody>
     </div>
   </div>
 
-  <?php
-$id = $_SESSION['usuario'];
-$sql2 = "SELECT * FROM produto WHERE id_vendedor = $id";
-$query2 = $mysqli->query($sql2);
-
-echo "<div class='row'>
-  <div class='col-12'>
-    <div class='card mb-4'>
-      <div class='card-header pb-0'>
-        <h6>Produtos a venda</h6>
-      </div>
-      <div class='card-body px-0 pt-0 pb-2'>
-        <div class='table-responsive p-0'>
-          <table class='table align-items-center justify-content-center mb-0'>
-            <thead>
-              <tr>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7'>Produto</th>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Status do produto</th>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>Preço</th>
-                <th class='text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2'>estoque</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>";
-
-while ($row2 = $query2->fetch_array()) {
-  $tipe = $row2['tipe'];
-
-  if ($tipe == '1') {
-    $tipe = "Ativo";
-  } else {
-    $tipe = "Desativado";
-  }
-
-  echo "<tr>
-    <td>
-      <div class='d-flex px-2'>
-        <div>
-          <img src='../../pages/uploads/" . $row2['imagem'] . "' class='avatar avatar-sm rounded-circle me-2' alt='produto'>
-        </div>
-        <div class='my-auto'>
-          <h6 class='mb-0 text-sm'>" . $row2['nome'] . "</h6>
-        </div>
-      </div>
-    </td>
-    <td>
-      <p class='text-sm font-weight-bold mb-0'>" . $tipe . "</p>
-    </td>
-    <td>
-      <span class='text-xs font-weight-bold'>R$: " . $row2['preco'] . "</span>
-    </td>
-    <td class='align-middle text-center'>
-    <span class='text-xs font-weight-bold'>" . $row2['stock'] . "</span>
-    </td>
-
-
-    <td class='align-middle text-center'>
-    <span class='text-xs font-weight-bold'>Alterar produto</span>
-    </td>
-
-  </tr>";
-}
-
-echo "</tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-";
-?>
-<div class="add-container">
-<button onclick="add()" class="add"> + </button>
-</div>
- </div>
-</div>
-     
+  
                      
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#searchInput').on('keyup', function(){
+        var nome = $(this).val();
+        $.ajax({
+            url: 'search.php',
+            type: 'GET',
+            data: {nome: nome},
+            success: function(response){
+                // Atualiza o corpo da tabela com os novos dados
+                $('tbody').html(response);
+            }
+        });
+    });
+});
+</script>
+
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

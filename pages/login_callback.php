@@ -62,20 +62,9 @@ if (isset($_POST['registrar'])) {
     $name = $_SESSION['name'];
     $complemento = $_POST['complemento'];
 
-    if (isset($_FILES['file']) && $stmt->num_rows == 0) {
-        $arquivo = $_FILES['file'];
-        $pasta = "uploads/";
-        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-        $nomeA = $arquivo['name'];
-        $novo = uniqid();
-        $extensao = strtolower(pathinfo($nomeA, PATHINFO_EXTENSION));
-        $path = $pasta . $novo . "." . $extensao;
-        $caminho_completo = $path;
-        move_uploaded_file($arquivo['tmp_name'], $caminho_completo);
-    }
 
-    $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssss", $name, $senha, $email, $endereco, $numero, $CEP, $CPF, $complemento, $caminho_completo);
+    $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $name, $senha, $email, $endereco, $numero, $CEP, $CPF, $complemento);
 
     if ($stmt->execute()) {
         $_SESSION['usuario'] = $mysqli->insert_id;
@@ -190,8 +179,7 @@ display: ;
 <input type="text" placeholder="CEP" name="CEP" id="CEP" required>
                     <input type="text" id="endereco" placeholder="endereço" name="endereco" required>
                     <input type="text"  placeholder="complemento" name="complemento" required>
-                    <input type="file" name="file" id="foto" accept="image/*" required>
-<label for="foto">Enviar Documento com foto</label>
+
 
 <br><br>
 <button type="submit" id="enviar" class="button"  name="registrar">Registrar</button>

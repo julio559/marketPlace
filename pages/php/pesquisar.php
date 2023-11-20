@@ -172,41 +172,48 @@ if(isset($_SESSION["usuario"])) {
 
     <?php 
 
-    if (isset($_GET['pesquisa'])) {
-        $pesq = $_GET['pesquisa'];
-        $stmt = $mysqli->prepare("SELECT id, nome, cartegoria, descricao, sub_descricao,preco, imagem FROM produto WHERE nome LIKE ?");
-        $searchString = "%" . $pesq . "%";
-        $stmt->bind_param("s", $searchString);
-        $stmt->execute();
+if (isset($_GET['pesquisa'])) {
+    $pesquisa = $_GET['pesquisa'];
+    $consulta = $mysqli->prepare("SELECT id, nome, cartegoria, descricao, sub_descricao, preco, imagem FROM produto WHERE nome LIKE ?");
+    $stringDePesquisa = "%" . $pesquisa . "%";
+    $consulta->bind_param("s", $stringDePesquisa);
+    $consulta->execute();
 
-        $result = $stmt->get_result();
+    // Associa cada coluna do resultado a uma variável
+    $consulta->bind_result($id, $nome, $categoria, $descricao, $subDescricao, $preco, $imagem);
 
-        if($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()): ?>
-                <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>" class="product-link">
-                    <div class="produto">
-                        <div class="produto-imagem">
-                            <img src="../uploads/<?php echo $row['imagem']; ?>" alt="Imagem do produto <?php echo htmlspecialchars($row['nome']); ?>">
-                        </div>
-                        <div class="produto-info">
-                            <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
-                            <p><strong>Tipo:</strong> <?php echo htmlspecialchars($row['cartegoria']); ?></p>
-                            <p><strong>Descrição:</strong> <?php echo htmlspecialchars($row['sub_descricao']); ?></p>
-                            <p class="preco"><?php echo number_format($row['preco'], 2, ',', '.'); ?> R$</p>
-                        </div>
-                    </div>
-                </a>
-            <?php endwhile;
-        } else {
-            echo '<div class="not-found">Desculpe, não encontramos nenhum produto com esse nome.</div>';
-        }
+    $encontrouProduto = false;
 
-        $stmt->close();
-    } else {
-        header("location: index-4.php");
-        exit;
+    while ($consulta->fetch()) {
+        $encontrouProduto = true;
+        ?>
+        <a href="../product-details.php?id_prod=<?php echo $id; ?>" class="product-link">
+            <div class="produto">
+                <div class="produto-imagem">
+                    <img src="../uploads/<?php echo $imagem; ?>" alt="Imagem do produto <?php echo htmlspecialchars($nome); ?>">
+                </div>
+                <div class="produto-info">
+                    <h3><?php echo htmlspecialchars($nome); ?></h3>
+                    <p><strong>Tipo:</strong> <?php echo htmlspecialchars($categoria); ?></p>
+                    <p><strong>Descrição:</strong> <?php echo htmlspecialchars($subDescricao); ?></p>
+                    <p class="preco"><?php echo number_format($preco, 2, ',', '.'); ?> R$</p>
+                </div>
+            </div>
+        </a>
+        <?php 
     }
-    ?>
+
+    if (!$encontrouProduto) {
+        echo '<div class="not-found">Desculpe, não encontramos nenhum produto com esse nome.</div>';
+    }
+
+    $consulta->close();
+} else {
+    header("Location: index-4.php");
+    exit;
+}
+?>
+
 </div> <!-- Final do container -->
 
 </body>

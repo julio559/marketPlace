@@ -20,6 +20,6 @@ $id = $_SESSION["usuario"];
     <title>Document</title>
 </head>
 <body>
-<button> <i class="bi bi-truck"></i></button>
+
 </body>
 </html>

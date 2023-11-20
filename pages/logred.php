@@ -1,6 +1,6 @@
 <?php  
-include("php\log.php");
-include("php\criar.php");
+include("php/log.php");
+include("php/criar.php");
 
 
 require_once 'google_config.php';
@@ -55,28 +55,6 @@ margin-left: 8vw;
 
 
 /* Estilização básica para o botão de upload de imagem */
-#foto {
-    display: none; /* Esconde o input original */
-}
-
-#foto + label {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#foto + label:hover {
-    background-color: #0056b3;
-}
-
-#foto:checked + label {
-    background-color: #004192;
-}
-
 
 </style>
 
@@ -100,13 +78,13 @@ margin-left: 8vw;
                     <input type="Email" placeholder=" Digite seu Email" name="nomeLogin" required>
                     <input type="password" placeholder="Senha" name="senhaLogin" required>
 
-                    <p class="error"> 
-                    <?php   
-                        if( $error_message) {
-                            echo  $error_message;
-                        }
-                    ?>
-                    </p>
+                 <?php if($error){
+
+echo $error;
+
+                 }
+
+                 ?>
                     <br>
                     <button type="submit" id="" class="button" name="enviar">Entrar</button>
                     <button type="button" class="button"  id="showCreateForm">Criar Usuário</button>
@@ -165,8 +143,7 @@ echo "<p class='error'> $exit </p>";
 <input type="text" placeholder="CEP" name="CEP" id="CEP" required>
                     <input type="text" id="endereco" placeholder="endereço" name="endereco" required>
                     <input type="text" id=" " placeholder="complemento" name="complemento" required>
-                    <input type="file" name="file" id="foto" accept="image/*" required>
-<label for="foto">Enviar Documento com foto</label>
+
 <br><br>
 
 <div id="buttonContainer">

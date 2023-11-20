@@ -48,7 +48,7 @@ include("php/404e.php");
                                     <input placeholder="Search..." name="pesquisa" type="text">
                                     <button type="submit">search</button>
                                 </form>
-                                <a href="php/index-4.php">Back to home page</a>
+                                <a href="http://www.b2b4u.com.br/">Back to home page</a>
                             </div>
                         </div>
                     </div>

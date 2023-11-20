@@ -22,23 +22,14 @@ if (isset($_POST['nome']) && isset($_POST['senha'])) {
 
     $caminho_completo = null;
 
-    if (isset($_FILES['file']) && $stmt->num_rows == 0) {
-        $arquivo = $_FILES['file'];
-        $pasta = "uploads/";
-        $nomeA = $arquivo['name'];
-        $novo = uniqid();
-        $extensao = strtolower(pathinfo($nomeA, PATHINFO_EXTENSION));
-        $path = $pasta . $novo . "." . $extensao;
-        $caminho_completo = $path;
-        move_uploaded_file($arquivo['tmp_name'], $caminho_completo);
-    }
+
 
     if ($stmt->num_rows > 0) {
         $error_message = "E-mail já está em uso!";
     } else {
         $stmt->close();
-        $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $nome, $senha, $email, $endereco, $numero, $cep, $cpf, $complemento, $caminho_completo);
+        $stmt = $mysqli->prepare("INSERT INTO clientes (nome, senha, email, endereco, numero, cep, cpf, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $nome, $senha, $email, $endereco, $numero, $cep, $cpf, $complemento);
         
         if ($stmt->execute()) {
             if ($caminho_completo !== null) {

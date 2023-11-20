@@ -15,7 +15,7 @@ $query = $mysqli -> query($sql);
 while ($row = $query -> fetch_assoc()) {
 
     $tipe = $row['tipe'];
-if($tipe != '1'){
+if($tipe < '1'){
 header("location: ../../pages/php/index-4.php");
 
 }
@@ -23,6 +23,7 @@ header("location: ../../pages/php/index-4.php");
 
 
 // Verifica se o formulário foi enviado
+
 if (isset($_POST['meta'])) {
     // Armazena o valor da meta e o ID do usuário da sessão
     $meta = $_POST['meta'];
@@ -35,31 +36,41 @@ if (isset($_POST['meta'])) {
         // Vincula o ID do usuário à consulta e executa
         $stmtCheck->bind_param("i", $id);
         $stmtCheck->execute();
-        $result = $stmtCheck->get_result();
-        $stmtCheck->close();
+
+        // Bind the result variable
+        $stmtCheck->bind_result($metaVendaId);
 
         // Decide entre UPDATE ou INSERT dependendo se a meta já existe
-        if ($result->num_rows > 0) {
+        $updateMeta = false;
+        if ($stmtCheck->fetch()) {
             // UPDATE se a meta já existe
+            $updateMeta = true;
+        }
+
+        $stmtCheck->close();
+
+        if ($updateMeta) {
+            // Prepara a declaração para UPDATE
             $sql23 = "UPDATE meta_venda SET valor_meta = ? WHERE id_usuario = ?";
         } else {
-            // INSERT se a meta não existe
+            // Prepara a declaração para INSERT
             $sql23 = "INSERT INTO meta_venda (valor_meta, id_usuario) VALUES (?, ?)";
         }
 
-        // Prepara a declaração para INSERT ou UPDATE
         $stmt23 = $mysqli->prepare($sql23);
         if ($stmt23) {
             // Vincula os parâmetros e executa a consulta
             $stmt23->bind_param("ii", $meta, $id);
             $stmt23->execute();
-          
 
             // Verifica se a operação foi bem-sucedida
             if ($stmt23->affected_rows > 0) {
-            
-            } 
-            
+                // Operação bem-sucedida
+            } else {
+                // Operação falhou
+            }
+
+            $stmt23->close();
         } else {
             echo "Erro ao preparar a consulta: " . $mysqli->error;
         }
@@ -68,6 +79,8 @@ if (isset($_POST['meta'])) {
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,8 +142,10 @@ color: white;
           </a>
         </li>
 
+
+
         <li class="nav-item">
-          <a class="nav-link active" href="emergencia.php">
+          <a class="nav-link" href="http://www.b2b4u.com.br/argon-dashboard-master/pages/emergencia.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -144,9 +159,20 @@ color: white;
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Tabelas</span>
+            <span class="nav-link-text ms-1">Tabela de usuarios</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link " href="../pages/tables2.php">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Tabela de produtos</span>
+          </a>
+        </li>
+       
+
         <li class="nav-item">
           <a class="nav-link " href="../../pages/php/dahboardPer.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -176,8 +202,20 @@ color: white;
             <span class="nav-link-text ms-1">Resumo mensal vendedores</span>
           </a>
         </li>
-       
-      
+    
+
+        <?php 
+if ($tipe == 3) {
+    echo '<li class="nav-item">
+            <a class="nav-link " href="total_vendido_plataform.php">
+                <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    <img src="ingressos.png" width="20px"> 
+                </div>
+                <span class="nav-link-text ms-1">Resulmo total</span>
+            </a>
+          </li>';
+}
+?>
 
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Detalhes da conta</h6>

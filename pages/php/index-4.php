@@ -19,6 +19,226 @@ $nome = $row['nome'];
 }
 
 
+
+$sql_verify_account = "SELECT verify_account, imagem_verify FROM clientes WHERE id = $id ";
+$query_verify = $mysqli -> query($sql_verify_account);
+
+
+while ($row_verify = $query_verify -> fetch_assoc()){
+
+
+$verif = $row_verify["verify_account"];
+$imgv = $row_verify["imagem_verify"];
+if( $imgv !== '' && $verif == 0){
+  die ( "<style>
+    body {
+        background-color: #f0f0f0; /* Fundo suave */
+        font-family: 'Arial', sans-serif; /* Fonte mais moderna */
+    }
+
+    .centralizado {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .centralizado form {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        max-width: 400px;
+        width: 100%;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 15px; /* Espaçamento abaixo do título */
+    }
+
+    p {
+        color: #555;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    #foto {
+        display: none;
+    }
+
+    #foto + label, input[type='submit'] {
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        display: inline-block;
+        margin-top: 20px;
+        width: 100%; /* Ocupa toda a largura disponível */
+        text-align: center;
+    }
+
+    #foto + label:hover, input[type='submit']:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px); /* Efeito de elevação */
+    }
+
+    #foto:checked + label {
+        background-color: #004192;
+    }
+
+    input[type='submit'] {
+        margin-top: 30px; /* Mais espaço acima do botão de enviar */
+    }
+</style>
+<div class='centralizado'>
+    <form method='POST'>
+    <a href='logout.php'> Sair </a>
+        <h2>Envio de Documento</h2>
+        <p>Por favor aguarde, estamos verificando seu documento para liberarmos seu acesso.</p>
+        
+        <p>Avisaremos assim que alguém liberar seu acesso.</p>
+    </form>
+</div>
+
+    ");
+
+
+    
+}
+if (isset($_FILES['file'])) {
+    $arquivo = $_FILES['file'];
+    $pasta = "../uploads/";
+    $nomeArquivo = $arquivo['name'];
+    $novoNome = uniqid();
+    $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION));
+    $caminhoCompleto = $pasta . $novoNome . "." . $extensao;
+    
+    // Supondo que você já tenha iniciado a sessão e que o ID do usuário esteja armazenado nela
+    
+    $id = $_SESSION['usuario']; 
+
+
+
+    // Move o arquivo para a pasta de uploads
+    if (move_uploaded_file($arquivo['tmp_name'], $caminhoCompleto)) {
+        // Prepara e executa a atualização no banco de dados
+        $stmt = $mysqli->prepare("UPDATE clientes SET imagem_verify = ? WHERE id = ?");
+
+        if (!$stmt) {
+            die("Erro na preparação: " . $mysqli->error);
+        }
+
+        $stmt->bind_param("si", $caminhoCompleto, $id);
+        if (!$stmt->execute()) {
+            echo "Erro ao atualizar no banco de dados: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        echo "Erro ao fazer upload do arquivo.";
+
+
+    }
+
+header("location: index-4.php");
+
+}
+
+
+if($verif == 0){
+    die("
+    <style>
+    body {
+        background-color: #f0f0f0; /* Fundo suave */
+        font-family: 'Arial', sans-serif; /* Fonte mais moderna */
+    }
+
+    .centralizado {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    .centralizado form {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        max-width: 400px;
+        width: 100%;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 15px; /* Espaçamento abaixo do título */
+    }
+
+    p {
+        color: #555;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    #foto {
+        display: none;
+    }
+
+    #foto + label, input[type='submit'] {
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        display: inline-block;
+        margin-top: 20px;
+        width: 70%; /* Ocupa toda a largura disponível */
+        text-align: center;
+    }
+
+    #foto + label:hover, input[type='submit']:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px); /* Efeito de elevação */
+    }
+
+    #foto:checked + label {
+        background-color: #004192;
+    }
+
+    input[type='submit'] {
+        margin-top: 30px; /* Mais espaço acima do botão de enviar */
+    }
+</style>
+<div class='centralizado'>
+<form method='POST' enctype='multipart/form-data'>
+    <h2>Envio de Documento</h2>
+    <a href='logout.php'> Sair </a>
+
+    <p>Por favor, envie uma foto do seu documento para liberarmos seu acesso.</p>
+    <input type='file' name='file' id='foto' accept='image/*' required>
+    <label for='foto'>Enviar Documento com foto</label>
+    <input type='submit' value='Enviar'>
+    <p>Avisaremos assim que alguém liberar seu acesso.</p>
+</form>
+</div>
+
+    ");
+
+}
+}
+
+
+
+
+
 $sql33 = "SELECT online FROM plataform";
 $query33 = $mysqli -> query($sql33);
 while ($row33 = $query33 -> fetch_assoc()) {
@@ -66,9 +286,12 @@ if( $on === '1'){
     </style>
     <div class='modal-overlay'>
         <div class='blocked-user-container'>
+
+       
             <h2>Plataforma fora do ar</h2>
             <p>A plataforma esta fora do ar ainda sem previsão para voltar</p>
             <p>Por favor, entre em contato com o suporte para mais informações.</p>
+            
         </div>
     </div>
     ");
@@ -139,7 +362,7 @@ $block = false;
 
 
     $tipe = $row['tipe'];
-if($tipe == '1'){
+    if ($tipe >= 1) {
 header("location: ../../argon-dashboard-master/pages/dashboard.php");
 
 }
@@ -480,57 +703,60 @@ echo "<a href='../logred.php'>logar</a>";
           
        <?php 
 // Prepare the SQL query
-$stmt = $mysqli->prepare("SELECT * FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
-$stmt->execute();
 
-// Store the result
-$result = $stmt->get_result();
+// Prepara a consulta SQL
 
-// Loop through the results
-while ($row = $result->fetch_assoc()):
+// Prepara a consulta SQL
+$consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
+$consulta->execute();
 
-    $id = $row['id'];
-?>
+// Associa as colunas do seu resultado às variáveis
+$consulta->bind_result($idProduto, $imagemProduto, $nomeProduto, $precoProduto, $estoqueProduto);
 
-<div class="col-lg-3">
-    <div class="single_product"> 
-        <div class="product_thumb">
-            <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
-        </div> 
-        <div class="product_content">   
-            <h3><a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
-            <div class="product_price">
-                <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
-            </div>
-            <div class="product_action">
-                <ul>
-                <?php if(isset($_SESSION["usuario"])): ?>
+// Itera sobre cada linha do resultado
+while ($consulta->fetch()) {
+    $imagemProduto = htmlspecialchars($imagemProduto);
+    $nomeProduto = htmlspecialchars($nomeProduto);
+    $precoFormatado = number_format($precoProduto, 2, ',', '.');
 
-                    <?php  
-                    $estoque = $row['stock'];
+    ?>
 
-                    if ($estoque > 0) {
-                        echo "<li class='product_cart'>
-                            <a href='../product-details.php?id_prod=$id' title='Adicionar ao carrinho'> Detalhes </a>
-                        </li>";
-                    } else {
-                        echo "<li class='product_cart'>
-                            <button class='not' disabled title='Adicionar ao carrinho'> SEM ESTOQUE </button>
-                        </li>";
-                    }
-                    ?>
-
-                <?php endif; ?>
-                </ul>
-            </div>
-        </div>    
+    <div class="col-lg-3">
+        <div class="single_product"> 
+            <div class="product_thumb">
+                <a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><img src="../uploads/<?php echo $imagemProduto; ?>" width="250px" height="250px" alt=""></a>
+            </div> 
+            <div class="product_content">   
+                <h3><a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><?php echo $nomeProduto; ?></a></h3>
+                <div class="product_price">
+                    <span class="current_price">R$<?php echo $precoFormatado; ?></span>
+                </div>
+                <div class="product_action">
+                    <ul>
+                        <?php if(isset($_SESSION["usuario"])): ?>
+                            <?php  
+                            if ($estoqueProduto > 0) {
+                                echo "<li class='product_cart'>
+                                    <a href='../product-details.php?id_prod=$idProduto' title='Adicionar ao carrinho'>Detalhes</a>
+                                </li>";
+                            } else {
+                                echo "<li class='product_cart'>
+                                    <button class='not' disabled title='Adicionar ao carrinho'>SEM ESTOQUE</button>
+                                </li>";
+                            }
+                            ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>    
+        </div>
     </div>
-</div>
 
-<?php 
-endwhile; 
-$stmt->close();
+    <?php 
+}
+$consulta->close();
 ?>
+
 
                 
             </div>

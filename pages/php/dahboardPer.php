@@ -704,58 +704,59 @@ while ($row = $query->fetch_assoc()) {
           
        <?php 
 // Prepare the SQL query
-$stmt = $mysqli->prepare("SELECT * FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
-$stmt->execute();
 
-// Store the result
-$result = $stmt->get_result();
+// Prepara a consulta SQL
 
-// Loop through the results
-while ($row = $result->fetch_assoc()):
+// Prepara a consulta SQL
+$consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
+$consulta->execute();
 
-    $id_prod = $row['id'];
-?>
+// Associa as colunas do seu resultado às variáveis
+$consulta->bind_result($idProduto, $imagemProduto, $nomeProduto, $precoProduto, $estoqueProduto);
 
-<div class="col-lg-3">
-    <div class="single_product"> 
-        <div class="product_thumb">
-            <a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><img src="../uploads/<?php echo htmlspecialchars($row['imagem']); ?>" width="250px" height="250px" alt=""></a>
-        </div> 
-        <div class="product_content">   
-            <h3><a href="../product-details.php?id_prod=<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['nome']); ?></a></h3>
-            <div class="product_price">
-                <span class="current_price"> R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
-            </div>
-            <div class="product_action">
-                <ul>
-                <?php if(isset($_SESSION["usuario"])): ?>
+// Itera sobre cada linha do resultado
+while ($consulta->fetch()) {
+    $imagemProduto = htmlspecialchars($imagemProduto);
+    $nomeProduto = htmlspecialchars($nomeProduto);
+    $precoFormatado = number_format($precoProduto, 2, ',', '.');
 
-                    <?php  
-                    $estoque = $row['stock'];
+    ?>
 
-                    if ($estoque > 0) {
-                        echo "<li class='product_cart'>
-                            <a href='../product-details.php?id_prod=$id_prod' title='Adicionar ao carrinho'> + detalhes</a>
-                        </li>";
-                    } else {
-                        echo "<li class='product_cart'>
-                            <button class='not' disabled title='Adicionar ao carrinho'> SEM ESTOQUE </button>
-                        </li>";
-                    }
-                    ?>
-
-                <?php endif; ?>
-                </ul>
-            </div>
-        </div>    
+    <div class="col-lg-3">
+        <div class="single_product"> 
+            <div class="product_thumb">
+                <a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><img src="../uploads/<?php echo $imagemProduto; ?>" width="250px" height="250px" alt=""></a>
+            </div> 
+            <div class="product_content">   
+                <h3><a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><?php echo $nomeProduto; ?></a></h3>
+                <div class="product_price">
+                    <span class="current_price">R$<?php echo $precoFormatado; ?></span>
+                </div>
+                <div class="product_action">
+                    <ul>
+                        <?php if(isset($_SESSION["usuario"])): ?>
+                            <?php  
+                            if ($estoqueProduto > 0) {
+                                echo "<li class='product_cart'>
+                                    <a href='../product-details.php?id_prod=$idProduto' title='Adicionar ao carrinho'>Detalhes</a>
+                                </li>";
+                            } else {
+                                echo "<li class='product_cart'>
+                                    <button class='not' disabled title='Adicionar ao carrinho'>SEM ESTOQUE</button>
+                                </li>";
+                            }
+                            ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>    
+        </div>
     </div>
-</div>
 
-<?php 
-endwhile; 
-$stmt->close();
+    <?php 
+}
+$consulta->close();
 ?>
-
                 
             </div>
        </div> 
