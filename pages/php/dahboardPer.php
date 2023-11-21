@@ -5,7 +5,7 @@ include("conexao.php");
 
 if(!isset($_SESSION['usuario'])){ 
 
-    header("location: ../logred.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 }
 if(isset($_SESSION['usuario'])){ 
 
@@ -85,9 +85,9 @@ if ($query23->num_rows > 0) {
 if(isset ($_POST['cartegoria'])){
 
 $cartegoria = $_POST['cartegoria'];
-$sqlUP = "INSERT INTO cartegoria (nome_cartegoria) VALUE ('$cartegoria')";
+$sqlUP = "INSERT INTO cartegoria (cartegoria) VALUE ('$cartegoria')";
 $queque = $mysqli->query($sqlUP);
-
+header("location: dashboardPer.php");
 
 }
 
@@ -335,7 +335,7 @@ $sql = "SELECT * FROM cartegoria";
 $quer = $mysqli->query($sql);
 if ($quer->num_rows > 0) {
     while ($row2342 = $quer->fetch_assoc()) {
-        $cartegoria = $row2342['nome_cartegoria'];
+        $cartegoria = $row2342['cartegoria'];
       
         echo "<li class='seila'><a id='red' href='../shop.php?cartegoria=$cartegoria'>$cartegoria</a></li>";
     }

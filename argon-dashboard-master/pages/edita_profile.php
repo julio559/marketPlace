@@ -24,6 +24,10 @@ $endereco = $row['endereco'];
 $cep = $row['cep'];
 $numero = $row['numero'];
 }
+}else{
+
+header("location: dashboard.php");
+
 }
 
 if($tipe =='1'){
@@ -36,6 +40,36 @@ $tipe = "Usuario padrão";
 
 }
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../../pages/vendor/autoload.php'; // Caminho para o autoloader do Composer
+
+if(isset($_GET['email_send'])){
+  $mensagem = $_GET['email_send'];
+  $para = "destinatario@email.com"; // Substitua pelo e-mail do destinatário
+
+  $mailer = new PHPMailer();
+  $mailer->IsSMTP();
+  $mailer->SMTPDebug = 1; // Habilita a depuração SMTP (desative em produção)
+  $mailer->Port = 587; // Porta de conexão
+  $mailer->Host = 'smtplw.com.br'; // Endereço do Host do SMTP da Locaweb
+  $mailer->SMTPAuth = true; // Habilita autenticação SMTP
+  $mailer->Username = 'smtplocaweb'; // Login de autenticação do SMTP
+  $mailer->Password = 'Gwb9etA323'; // Senha de autenticação do SMTP
+  $mailer->FromName = 'Bart S. Locaweb'; // Nome que será exibido como remetente
+  $mailer->From = ''; // E-mail do remetente
+  $mailer->AddAddress($para, 'Nome do Destinatário'); // Adiciona o destinatário
+  $mailer->Subject = 'Teste enviado através do PHP Mailer SMTPLW';
+  $mailer->Body = $mensagem; // Corpo da mensagem
+
+  if(!$mailer->Send()){
+      echo "Message was not sent<br>";
+      echo "Mailer Error: " . $mailer->ErrorInfo;
+  } else {
+      print "E-mail enviado!";
+  }
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -175,7 +209,7 @@ padding: 10px;
 
 
         <li class="nav-item">
-          <a class="nav-link active" href="emergencia.php">
+          <a class="nav-link" href="emergencia.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
             </div>
@@ -428,6 +462,36 @@ padding: 10px;
                 </div>
               </div>
               <div class="text-center mt-4">
+
+              <button type="button" class="btn btn-primary" id="btn-close" data-bs-toggle="modal" data-bs-target="#exampleModalBox44">
+ Enviar mensagem ao usuario
+</button>
+<!-- Modal Box 2 -->
+<div class="modal fade" id="exampleModalBox44" tabindex="-1" aria-labelledby="exampleModalLabelBox44" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelBox44">Digite a mensagem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="GET">
+
+                <input type="hidden" value="<?php echo $id; ?>" name="id">
+                    <input type="text" class="form-control" placeholder="Escreva aqui" name="meta" name="email_send" required>
+                    <br>
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
                 <h5>
                   <?php echo $nome ?>
                 </h5>

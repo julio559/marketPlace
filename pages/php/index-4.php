@@ -5,7 +5,7 @@ include("conexao.php");
 
 if(!isset($_SESSION['usuario'])){ 
 
-    header("location: ../logred.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 }
 if(isset($_SESSION['usuario'])){ 
 
@@ -420,13 +420,39 @@ if ($query23->num_rows > 0) {
 
         <style>
 
-
-
-
 #escrita{
 color: white;
 
 }
+
+
+.seila {
+  /* Adiciona uma borda cinza na parte de baixo do elemento */
+  border-bottom: 1px solid gray;
+  padding: 10px; /* Ajuste o espaçamento interno conforme necessário */
+}
+
+/* Estilo para o link dentro do elemento 'seila' */
+.seila a {
+  /* Define a cor do texto do link como preto */
+  color: black;
+  /* Remove a decoração padrão do link (sublinhado) */
+  text-decoration: none;
+}
+
+
+.top_links {
+  white-space: nowrap; /* Impede a quebra de linha */
+margin-left: 20px;
+
+}
+
+.top_links a {
+  color: white; /* Define a cor do texto como branco */
+  text-decoration: none; /* Remove sublinhado do link */
+}
+
+
             </style>
     </head>
     <body>
@@ -434,102 +460,18 @@ color: white;
             
             
             <!--header area start-->
-            <header class="header_area">
+           <header class="header_area">
                 <!--header top start-->
-                <div class="header_top top_four">
-                    <div class="container-fluid">   
-                        <div class="row align-items-center">
 
-                            <div class="col-lg-6 col-md-6">
-                                <div class="welcome_text">
-                                  
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="top_right text-right">
-                                    <ul>
-                                       <li class="top_links"><a href="#">
-                                        
-                                       <?php 
-                                       if(isset($_SESSION['usuario'])){
-                                        echo "Conta do  $nome ";
-                                       }else{
-
-echo "Fazer login";
-
-                                       }
-                                       ?> <i class="ion-chevron-down"></i></a>
-                                            <ul class="dropdown_links">
-
-
-                                            <?php 
-                                       if(isset($_SESSION['usuario'])){
-
-                                           echo     "<li><a href='cart.php'> Meu carrinho </a></li>";
-                                       }
-
-                                       ?>
-                                                <?php 
-                                       if(isset($_SESSION['usuario'])){
-
-                                           echo    " <li><a href='my-account.php?id=$id'> conta de $nome </a></li>";
-
-
-                                       }else{
-
-                                        echo "<li><a href='../logred.php'> fazer login </a></li>";
-
-                                       }
-                                       ?>
-
-
-<?php 
-                                       if(isset($_SESSION['usuario'])){
-
-                                           echo     "<li><a href='../desejos.php'> Produtos curtidos </a></li>";
-                                       }
-
-                                       ?>
-
-
-
-<?php 
-                                       if(isset($_SESSION['usuario'])){
-
-                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
-                                       }
-
-                                       ?>
-
-
-                                                
-                                                
-                                            </ul>
-                                        </li> 
-                                        <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
-                                            <ul class="dropdown_currency">
-                                                <li><a href="#">EUR</a></li>
-                                                <li><a href="#">USD</a></li>
-                                            </ul>
-                                        </li>
-                                      
-                                    </ul>
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!--header top start-->
                 
                 <!--header middel start-->
                 <div class="header_middel middel_four">
                     <div class="container-fluid">
                         <div class="row align-items-center">
-                            <div class="col-lg-3 col-md-5">
-                                <div class="logo">
-                                    <a href="index-4.php"><img src="assets/img/logo/logo4.png" alt=""></a>
+                        <div class="logo">
+                                    <a href="index-4.php"><img src="uploads/imagem_2023-11-21_142434627.png" alt=""></a>
                                 </div>
-                            </div>
                             <div class="col-lg-3 col-md-7">
                                 <div class="categories_menu">
                                     <div class="categories_title">
@@ -539,10 +481,20 @@ echo "Fazer login";
                                        
  
 
+<?php 
 
-                                                    <li class="seila"><a id="red" href="../shop.php?cartegoria=eletronico">Eletronicos</a>
+$sql2 = "SELECT * FROM cartegoria";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc() ){
+
+$cartegoria = $row['cartegoria'];
+echo "     <li class='seila'><a id='red' href='../shop.php?cartegoria=$cartegoria'>$cartegoria</a>
                                                         
-                                        </li>
+</li>";
+
+}
+?>
+                                               
 
 
 
@@ -559,7 +511,7 @@ echo "Fazer login";
                             <div class="col-lg-4 col-md-7">        
                                 <div class="search_bar">
                                     <form action="pesquisar.php" method="GET">
-                                        <input placeholder="Search entire store here..." name="pesquisa" type="text">
+                                        <input placeholder="Pesquise na nossa loja" name="pesquisa" type="text">
                                         <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                     </form>
                                 </div>
@@ -567,11 +519,11 @@ echo "Fazer login";
                             </div> 
                             <div class="col-lg-2 col-md-5">
                                 <div class="cart_area">
-                                <button class="blue" onclick="red()"><i class='ion-ios-cart-outline'></i> Venha comprar</button>
+                                
                                     <div class="cart_link">
                                         <?php
                                         if(isset($_SESSION["usuario"])){
-                                        echo "<a href='cart.php?idd=$id'><i class='ion-ios-cart-outline'></i>My Cart</a>";
+                                        echo "<a href='cart.php?idd=$id'><i class='ion-ios-cart-outline'></i></a>";
                                         }else{
 
 echo "<a href='../logred.php'>logar</a>";
@@ -581,6 +533,32 @@ echo "<a href='../logred.php'>logar</a>";
                                         ?>
                                            
                                             </div>
+
+                                            <ul>
+    <li class="top_links"><a href="#">
+        <?php 
+        if(isset($_SESSION['usuario'])){
+            echo "Conta de $nome";
+        }else{
+            echo "Fazer login";
+        }
+        ?> <i class="ion-chevron-down"></i></a>
+        <ul class="dropdown_links">
+            <?php 
+            if(isset($_SESSION['usuario'])){
+                echo "<li><a href='cart.php'>Meu carrinho</a></li>";
+                echo "<li><a href='my-account.php?id=$id'>Conta de $nome</a></li>";
+                echo "<li><a href='../desejos.php'>Produtos curtidos</a></li>";
+                echo "<li><a href='pedidosAbertos.php'>Reclamações abertas</a></li>";
+            }else{
+                echo "<li><a href='../logred.php'>Fazer login</a></li>";
+            }
+            ?>
+        </ul>
+    </li>
+</ul>
+
+                                            
                                         </div>
                                         <!--mini cart end-->
                                     </div>
@@ -707,7 +685,7 @@ echo "<a href='../logred.php'>logar</a>";
 // Prepara a consulta SQL
 
 // Prepara a consulta SQL
-$consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 0 ORDER BY `id` DESC LIMIT 4");
+$consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 1 ORDER BY `id` DESC LIMIT 4");
 $consulta->execute();
 
 // Associa as colunas do seu resultado às variáveis
@@ -844,7 +822,7 @@ $consulta->close();
                         <div class="row align-items-center">
                             <div class="col-lg-6 col-md-6">
                                 <div class="copyright_content">
-                                    <p>Copyright &copy; 2018, <a href="#">Cigar</a>. All Rights Reserved</p>
+                                    <p>Copyright &copy; 2023, <a href="#">Gon1</a>. Todos os direitos reservados</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">

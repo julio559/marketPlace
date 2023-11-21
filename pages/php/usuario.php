@@ -23,7 +23,7 @@ header("location: index-4.php");
 }
 
 if (!isset($_SESSION['usuario'])) {
-header("location: ../logred.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 }
 // Garanta que $_SESSION['usuario'] esteja definido
 if (isset($_SESSION['usuario'])) {

@@ -1,9 +1,17 @@
 {
+    "name": "adm/market-place",
+    "autoload": {
+        "psr-4": {
+            "Adm\\MarketPlace\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Julio cesar",
+            "email": "jcgcampana@gmail.com"
+        }
+    ],
     "require": {
-        "google/apiclient": "2.10",
-        "guzzlehttp/guzzle": "^7.8",
-        "rmccue/requests": "^2.0",
-        "gerencianet/gerencianet-sdk-php": "^5.1",
-        "mercadopago/dx-php": "^3.0"
+        "phpmailer/phpmailer": "^6.8"
     }
 }

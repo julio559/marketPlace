@@ -5,7 +5,7 @@ session_start();
 
 if(!isset($_SESSION["usuario"])){
 
-header("location: ../logred.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 
 }
 $id = $_SESSION["usuario"];

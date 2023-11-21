@@ -5,3 +5,94 @@ BACKGROUND - URL
 
 
 
+background: url(https://images.unsplash.com/flagged/photo-1580820258381-20c91a156841?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);.espacamento{
+
+margin-left: 30px ;
+
+
+
+
+
+                <div class="header_top top_four">
+                    <div class="container-fluid">   
+                        <div class="row align-items-center">
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="welcome_text">
+                                  
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="top_right text-right">
+                                    <ul>
+                                       <li class="top_links"><a href="#">
+                                        
+                                       <?php 
+                                       if(isset($_SESSION['usuario'])){
+                                        echo "Conta do  $nome ";
+                                       }else{
+
+echo "Fazer login";
+
+                                       }
+                                       ?> <i class="ion-chevron-down"></i></a>
+                                            <ul class="dropdown_links">
+
+
+                                            <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='cart.php'> Meu carrinho </a></li>";
+                                       }
+
+                                       ?>
+                                                <?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo    " <li><a href='my-account.php?id=$id'> conta de $nome </a></li>";
+
+
+                                       }else{
+
+                                        echo "<li><a href='../logred.php'> fazer login </a></li>";
+
+                                       }
+                                       ?>
+
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='../desejos.php'> Produtos curtidos </a></li>";
+                                       }
+
+                                       ?>
+
+
+
+<?php 
+                                       if(isset($_SESSION['usuario'])){
+
+                                           echo     "<li><a href='pedidosAbertos.php'> reclamações abertas </a></li>";
+                                       }
+
+                                       ?>
+
+
+                                                
+                                                
+                                            </ul>
+                                        </li> 
+                                        <li class="currency"><a href="#">BRL <i class="ion-chevron-down"></i></a>
+                                            <ul class="dropdown_currency">
+                                                <li><a href="#">EUR</a></li>
+                                                <li><a href="#">USD</a></li>
+                                            </ul>
+                                        </li>
+                                      
+                                    </ul>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                </div>

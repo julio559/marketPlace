@@ -1,11 +1,10 @@
 <?php
 session_start();
-include("conexao.php");
-$error = "";
+include '../../pages/php/conexao.php';
 
-// Redireciona o usuário se ele já estiver logado
+$error = "";
 if (isset($_SESSION['usuario'])) {
-    header("Location: ../pages/php/index-4.php");
+    header("Location: ../../pages/php/index-4.php");
     exit;
 }
 
@@ -13,7 +12,7 @@ if (isset($_POST['enviar'])) {
     if (empty($_POST['nomeLogin']) || empty($_POST['senhaLogin'])) {
         $error = "<p class='error'>Por favor, preencha todos os campos.</p>";
     } else {
-        $email = $_POST['nomeLogin'];  // Renomeado para email para tornar mais claro
+        $email = $_POST['nomeLogin'];
         $senha = $_POST['senhaLogin'];
 
         $sql_code = "SELECT id, nome, senha FROM clientes WHERE email = ? LIMIT 1";
@@ -22,7 +21,7 @@ if (isset($_POST['enviar'])) {
             $stmt->bind_param("s", $email);
             $stmt->execute();
 
-            $stmt->store_result(); // Adiciona armazenamento de resultado para verificar se houve retorno
+            $stmt->store_result();
             if ($stmt->num_rows == 1) {
                 $stmt->bind_result($id, $nome, $hashedSenha);
                 $stmt->fetch();

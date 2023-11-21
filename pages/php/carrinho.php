@@ -11,7 +11,7 @@ $id_usuario = $_SESSION["usuario"];
 
 }
 if(!isset($_SESSION['usuario'])) {
-    header("location: index-4.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 }
 
 

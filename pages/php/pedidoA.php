@@ -3,7 +3,7 @@ include("conexao.php");
 session_start();
 
 if (!isset($_SESSION["usuario"])) {
-    echo "Usuário não autenticado."; // Ou redirecione para a página de login
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
     exit;
 }
 

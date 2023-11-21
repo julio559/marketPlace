@@ -3,6 +3,10 @@ include("conexao.php");
 session_start();
 if (isset($_SESSION["usuario"])) {
 $id = $_SESSION["usuario"];
+}else{
+
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
+
 }
 if(isset($_GET["id_prod"])) {
 $id_prod = $_GET['id_prod'];
@@ -14,6 +18,9 @@ while ($row = $query -> fetch_assoc()) {
 
     $nome = $row["nome"];   
     $imagem = $row["imagem"];   
+    $imagem2 = $row["imagem2"]; 
+    $imagem3 = $row["imagem3"]; 
+    $imagem4 = $row["imagem4"]; 
     $cartegoria = $row["cartegoria"];
     $descricao = $row["descricao"];
     $sub_descricao = $row["sub_descricao"];

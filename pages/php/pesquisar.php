@@ -1,7 +1,12 @@
 <?php  
 session_start();
 include("conexao.php");
+if(!isset($_SESSION['usuario'])){
 
+
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
+
+}
 $nome = "";
 $notLOG = "Você ainda nao esta logado";
 

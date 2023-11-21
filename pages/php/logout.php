@@ -5,7 +5,7 @@ session_start();
 
 }
 if ( session_destroy() === true){
-header('location: ../logred.php');
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 }
 
 ?>

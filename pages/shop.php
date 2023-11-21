@@ -6,8 +6,7 @@ if (!isset($_SESSION)) {
 }
 
 if(!isset($_SESSION["usuario"])) {
-
-header("location:logred.php");
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
 
 }
 if (isset($_SESSION['usuario'])) {
@@ -142,6 +141,22 @@ if( $on === '1'){
         cursor: default; /* Muda o cursor para o padrão */
         color: #aaa; /* Torna a cor cinza para parecer inativo */
     }
+
+
+    .seila {
+  /* Adiciona uma borda cinza na parte de baixo do elemento */
+  border-bottom: 1px solid gray;
+  padding: 10px; /* Ajuste o espaçamento interno conforme necessário */
+}
+
+/* Estilo para o link dentro do elemento 'seila' */
+.seila a {
+  /* Define a cor do texto do link como preto */
+  color: black;
+  /* Remove a decoração padrão do link (sublinhado) */
+  text-decoration: none;
+}
+
 </style>
     </head>
     <body>
@@ -237,7 +252,7 @@ echo "Fazer login";
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-md-4">
                                 <div class="logo">
-                                    <a href="php/index-4.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a href="php/index-4.php"><img src="uploads/imagem_2023-11-21_142434627.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-5">
@@ -253,7 +268,7 @@ echo "Fazer login";
                               
                                     <div class="cart_link">
 
-                                        <a href="php/cart.php"><i class="ion-ios-cart-outline"></i>My Cart</a>
+                                        <a href="php/cart.php"><i class="ion-ios-cart-outline"></i>Meu carrinho</a>
                                         <span class="cart_count"><?php echo $itemCount; ?></span>
                                  
                                     </div>
@@ -271,49 +286,26 @@ echo "Fazer login";
                             <div class="col-lg-3 col-md-5">
                                 <div class="categories_menu">
                                     <div class="categories_title">
-                                        <h2 class="categori_toggle"> All categories</h2>
+                                        <h2 class="categori_toggle"> Todas cartegorias</h2>
                                     </div>
                                     <div class="categories_menu_inner">
-                                        <ul>
-                                            <li class="categorie_list"><a href="#">Laptop & Computer <i class="fa fa-angle-right"></i></a>
-                                                <ul class="categories_mega_menu">
-                                                    <li><a href="#">Headphoness</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Dell Laptops</a></li>
-                                                                <li><a href="">HP Laptops</a></li>
-                                                                <li><a href="">Lenovo Laptops</a></li>
-                                                                <li><a href="">Apple Laptops</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Laptop & Computers</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Digital Cameras</a></li>
-                                                                <li><a href="">Camcorders</a></li>
-                                                                <li><a href="">Photo Accessories</a></li>
-                                                                <li><a href="">Memory Cards</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><a href="#">Camera & Photos</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Apple Phones</a></li>
-                                                                <li><a href="">Samsung Phones</a></li>
-                                                                <li><a href="">Motorola Phones</a></li>
-                                                                <li><a href="">Lenovo Phones</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    <li><img src="assets/img/categorie/categorie.png" alt=""></li>
-                                                        
-                                                    
+                                        
+                                        <?php 
 
-                                                </ul>
-                                            </li>
-</ul> </div></div> </div>
+$sql2 = "SELECT * FROM cartegoria";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc() ){
+
+$cartegoria = $row['cartegoria'];
+echo "     <li class='seila'><a id='red' href='shop.php?cartegoria=$cartegoria'>$cartegoria</a>
+                                                        
+</li>";
+
+}
+?>
+
+                                            
+</div></div> </div>
                             <div class="col-lg-7">
                                 <div class="main_menu_inner">
                                     <div class="main_menu d-none d-lg-block"> 
@@ -321,7 +313,7 @@ echo "Fazer login";
                              
                                           
                                             
-                                            <li><a href="contact.html">Contact Us</a></li>
+                                            <li><a href="contact.html">Fale conosco</a></li>
                                         </ul>
 
                                     </div>
@@ -333,7 +325,7 @@ echo "Fazer login";
                                         <span class="pe-7s-headphones"></span>
                                     </div>
                                     <div class="contact_number">
-                                        <p>Call Us:</p>
+                                        <p>Ligue para:</p>
                                         <span>(999) 1234 56789</span>
                                     </div>
                                 </div>
@@ -432,7 +424,7 @@ $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-$query = "SELECT * FROM produto WHERE tipe = 0 $orderStatement LIMIT $perPage OFFSET $offset";
+$query = "SELECT * FROM produto WHERE tipe = 1 $orderStatement LIMIT $perPage OFFSET $offset";
 $result = $mysqli->query($query);
 
 
@@ -502,7 +494,7 @@ $totalResult = $mysqli->query($totalQuery);
 $totalRows = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $perPage);
 
-$query = "SELECT * FROM produto WHERE tipe = 0 $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";  // Modificamos aqui também
+$query = "SELECT * FROM produto WHERE tipe = 1 $whereStatement $orderStatement LIMIT $perPage OFFSET $offset";  // Modificamos aqui também
 $result = $mysqli->query($query);
 
 function checkIfProductIsInWishlist($product_id, $user_id) {
@@ -623,7 +615,7 @@ if (isset($_SESSION['usuario'])) {
                                     </div>
                                     <div class="shipping_content">
                                         <h3>Support@exemplo.com.br</h3>
-                                        <p>Orders Support!</p>
+                                        <p>Suporte de compras!</p>
                                     </div>
                                 </div>
                             </div>
@@ -633,8 +625,8 @@ if (isset($_SESSION['usuario'])) {
                                         <span class="pe-7s-timer"></span>
                                     </div>
                                     <div class="shipping_content">
-                                        <h3>Mon - Fri / 8:00 - 18:00</h3>
-                                        <p>Working Days/Hours!</p>
+                                        <h3>Seg - Sex / 8:00 - 18:00</h3>
+                                        <p>Trabalhamos plea sua segurança</p>
                                     </div>
                                 </div>
                             </div>

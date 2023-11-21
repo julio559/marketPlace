@@ -1,135 +1,232 @@
+<?php
+include '../../pages/php/conexao.php';
+
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header("location: sign-in.php");
+    exit;
+}
+
+$id_vendedor = $_SESSION['usuario'];
+$message = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+    $name = $_POST['name'];
+    $price = $_POST['price'];
+    $description = $_POST['description'];
+    $type = '1'; // Se você tiver um campo para 'type', deve incluir no formulário
+    $stock = $_POST['stock'];
+    $category = $_POST['category'];
+    $subcategory = $_POST['subcategory'];
+$composicao = $_POST['composicao'];
+    $imageNames = array('', '', '', '');
+    $uploadDir = '../../pages/uploads/';
+
+    for ($i = 1; $i <= 4; $i++) {
+        if (isset($_FILES['image' . $i]) && $_FILES['image' . $i]['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image' . $i]['tmp_name'];
+            $fileName = $_FILES['image' . $i]['name'];
+            
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+            $dest_path = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                $imageNames[$i - 1] = $newFileName;
+            } else {
+                echo 'Houve um erro ao mover o arquivo para o diretório de upload.';
+                exit;
+            }
+        }
+    }
+
+    // Ajuste o nome da tabela e das colunas conforme o seu banco de dados
+    $stmt = $mysqli->prepare("INSERT INTO produto (nome, preco, descricao, tipe, id_vendedor, stock, imagem, imagem2, imagem3, imagem4, cartegoria, sub_descricao, composicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $stmt->bind_param("ssssissssssss", $name, $price, $description, $type, $id_vendedor, $stock, $imageNames[0], $imageNames[1], $imageNames[2], $imageNames[3], $category, $subcategory, $composicao);
+
+    $stmt->execute();
+    if ($stmt->affected_rows > 0) {
+        $message = '<div class="message-box success">Produto adicionado com sucesso.</div>';
+    } else {
+        $message = '<div class="message-box error">Erro ao adicionar o produto: ' . htmlspecialchars($stmt->error) . '</div>';
+    }
+
+
+    $stmt->close();
+}
+
+$mysqli->close();
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Add Product Page</title>
+<title>Adicionar Produto</title>
+<link rel="stylesheet" href="styles.css">
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        width: 80%;
-        margin: auto;
-        overflow: hidden;
-    }
-    header {
-        background: #50b3a2;
-        color: white;
-        padding-top: 30px;
-        min-height: 70px;
-        border-bottom: #e8491d 3px solid;
-    }
-    header a {
-        color: #ffffff;
-        text-decoration: none;
-        text-transform: uppercase;
-        font-size: 16px;
-    }
-    header ul {
-        padding: 0;
-        list-style: none;
-    }
-    header ul li {
-        float: left;
-        display: inline;
-        padding: 0 20px 0 20px;
-    }
-    header #branding {
-        float: left;
-    }
-    header #branding h1 {
-        margin: 0;
-    }
-    header nav {
-        float: right;
-        margin-top: 10px;
-    }
-    header .highlight, header .current a {
-        color: #e8491d;
-        font-weight: bold;
-    }
-    header a:hover {
-        color: #ffffff;
-        font-weight: bold;
-    }
-    .add-product {
-        background: #ffffff;
-        padding: 15px;
-        margin-top: 15px;
-        border: 1px solid #cccccc;
-    }
-    .add-product input[type="text"],
-    .add-product input[type="number"],
-    .add-product select,
-    .add-product textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #cccccc;
-    }
-    .add-product input[type="submit"] {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background: #50b3a2;
-        color: white;
-        border: 0;
-        cursor: pointer;
-    }
-    .add-product input[type="submit"]:hover {
-        background: #45a092;
-        transition: background 0.3s ease;
-    }
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #e9ecef; /* Um cinza claro, você pode substituir pela cor da imagem */
+}
+
+.add-product-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.add-product-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+#productForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#productForm input,
+#productForm textarea {
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+#productForm button {
+  padding: 0.75rem;
+  border: none;
+  background-color: #007bff; /* Azul, pode ser substituído pela cor da imagem */
+  color: white;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#productForm button:hover {
+  background-color: #0056b3;
+}
+
+.image-upload-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.image-upload {
+  width: 100px; 
+  height: 100px; 
+  border: 1px dashed #ced4da;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload input[type="file"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+}
+
+.image-upload::before {
+  content: "+";
+  font-size: 2rem;
+  color: #ced4da;
+  position: absolute;
+}
+
+.image-preview {
+  display: none; 
+}
+.message-box {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  color: #fff;
+  text-align: center;
+}
+
+.success {
+  background-color: #28a745; 
+}
+
+.error {
+  background-color: #dc3545; 
+}
+
 </style>
 </head>
 <body>
-<header>
-    <div class="container">
-        <div id="branding">
-            <h1><span class="highlight">My</span> Catalogue</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="current"><a href="products.html">Products</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<div class="container">
-    <section class="add-product">
-        <h2>Add Product</h2>
-        <form>
-            <div>
-                <label for="name">Product Name</label>
-                <input type="text" id="name" name="name">
-            </div>
-            <div>
-                <label for="category">Category</label>
-                <select id="category" name="category">
-                    <option value="electronics">Electronics</option>
-                    <option value="books">Books</option>
-                    <option value="clothing">Clothing</option>
-                    <!-- Add more categories as needed -->
-                </select>
-            </div>
-            <div>
-                <label for="price">Price</label>
-                <input type="number" id="price" name="price" min="0" step="0.01">
-            </div>
-            <div>
-                <label for="description">Description</label>
-                <textarea id="description" name="description"></textarea>
-            </div>
-            <!-- Add more fields as necessary -->
-            <input type="submit" value="Add Product">
-        </form>
-    </section>
+<div class="add-product-form">
+  <h2>Adicionar Novo Produto</h2>
+  <?php echo $message; ?>
+  <form id="productForm" enctype="multipart/form-data" method="POST">
+  <div class="image-upload-container">
+  <div class="image-upload">
+    <input type="file" id="image1" name="image1" accept="image/*">
+  </div>
+  <div class="image-upload">
+    <input type="file" id="image2" name="image2" accept="image/*">
+  </div>
+  <div class="image-upload">
+    <input type="file" id="image3" name="image3" accept="image/*">
+  </div>
+  <div class="image-upload">
+    <input type="file" id="image4" name="image4" accept="image/*">
+  </div>
 </div>
+ 
+    <input type="text" id="name" name="name" placeholder="Nome do Produto" required>
+    <input type="number" step="0.01" id="price" name="price" placeholder="Preço" required>
+    <textarea id="description" name="description" placeholder="Descrição" required></textarea>
+    <input type="text" id="subcategory" name="composicao" placeholder="Composição" required>
+   
+    <input type="number" id="stock" name="stock" placeholder="Estoque" required>
+    <!-- Aqui você pode adicionar campos para upload de imagens -->
+    <input type="text" id="category" name="category" placeholder="Categoria" required>
+    <input type="text" id="subcategory" name="subcategory" placeholder="Subcategoria" required>
+    <button type="submit">Adicionar Produto</button>
+  </form>
+</div>
+<script>
+
+document.querySelectorAll('.image-upload input[type="file"]').forEach(input => {
+  input.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imageUploadContainer = input.parentElement;
+        imageUploadContainer.style.backgroundImage = `url(${e.target.result})`;
+        // Remove o '+' ao carregar a imagem
+        if (imageUploadContainer.querySelector('::before')) {
+          imageUploadContainer.style.content = '';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});
+
+</script>
 </body>
 </html>

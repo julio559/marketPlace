@@ -1,5 +1,5 @@
 <?php  
-include("php/details-prod.php")
+include("php/details-prod.php");
 
 
 ?>
@@ -45,6 +45,28 @@ border-radius: 7px;
         color: gold;
     }
    
+
+    .seila {
+  /* Adiciona uma borda cinza na parte de baixo do elemento */
+  border-bottom: 1px solid gray;
+  padding: 10px; /* Ajuste o espaçamento interno conforme necessário */
+}
+
+/* Estilo para o link dentro do elemento 'seila' */
+.seila a {
+  /* Define a cor do texto do link como preto */
+  color: black;
+  /* Remove a decoração padrão do link (sublinhado) */
+  text-decoration: none;
+}
+
+
+.product_details{
+
+margin-left: 50px;
+
+}
+
     </style>
     </head>
     <body>
@@ -105,7 +127,7 @@ echo "Fazer login";
 
 
                                             if(isset($_SESSION["usuario"])){
-                                              echo "  <li><a href='php/logout.php'>LOG OUT</a></li>";
+                                              echo "  <li><a href='php/logout.php'>Sair</a></li>";
                                             }
                                                 ?>
                                                 
@@ -131,7 +153,7 @@ echo "Fazer login";
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-md-4">
                                 <div class="logo">
-                                    <a href="php/index-4.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a href="php/index-4.php"><img src="uploads/imagem_2023-11-21_142434627.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-5">
@@ -153,43 +175,39 @@ echo "Fazer login";
                 </div>
                 <!--header middel end-->
                 
-                <!--header bottom satrt-->
                 <div class="header_bottom">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-3 col-md-5">
                                 <div class="categories_menu">
                                     <div class="categories_title">
-                                        <h2 class="categori_toggle"> All categories</h2>
+                                        <h2 class="categori_toggle"> Todas cartegorias</h2>
                                     </div>
                                     <div class="categories_menu_inner">
-                                        <ul>
-                                            <li class="categorie_list"><a href="#">Laptop & Computer <i class="fa fa-angle-right"></i></a>
-                                                <ul class="categories_mega_menu">
-                                                    <li><a href="#">Headphoness</a>
-                                                        <div class="categorie_sub_menu">
-                                                            <ul>
-                                                                <li><a href="">Dell Laptops</a></li>
-                                                                <li><a href="">HP Laptops</a></li>
-                                                                <li><a href="">Lenovo Laptops</a></li>
-                                                                <li><a href="">Apple Laptops</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                        
+                                        <?php 
 
-                                </div>
-                            </div>
+$sql2 = "SELECT * FROM cartegoria";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc() ){
+
+$cartegoria = $row['cartegoria'];
+echo "     <li class='seila'><a id='red' href='shop.php?cartegoria=$cartegoria'>$cartegoria</a>
+                                                        
+</li>";
+
+}
+?>
+
+                                            
+</div></div> </div>
                             <div class="col-lg-7">
                                 <div class="main_menu_inner">
                                     <div class="main_menu d-none d-lg-block"> 
                                         <ul>
-                                            <li><a href="php/index-4.php">Home <i class="fa fa-angle-down"></i></a>
+                                            <li><a href="php/index-4.php">Paginas <i class="fa fa-angle-down"></i></a>
                                                 <ul class="sub_menu">
-                                                    <li><a href="php/index-4.php">Home</a></li>
+                                                    <li><a href="php/index-4.php">Pagina inicial</a></li>
                                                    
                                                 </ul>
                                             </li>
@@ -206,22 +224,15 @@ echo "Fazer login";
                                     <div class="mobile-menu d-lg-none">
                                         <nav>  
                                             <ul>
-                                            <li><a href="php/index-4.php">Home</a>
+                                            <li><a href="php/index-4.php">Paginas</a>
                                                 <ul>
-                                                    <li><a href="index-4.php">Home</a></li>
+                                                    <li><a href="index-4.php">Pagina incial</a></li>
                                                   
                                                 </ul>
                                             </li>
-                                            <li><a href="shop.html">shop</a>
-                                                <ul>
-                                                    <li><a href="#">Shop Layouts</a>
-                                                        <ul>
-                                                            <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                            
-                                                        </ul>
-                                                    </li>
+                                
                                                   
-                                            <li><a href="contact.html">Contact Us</a></li>
+                                            <li><a href="contact.html">Fale conosco</a></li>
                                         </ul>
                                         </nav>      
                                     </div>
@@ -233,7 +244,7 @@ echo "Fazer login";
                                         <span class="pe-7s-headphones"></span>
                                     </div>
                                     <div class="contact_number">
-                                        <p>Call Us:</p>
+                                        <p>Ligue para:</p>
                                         <span>(999) 1234 56789</span>
                                     </div>
                                 </div>
@@ -252,11 +263,11 @@ echo "Fazer login";
                         <div class="row">
                             <div class="col-12">
                                 <div class="breadcrumb_content">
-                                    <h3>product details</h3>
+                                    <h3>Detalhes do produto</h3>
                                     <ul>
-                                        <li><a href="index.html">home</a></li>
+                                       
                                         <li><i class="fa fa-angle-right"></i></li>
-                                        <li>product details</li>
+                                        <li>Detalhes</li>
                                     </ul>
                                 </div>
                             </div>
@@ -281,17 +292,17 @@ echo "Fazer login";
                                     </div>
                                     <div class="tab-pane fade" id="p_tab2" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem?>" alt="" width="600px" height="500px"></a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem2?>" alt="" width="600px" height="500px"></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="p_tab3" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem?>" alt="" width="600px" height="500px"></a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem3?>" alt="" width="600px" height="500px"></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="p_tab4" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem?>" alt="" width="600px" height="500px"> </a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem4?>" alt="" width="600px" height="500px"> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -302,18 +313,20 @@ echo "Fazer login";
                                             <a class="active" data-toggle="tab" href="#p_tab1" role="tab" aria-controls="p_tab1" aria-selected="false"><img src="uploads/<?php echo $imagem?>" height="107px" width="118px" alt=""></a>
                                         </li>
                                         <li>
-                                             <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false"><img src="assets/img/cart/cart11.jpg" alt=""></a>
+                                             <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false"><img src="uploads/<?php echo $imagem2?>" alt=""></a>
                                         </li>
                                         <li>
-                                           <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false"><img src="assets/img/cart/cart9.jpg" alt=""></a>
+                                           <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false"><img src="uploads/<?php echo $imagem3?>" alt=""></a>
                                         </li>
                                         <li>
-                                           <a data-toggle="tab" href="#p_tab4" role="tab" aria-controls="p_tab4" aria-selected="false"><img src="assets/img/cart/cart12.jpg" alt=""></a>
+                                           <a data-toggle="tab" href="#p_tab4" role="tab" aria-controls="p_tab4" aria-selected="false"><img src="uploads/<?php echo $imagem4?>" alt=""></a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
+                      
                         <div class="col-lg-7 col-md-6">
                             <div class="product_details">
                                 <h3><?php echo $nome; ?></h3>
@@ -371,6 +384,7 @@ echo "Fazer login";
                     </div>
                 </div>
             </div>
+           
             <!--single product wrapper end-->
             
             
@@ -404,15 +418,61 @@ echo "Fazer login";
                                                     <tbody>
                                                         <tr>
                                                             <td class="first_child">Composições</td>
-                                                            <td>Poliéster</td>
+                                                            <td><?php 
+                                                            
+                                                            $composicao = "Não informado"; // Valor padrão se não encontrar o produto
+
+                                                            // Obtenha o ID do produto a partir da URL
+                                                            $id_prod = isset($_GET['id_prod']) ? (int)$_GET['id_prod'] : 0;
+                                                            
+                                                            // Preparar a consulta SQL
+                                                            $stmt = $mysqli->prepare("SELECT composicao FROM produto WHERE id = ?");
+                                                            $stmt->bind_param("i", $id_prod); // 'i' especifica que o parâmetro é um inteiro
+                                                            
+                                                            // Executar a consulta
+                                                            $stmt->execute();
+                                                            
+                                                          
+                                                            $stmt->bind_result($composicaoResult);
+                                                            
+                                                            
+                                                            if ($stmt->fetch()) {
+                                                              
+                                                                $composicao = $composicaoResult;
+                                                            }
+                                                            
+                                                            // Fechar o statement
+                                                            $stmt->close();
+                                                            
+                                                            // Exibir a composição do produto
+                                                            echo $composicao;
+                                                            
+?>
+                                            
+                                                            
+                                                            
+                                                            </td>
                                                         </tr>
+                                                   
                                                         <tr>
-                                                            <td class="first_child">Estilos</td>
-                                                            <td>Feminino</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="first_child">Propriedades</td>
-                                                            <td>Vestido Curto</td>
+                                                            <td class="first_child">Cartegoria</td>
+                                                            <td><?php
+$id_prod = $_GET['id_prod'];
+$cartegoria = 'Não informada';
+$sql2 = "SELECT cartegoria FROM produto WHERE id = $id_prod";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc()){
+                                           
+ $cartegoria = $row['cartegoria'];
+   
+
+} 
+
+echo $cartegoria
+?>
+                                                            
+                                                            
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -442,7 +502,7 @@ echo "Fazer login";
     <div class="product_active owl-carousel">
 
         <?php
-        $sqnew = "SELECT * FROM produto WHERE cartegoria = '$cartegoria' LIMIT 10";
+        $sqnew = "SELECT * FROM produto WHERE cartegoria = '$cartegoria' LIMIT 4";
         $quet = $mysqli -> query($sqnew);
         while ($row = $quet->fetch_assoc()) {
             $nome = $row['nome'];
@@ -463,13 +523,7 @@ echo "Fazer login";
                     <div class="product_content">
                         <div class="product_ratting">
                             <!-- Você pode ajustar as estrelas conforme a avaliação do produto aqui -->
-                            <ul>
-                                <li><a href="#"><i class="ion-star"></i></a></li>
-                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
-                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
-                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
-                                <li><a href="#"><i class="ion-ios-star-outline"></i></a></li>
-                            </ul>
+                     
                         </div>
                         <h3><a href="product-details.php?id_prod=<?php echo $id_prod; ?>"><?php echo $nome; ?></a></h3>
                         <div class="product_price">
@@ -547,7 +601,7 @@ if (isset($_SESSION['usuario'])) {
                                     </div>
                                     <div class="shipping_content">
                                         <h3>(999) 1234 56789</h3>
-                                        <p>Free support line!</p>
+                                        <p>Linha de suporte gratuito!</p>
                                     </div>
                                 </div>
                             </div>
@@ -557,8 +611,8 @@ if (isset($_SESSION['usuario'])) {
                                         <span class="pe-7s-mail"></span>
                                     </div>
                                     <div class="shipping_content">
-                                        <h3>Support@plazathemes.com</h3>
-                                        <p>Orders Support!</p>
+                                        <h3>ex_email@exemplo.com</h3>
+                                        <p>Suporte de compra!</p>
                                     </div>
                                 </div>
                             </div>
@@ -568,8 +622,8 @@ if (isset($_SESSION['usuario'])) {
                                         <span class="pe-7s-timer"></span>
                                     </div>
                                     <div class="shipping_content">
-                                        <h3>Mon - Fri / 8:00 - 18:00</h3>
-                                        <p>Working Days/Hours!</p>
+                                        <h3>Seg - Sex / 8:00 - 18:00</h3>
+                                        <p>Trabalhamos para sua segurança</p>
                                     </div>
                                 </div>
                             </div>
@@ -590,6 +644,19 @@ if (isset($_SESSION['usuario'])) {
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
         <script>
+
+
+$(document).ready(function(){
+    $('.product_d_button a').on('click', function(e) {
+        e.preventDefault(); // Evita o comportamento padrão do link
+        var tabId = $(this).attr('href'); // Pega o href do link clicado
+        $('.product_d_button a').removeClass('active'); // Remove a classe active de todos os links
+        $(this).addClass('active'); // Adiciona a classe active ao link clicado
+        $('.tab-content .tab-pane').removeClass('show active'); // Remove as classes show e active de todos os painéis
+        $(tabId).addClass('show active'); // Adiciona as classes show e active ao painel correspondente
+    });
+});
+
             const stars = document.querySelectorAll('.stars-rating span');
     stars.forEach(star => {
         star.addEventListener('click', function() {

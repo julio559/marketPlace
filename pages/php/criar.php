@@ -39,7 +39,7 @@ if (isset($_POST['nome']) && isset($_POST['senha'])) {
                 $stmt_img->execute();
                 $stmt_img->close();
             }
-            header("location: logred.php");
+            header("location: ../../argon-dashboard-master/pages/sign-in.php");
         } else {
             echo "Erro ao criar a conta.";
         }

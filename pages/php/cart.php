@@ -207,11 +207,11 @@ echo "Fazer login";
                     <div class="row">
                         <div class="col-12">
                             <div class="breadcrumb_content">
-                                <h3>cart</h3>
+                                <h3>Carrinho</h3>
                                 <ul>
-                                    <li><a href="index-4.php">home</a></li>
+                                    <li><a href="index-4.php">pagina inicial</a></li>
                                     <li><i class="fa fa-angle-right"></i></li>
-                                    <li>cart</li>
+                                    <li>carrinho</li>
                                 </ul>
                             </div>
                         </div>
@@ -231,11 +231,11 @@ echo "Fazer login";
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="product_remove">Delete</th>
-                                        <th class="product_thumb">Image</th>
-                                        <th class="product_name">Product</th>
-                                        <th class="product-price">Price</th>
-                                        <th class="product_quantity">Quantity</th>
+                                        <th class="product_remove">Deletar</th>
+                                        <th class="product_thumb">Imagem</th>
+                                        <th class="product_name">Produto</th>
+                                        <th class="product-price">Preço</th>
+                                        <th class="product_quantity">Quantidade</th>
                                         <th class="product_total">Total</th>
                                         <th class="product_total">Melhor cupom</th>
                                         <th class="product_total">Forma de pagamento</th>

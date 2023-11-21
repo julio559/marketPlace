@@ -17,14 +17,14 @@ font-size: 18px;
 
 
 .slider_four_area .single_slider.slider_one {
-	background: url(https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widexl.jpg);
+	background: url(https://media.istockphoto.com/id/1397817135/pt/foto/studio-shot-of-a-beautiful-young-woman-showing-off-her-long-brown-hair.jpg?s=2048x2048&w=is&k=20&c=sGTxHonY6vRm0ToBVtWObBr9ffkIDwso_Vp8uo6fU6Q=);
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-position: center center;
 	background-size: cover;
 }
 .slider_four_area .single_slider.slider_two {
-	background: url(https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widexl.jpg);
+	background: url(https://media.istockphoto.com/id/1490373861/pt/foto/natural-beauty.jpg?s=2048x2048&w=is&k=20&c=iPMgtuNlKQq09hv6mAUVrdH89D6J11Euo3TgR31SRa0=);
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-position: center center;
@@ -52,4 +52,8 @@ border: 10px;
     z-index: 1000;        /* Ensure the icon stays on top of other elements */
 }
 
+.cart_area{
 
+margin-left: 	10VW;
+
+}
