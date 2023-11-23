@@ -67,6 +67,38 @@ margin-left: 50px;
 
 }
 
+.single_product_wrapper .container .row {
+    display: flex;
+}
+
+.product_gallery ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product_gallery ul li {
+    margin-bottom: 10px; /* Espaço entre as imagens menores */
+}
+
+.com{
+outline: none;
+border: none;
+border-radius: 10px;
+
+color: white;
+background-color: #007bff;
+padding: 10px;
+}
+
+
+.sem{
+    background-color: #cccccc; /* Cinza claro */
+    color: #666666; /* Cinza escuro para o texto */
+    border: 1px solid #aaaaaa; /* Borda em cinza */
+    cursor: not-allowed; /* Cursor de "não permitido" para indicar ação desabilitada */
+}
+
+
     </style>
     </head>
     <body>
@@ -278,113 +310,111 @@ echo "     <li class='seila'><a id='red' href='shop.php?cartegoria=$cartegoria'>
             <!--breadcrumbs area end-->
             
             
-            <!--single product wrapper start-->
             <div class="single_product_wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-6">
-                            <div class="product_gallery">
-                                <div class="tab-content produc_thumb_conatainer">
-                                    <div class="tab-pane fade show active" id="p_tab1" role="tabpanel" >
+    <div class="container">
+        <div class="row">
+            <!-- Coluna para Imagens Menores (Lado Esquerdo) -->
+            <div class="col-lg-7 col-md-6">
+                <!-- Gallery for smaller images -->
+                <div class="row">
+                    <div class="col-3">
+                        <div class="product_gallery">
+                            <ul class="list-unstyled" role="tablist">
+                                <li>
+                                    <a data-toggle="tab" href="#p_tab1" role="tab" aria-controls="p_tab1" aria-selected="false">
+                                        <img src="uploads/<?php echo $imagem?>" alt="Imagem do produto" height="107px" width="118px">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false">
+                                        <img src="uploads/<?php echo $imagem2?>" alt="Imagem do produto" height="107px" width="118px">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false">
+                                        <img src="uploads/<?php echo $imagem3?>" alt="Imagem do produto" height="107px" width="118px">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#p_tab4" role="tab" aria-controls="p_tab4" aria-selected="false">
+                                        <img src="uploads/<?php echo $imagem4?>" alt="Imagem do produto" height="107px" width="118px">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="p_tab1" role="tabpanel">
+                                <a href="#">
+                                    <img src="uploads/<?php echo $imagem?>" alt="Imagem do produto" width="400px" height="400px">
+                                </a>
+                            </div>
+                            <div class="tab-pane fade" id="p_tab2" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem?>" alt="" width="600px" height="500px"></a>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="p_tab2" role="tabpanel">
-                                        <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem2?>" alt="" width="600px" height="500px"></a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem2?>" alt="" width="400px" height="400px"></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="p_tab3" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem3?>" alt="" width="600px" height="500px"></a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem3?>" alt="" width="400px" height="400px"></a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="p_tab4" role="tabpanel">
                                         <div class="modal_img">
-                                            <a href="#"><img src="uploads/<?php echo $imagem4?>" alt="" width="600px" height="500px"> </a>
+                                            <a href="#"><img src="uploads/<?php echo $imagem4?>" alt="" width="400px" height="400px"> </a>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="product_thumb_button">    
-                                    <ul class="nav product_d_button" role="tablist">
-                                        <li >
-                                            <a class="active" data-toggle="tab" href="#p_tab1" role="tab" aria-controls="p_tab1" aria-selected="false"><img src="uploads/<?php echo $imagem?>" height="107px" width="118px" alt=""></a>
-                                        </li>
-                                        <li>
-                                             <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false"><img src="uploads/<?php echo $imagem2?>" alt=""></a>
-                                        </li>
-                                        <li>
-                                           <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false"><img src="uploads/<?php echo $imagem3?>" alt=""></a>
-                                        </li>
-                                        <li>
-                                           <a data-toggle="tab" href="#p_tab4" role="tab" aria-controls="p_tab4" aria-selected="false"><img src="uploads/<?php echo $imagem4?>" alt=""></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                      
-                        <div class="col-lg-7 col-md-6">
-                            <div class="product_details">
-                                <h3><?php echo $nome; ?></h3>
-                                <div class="product_price">
-                                    <span class="current_price">Preço: <br> R$<?php echo number_format($preco, 2, ',', '.'); ?></span>
-                                
-                                </div>
-                                
-                               <div class="product_description">
-                               <p><?php echo $sub_descricao ?></p>
-                               <p><stong>Cartegoria: </strong><?php echo $cartegoria ?></p>
-
-                               </div>
-                                <div class="product_details_action">
-                                  <form method="get" action="php/cart.php">
-                                    <div class="product_stock">
-                                        
-                                    <input type="hidden" value="<?php echo $id_prod; ?>" name="id">
-                                    <input type="hidden" value="<?php echo $stock; ?>" name="estoque">
-                                    <label>Estoque</label>
-                                    <p> Temos <?php echo $stock ?> em estoque <p>
-                                    
-                                    <br>
-                                        <label>Quantidade</label>
-                                        
-                                        <input min="1" value="1" max="<?php echo $stock?>" name="quantidade" type="number">
-                                    </div>
-                                    <div class="product_action_link">
-                                        <ul>
-                                            <?php 
-
-
-                                     if ($stock > 0) {
-                                        echo "<li class='product_cart'><input type='submit' title='Add to cart' value='adicionar ao carrinho'></li>";
-                                    } else {
-                                        echo "<li class='product_cart'><input type='button' title='Sem estoque' value='Sem estoque' disabled></li>";
-                                    }
-                                
-                                          ?>
-
-                                        </ul>
-                                        </form>
-                                    </div>
-                                    <div class="social_sharing">
-                                    <button id="compartilhar" onclick="copyURLToClipboard()">Compartilhar</button>
-
-                                        <ul>
-                                          
-                                          
-                                        </ul>
-                                    </div> 
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-           
+
+            <!-- Coluna para Detalhes do Produto (Lado Direito) -->
+            <div class="col-lg-5 col-md-6">
+    <div class="product_details">
+        <h3><?php echo $nome; ?></h3>
+        <div class="product_price">
+            <span class="current_price">Preço:</span>
+            <br>
+            <span class="price_value">R$<?php echo number_format($preco, 2, ',', '.'); ?></span>
+        </div>
+        <div class="product_description">
+            <p><?php echo $sub_descricao; ?></p>
+            <p><strong>Categoria:</strong> <?php echo $cartegoria; ?></p>
+        </div>
+        <div class="product_stock">
+            <label>Estoque:</label>
+            <p>Temos <?php echo $stock; ?> em estoque</p>
+            <label>Quantidade:</label>
+            <input min="1" max="<?php echo $stock; ?>" value="1" name="quantidade" type="number">
+        </div>
+        <div class="product_action_link">
+            <form method="get" action="php/cart.php">
+
+
+            <input type="hidden" value="<?php echo $id_prod; ?>" name="id">
+                                    <input type="hidden" value="<?php echo $stock; ?>" name="estoque">
+
+                <?php 
+                if ($stock > 0) {
+                    echo "<button type='submit' class='com' title='Adicionar ao carrinho'>Adicionar ao carrinho</button>";
+                } else {
+                    echo "<button class='sem' disabled title='Sem estoque'>Sem estoque</button>";
+                }
+                ?>
+            </form>
+        </div>
+        <div class="social_sharing">
+            <button id="compartilhar" onclick="copyURLToClipboard()">Compartilhar</button>
+            <!-- Social sharing links can be added here -->
+        </div> 
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
             <!--single product wrapper end-->
             
             
@@ -474,6 +504,51 @@ echo $cartegoria
                                                             
                                                             </td>
                                                         </tr>
+
+
+                                                        <tr>
+                                                            <td class="first_child">Tamanho</td>
+                                                            <td><?php
+$id_prod = $_GET['id_prod'];
+$tamanho = 'Não informado';
+$largura = 'Não informado';
+$sql2 = "SELECT largura, tamanho FROM produto WHERE id = $id_prod";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc()){
+                                           
+ $altura = $row['tamanho'];
+ $largura = $row['largura'];
+   
+
+} 
+
+echo "$altura cm x $largura cm ";
+?>
+                                                            
+                                                            
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="first_child">Cor</td>
+                                                            <td><?php
+$id_prod = $_GET['id_prod'];
+$cor = 'Não informada';
+$sql2 = "SELECT cor FROM produto WHERE id = $id_prod";
+$quer2 = $mysqli -> query($sql2);
+while( $row = $quer2 -> fetch_assoc()){
+                                   
+ $cor = $row['cor'];
+   
+
+} 
+
+echo $cor;
+?>
+                                                            
+                                                            
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </form>
@@ -509,12 +584,13 @@ echo $cartegoria
             $descricao = $row['descricao'];
             $id_prod = $row['id'];
             $preco = $row['preco'];
+            $imagem33 = $row['imagem']
         ?>
 
             <div class="col-lg-3">
                 <div class="single_product">
                     <div class="product_thumb">
-                        <a href="product-details.php?id_prod=<?php echo $id_prod; ?>"><img src="uploads/<?php echo $imagem; ?>" width="250px" height="250px" alt=""></a>
+                        <a href="product-details.php?id_prod=<?php echo $id_prod; ?>"><img src="uploads/<?php echo $imagem33; ?>" width="250px" height="250px" alt=""></a>
                         <div class="btn_quickview">
                        
 
@@ -536,13 +612,10 @@ if (isset($_SESSION['usuario'])) {
     $id = $row['id'];
     if ($row['stock'] <= 0) {
         echo "<li class='product_cart'><a href='#' class='disabled-link' disabled title='sem estoque'>Sem estoque</a></li>";
-    } else {
-        echo "<li class='product_cart'><a href='php/cart.php?id=$id' title='Add to Cart'>Add to Cart</a></li>";
-    }
-} else {
+    }else {
     echo "<li class='product_cart'><a href='product-details.php?id_prod=" . $row['id'] . "' title='ver detalhes'>ver detalhes</a></li>";
 }
-
+}
 ?>
                             </ul>
                         </div>
@@ -637,8 +710,8 @@ if (isset($_SESSION['usuario'])) {
 
     
 		
-		<!-- all js here -->
-        <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
+       
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="assets/js/popper.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/plugins.js"></script>
@@ -647,15 +720,16 @@ if (isset($_SESSION['usuario'])) {
 
 
 $(document).ready(function(){
-    $('.product_d_button a').on('click', function(e) {
+    $('.product_gallery a').on('click', function(e) {
         e.preventDefault(); // Evita o comportamento padrão do link
         var tabId = $(this).attr('href'); // Pega o href do link clicado
-        $('.product_d_button a').removeClass('active'); // Remove a classe active de todos os links
+        $('.product_gallery a').removeClass('active'); // Remove a classe active de todos os links
         $(this).addClass('active'); // Adiciona a classe active ao link clicado
         $('.tab-content .tab-pane').removeClass('show active'); // Remove as classes show e active de todos os painéis
         $(tabId).addClass('show active'); // Adiciona as classes show e active ao painel correspondente
     });
 });
+
 
             const stars = document.querySelectorAll('.stars-rating span');
     stars.forEach(star => {

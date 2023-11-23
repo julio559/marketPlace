@@ -12,7 +12,9 @@ if(isset($_POST["id_cart"])){
     $stmt->execute();
 
     if($stmt->affected_rows > 0){
-        $response['status'] = "success";
+        $response['status'] = "success"; // Ou "error" se não foi bem-sucedido.
+        echo json_encode($response);
+        exit;
     } else {
         $response['status'] = "error";
     }

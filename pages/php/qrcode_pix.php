@@ -3,15 +3,24 @@ include("conexao.php");
 session_start();
 $apiUrl = 'https://api.mercadopago.com/v1/payments';
 $accessToken = 'APP_USR-3786249808377944-102717-0761542ae1dd7c1769ec74fa4d8462da-1098015242'; // Substitua pelo seu token real, e mantenha-o seguro!
-if (!isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'], $_GET['paymentMethod'])) {
+if (!isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'],)) {
 header("location: cart.php");
 }
 // Verificar se as variáveis necessárias estão definidas
-if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'], $_GET['paymentMethod'])) {
+if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'])) {
     $id_prod = $_GET['id_prod'];
     $total = $_GET['total_value'];
+    $total = str_replace(',', '.', str_replace('.', '', $total));
+
+    // Converta a string em um número de ponto flutuante (float)
+    $total = (float) $total;
+    
+    // Agora você pode formatar o número usando number_format()
+    $totalFormatado = number_format($total, 2, ',', '.');
+
+
     $quantidade = $_GET['quantidade'];
-    $paymentMethod = $_GET['paymentMethod'];
+  
 
     $sql = "SELECT preco, nome FROM produto WHERE id = $id_prod";
     $result = $mysqli->query($sql);
@@ -29,7 +38,7 @@ $email = $row2['email'];
 
 }
 
-        if ($paymentMethod === 'pix') {
+        
             // Dados para pagamento com Pix
             $dadosPagamento = [
                 'transaction_amount' => floatval($total), // Converter para float
@@ -99,19 +108,8 @@ $orderId = $mysqli->insert_id; // Isso vai pegar o último ID inserido na conex�
                 print_r($data);
                 echo '</pre>';
             }
-        } elseif ($paymentMethod === 'cartao') {
-            // Redirecionar para a página de pagamento com cartão
-            header("Location: mercado_pago.php?id_prod=$id_prod&quantidade=$quantidade&total_value=$total");
-            exit;
-        } else {
-            echo 'Método de pagamento inválido.';
-        }
-    } else {
-        echo "Produto não encontrado!";
-    }
-} else {
-    echo 'Parâmetros ausentes.';
-}
+        } 
+      }
 
 
 
@@ -223,7 +221,7 @@ body {
             <i class="fas fa-arrow-left"></i> Voltar
         </a>
 <div class="centered-div">
-<p class="ola">  Validade do seu pagamento <br> no valor de R$<?php echo number_format($total, 2, ',', '.') ; ?></p>
+<p class="ola">  Validade do seu pagamento <br> no valor de R$<?php echo $totalFormatado; ?></p>
 
 <div class="timer" id="timer">
   30:00

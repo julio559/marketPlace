@@ -11,8 +11,9 @@ if (!isset($_SESSION['usuario'])) {
 $id_vendedor = $_SESSION['usuario'];
 $message = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
+  $cor = $_POST['cor'];
+$altura = $_POST['altura'];
+$largura = $_POST['largura'];
     $name = $_POST['name'];
     $price = $_POST['price'];
     $description = $_POST['description'];
@@ -44,9 +45,9 @@ $composicao = $_POST['composicao'];
     }
 
     // Ajuste o nome da tabela e das colunas conforme o seu banco de dados
-    $stmt = $mysqli->prepare("INSERT INTO produto (nome, preco, descricao, tipe, id_vendedor, stock, imagem, imagem2, imagem3, imagem4, cartegoria, sub_descricao, composicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $mysqli->prepare("INSERT INTO produto (nome, preco, descricao, tipe, id_vendedor, stock, imagem, imagem2, imagem3, imagem4, cartegoria, sub_descricao, composicao, tamanho, largura, cor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("ssssissssssss", $name, $price, $description, $type, $id_vendedor, $stock, $imageNames[0], $imageNames[1], $imageNames[2], $imageNames[3], $category, $subcategory, $composicao);
+    $stmt->bind_param("ssssisssssssssss", $name, $price, $description, $type, $id_vendedor, $stock, $imageNames[0], $imageNames[1], $imageNames[2], $imageNames[3], $category, $subcategory, $composicao, $altura, $largura, $cor);
 
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
@@ -201,7 +202,12 @@ body, html {
     <input type="text" id="subcategory" name="composicao" placeholder="Composição" required>
    
     <input type="number" id="stock" name="stock" placeholder="Estoque" required>
-    <!-- Aqui você pode adicionar campos para upload de imagens -->
+    <input type="text" id="stock" name="altura" placeholder="tamanho" oninput="addX()" required>
+    <input type="text" id="stock" name="cor" placeholder="cor" oninput="addX()" required>
+    <input type="text" id="stock" name="largura" placeholder="largura em cm" oninput="addX()" required>
+<span id="formattedOutput"></span>
+
+
     <input type="text" id="category" name="category" placeholder="Categoria" required>
     <input type="text" id="subcategory" name="subcategory" placeholder="Subcategoria" required>
     <button type="submit">Adicionar Produto</button>
@@ -226,6 +232,11 @@ document.querySelectorAll('.image-upload input[type="file"]').forEach(input => {
     }
   });
 });
+
+
+
+
+
 
 </script>
 </body>

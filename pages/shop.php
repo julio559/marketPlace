@@ -533,7 +533,8 @@ if ($result->num_rows > 0) {
                <?php echo   $isLiked = checkIfProductIsInWishlist($row['id'], $_SESSION['usuario']);
 $likedClass = $isLiked ? "liked" : "";
 
-echo '<button id="wishButton" class="heart-button ' . $likedClass . '" data-prod-id="' . $row['id'] . '" data-user-id="' . $_SESSION['usuario'] . '">❤</button>';
+echo '<button id="wishButton" class="heart-button ' . $likedClass . '" data-prod-id="' . $row['id'] . '">❤</button>';
+
  ?>
                     </div>
                     <h3><a href="product-details.php"><?php echo $row['nome']; ?></a></h3>
@@ -632,8 +633,8 @@ if (isset($_SESSION['usuario'])) {
                             </div>
                         </div>  
                         
-                        
-		<!-- all js here -->
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
         <script src="assets/js/popper.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
@@ -641,29 +642,36 @@ if (isset($_SESSION['usuario'])) {
         <script src="assets/js/main.js"></script>
 
         <script>
-document.querySelectorAll('.heart-button').forEach(button => {
-    button.addEventListener('click', function() {
-        let productId = this.getAttribute('data-prod-id');
-        let userId = this.getAttribute('data-user-id');
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.heart-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do botão
+            let productId = this.getAttribute('data-prod-id');
+            let userId = this.getAttribute('data-user-id');
 
-        fetch('addToWishlist.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `product_id=${productId}&user_id=${userId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                if (data.liked) {
-                    button.classList.add('liked');
-                } else {
-                    button.classList.remove('liked');
+            fetch('addToWishlist.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'product_id=' + productId
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
                 }
-            } else {
-                console.error("Erro ao atualizar lista de desejos");
-            }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    this.classList.toggle('liked', data.liked);
+                } else {
+                    console.error("Erro ao atualizar lista de desejos");
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao fazer a requisição:', error);
+            });
         });
     });
 });

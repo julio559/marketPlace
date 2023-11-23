@@ -1,15 +1,15 @@
 <?php
 // Inclui o arquivo de conexão com o banco de dados
 include '../../pages/php/conexao.php';
-
+session_start();
 // Verifica se a variável 'nome' foi enviada
 if (isset($_GET['nome'])) {
     // Recebe o valor enviado pelo AJAX
     $nome = $_GET['nome'];
-
+$id = $_SESSION['usuario'];
     // Prepara uma consulta SQL para buscar usuários com um nome que contém o valor recebido
     // Importante: Isso é uma forma básica e não segura. Em um ambiente de produção, você deve usar declarações preparadas para evitar injeções SQL
-    $sql = "SELECT * FROM produto WHERE nome LIKE '%$nome%'";
+    $sql = "SELECT * FROM produto WHERE nome LIKE '%$nome%' and id_vendedor = $id";
 
     // Executa a consulta
     $query2 = $mysqli->query($sql);

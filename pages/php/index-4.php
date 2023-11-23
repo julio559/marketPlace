@@ -409,7 +409,7 @@ if ($query23->num_rows > 0) {
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 		
-		<!-- all css here -->
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="../assets/css/bundle.css">
         <link rel="stylesheet" href="../assets/css/plugins.css">
@@ -425,7 +425,14 @@ color: white;
 
 }
 
+.swiper-container {
+    overflow: hidden; /* Isso evitará que o Swiper saia dos limites */
+}
 
+/* Garanta que não haja margens adicionais nos slides */
+.swiper-slide {
+    margin: auto;
+}
 .seila {
   /* Adiciona uma borda cinza na parte de baixo do elemento */
   border-bottom: 1px solid gray;
@@ -451,6 +458,62 @@ margin-left: 20px;
   color: white; /* Define a cor do texto como branco */
   text-decoration: none; /* Remove sublinhado do link */
 }
+.swiper-container {
+ display: none;
+    width: 100%;
+    padding-left: 0; /* Ajuste ou remova o padding esquerdo se necessário */
+}
+
+.swiper-wrapper {
+    align-items: center; /* Centraliza verticalmente os slides */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Remove margens laterais dos slides */
+}
+
+.single_product {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* Ajuste o padding para espaçamento interno */
+}
+
+/* Para centralizar os botões de navegação do Swiper */
+.swiper-button-prev, .swiper-button-next {
+    top: 50%; /* Posiciona no meio verticalmente */
+    transform: translateY(-50%); /* Centraliza verticalmente */
+}
+
+/* Ajuste da visualização dos slides */
+.swiper {
+    overflow: visible;
+}
+@media (max-width: 767px) {
+    .desktop-product-grid {
+        display: none; /* Oculta a grade de produtos em telas pequenas */
+    }
+    .mobile-product-slider {
+        display: block; /* Mostra o carrossel Swiper em telas pequenas */
+    }
+}
+
+/* Estilos para dispositivos maiores que 767px */
+@media (min-width: 768px) {
+    .mobile-product-slider {
+        display: none; /* Oculta o carrossel Swiper em telas maiores */
+    }
+    .desktop-product-grid {
+        display: block; /* Mostra a grade de produtos em telas maiores */
+    }
+}
+
+
 
 
             </style>
@@ -460,113 +523,86 @@ margin-left: 20px;
             
             
             <!--header area start-->
-           <header class="header_area">
-                <!--header top start-->
+            <header class="header_area">
+    <!-- header top start -->
 
-                <!--header top start-->
-                
-                <!--header middel start-->
-                <div class="header_middel middel_four">
-                    <div class="container-fluid">
-                        <div class="row align-items-center">
-                        <div class="logo">
-                                    <a href="index-4.php"><img src="uploads/imagem_2023-11-21_142434627.png" alt=""></a>
-                                </div>
-                            <div class="col-lg-3 col-md-7">
-                                <div class="categories_menu">
-                                    <div class="categories_title">
-                                        <h2 class="categori_toggle"> Todas cartegorias</h2>
-                                    </div>
-                                    <div class="categories_menu_inner">
-                                       
- 
+    <!-- header top start -->
 
-<?php 
+    <!-- header middel start -->
+    <div class="header_middel middel_four">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="logo">
+                    <a href="index-4.php"><img src="uploads/imagem_2023-11-21_142434627.png" alt=""></a>
+                </div>
+                <div class="col-lg-3 col-md-7">
+                    <div class="categories_menu">
+                        <div class="categories_title">
+                            <h2 class="categori_toggle">Todas cartegorias</h2>
+                        </div>
+                        <div class="categories_menu_inner">
 
-$sql2 = "SELECT * FROM cartegoria";
-$quer2 = $mysqli -> query($sql2);
-while( $row = $quer2 -> fetch_assoc() ){
+                            <?php
+                            $sql2 = "SELECT * FROM cartegoria";
+                            $quer2 = $mysqli->query($sql2);
+                            while ($row = $quer2->fetch_assoc()) {
 
-$cartegoria = $row['cartegoria'];
-echo "     <li class='seila'><a id='red' href='../shop.php?cartegoria=$cartegoria'>$cartegoria</a>
-                                                        
-</li>";
-
-}
-?>
-                                               
-
-
-
-                                              
-
-
-
-
-                                       
-     
-                                    </div>
-                                </div>
-                            </div>       
-                            <div class="col-lg-4 col-md-7">        
-                                <div class="search_bar">
-                                    <form action="pesquisar.php" method="GET">
-                                        <input placeholder="Pesquise na nossa loja" name="pesquisa" type="text">
-                                        <button type="submit"><i class="ion-ios-search-strong"></i></button>
-                                    </form>
-                                </div>
-                                    
-                            </div> 
-                            <div class="col-lg-2 col-md-5">
-                                <div class="cart_area">
-                                
-                                    <div class="cart_link">
-                                        <?php
-                                        if(isset($_SESSION["usuario"])){
-                                        echo "<a href='cart.php?idd=$id'><i class='ion-ios-cart-outline'></i></a>";
-                                        }else{
-
-echo "<a href='../logred.php'>logar</a>";
-
-                                        }
-
-                                        ?>
-                                           
-                                            </div>
-
-                                            <ul>
-    <li class="top_links"><a href="#">
-        <?php 
-        if(isset($_SESSION['usuario'])){
-            echo "Conta de $nome";
-        }else{
-            echo "Fazer login";
-        }
-        ?> <i class="ion-chevron-down"></i></a>
-        <ul class="dropdown_links">
-            <?php 
-            if(isset($_SESSION['usuario'])){
-                echo "<li><a href='cart.php'>Meu carrinho</a></li>";
-                echo "<li><a href='my-account.php?id=$id'>Conta de $nome</a></li>";
-                echo "<li><a href='../desejos.php'>Produtos curtidos</a></li>";
-                echo "<li><a href='pedidosAbertos.php'>Reclamações abertas</a></li>";
-            }else{
-                echo "<li><a href='../logred.php'>Fazer login</a></li>";
-            }
-            ?>
-        </ul>
-    </li>
-</ul>
-
-                                            
-                                        </div>
-                                        <!--mini cart end-->
-                                    </div>
-                                </div>
-                            </div>
+                                $cartegoria = $row['cartegoria'];
+                                echo "     <li class='seila'><a id='red' href='../shop.php?cartegoria=$cartegoria'>$cartegoria</a></li>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-7">
+                    <div class="search_bar">
+                        <form action="pesquisar.php" method="GET">
+                            <input placeholder="Pesquise na nossa loja" name="pesquisa" type="text">
+                            <button type="submit"><i class="ion-ios-search-strong"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-5"></div> <!-- Espaço em branco -->
+                <div class="col-lg-3 col-md-5 text-right"> <!-- Mover para a direita -->
+                    <div class="cart_area">
+                        <div class="cart_link">
+                            <?php
+                            if (isset($_SESSION["usuario"])) {
+                                echo "<a href='cart.php?idd=$id'><i class='ion-ios-cart-outline'></i></a>";
+                            } else {
+                                echo "<a href='../logred.php'>logar</a>";
+                            }
+                            ?>
+                        </div>
+                        <ul>
+                            <li class="top_links"><a href="#">
+                                    <?php
+                                    if (isset($_SESSION['usuario'])) {
+                                        echo "Conta de $nome";
+                                    } else {
+                                        echo "Fazer login";
+                                    }
+                                    ?> <i class="ion-chevron-down"></i></a>
+                                <ul class="dropdown_links">
+                                    <?php
+                                    if (isset($_SESSION['usuario'])) {
+                                        echo "<li><a href='cart.php'>Meu carrinho</a></li>";
+                                        echo "<li><a href='my-account.php?id=$id'>Conta de $nome</a></li>";
+                                        echo "<li><a href='../desejos.php'>Produtos curtidos</a></li>";
+                                        echo "<li><a href='pedidosAbertos.php'>Reclamações abertas</a></li>";
+                                    } else {
+                                        echo "<li><a href='../logred.php'>Fazer login</a></li>";
+                                    }
+                                    ?>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
                 <!--header middel end-->
                 
                 <!--header bottom satrt-->
@@ -660,95 +696,130 @@ echo "<a href='../logred.php'>logar</a>";
                      
                     <!--categories banner end-->
                     
-                     <!--product area start-->
-                    <div class="produtc_area product_four">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="product_tab_button">
-                                    <ul class="nav" role="tablist">
-                                        <li>
-                                            <a class="active" data-toggle="tab" href="#Products" role="tab" aria-controls="Products" aria-selected="true"> Produtos novos </a>
-                                        </li>
-                                  
-                                    
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content">
-    
-       <div class="row">
-          
-       <?php 
-// Prepare the SQL query
-
-// Prepara a consulta SQL
-
-// Prepara a consulta SQL
-$consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 1 ORDER BY `id` DESC LIMIT 4");
-$consulta->execute();
-
-// Associa as colunas do seu resultado às variáveis
-$consulta->bind_result($idProduto, $imagemProduto, $nomeProduto, $precoProduto, $estoqueProduto);
-
-// Itera sobre cada linha do resultado
-while ($consulta->fetch()) {
-    $imagemProduto = htmlspecialchars($imagemProduto);
-    $nomeProduto = htmlspecialchars($nomeProduto);
-    $precoFormatado = number_format($precoProduto, 2, ',', '.');
-
-    ?>
-
-    <div class="col-lg-3">
-        <div class="single_product"> 
-            <div class="product_thumb">
-                <a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><img src="../uploads/<?php echo $imagemProduto; ?>" width="250px" height="250px" alt=""></a>
-            </div> 
-            <div class="product_content">   
-                <h3><a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><?php echo $nomeProduto; ?></a></h3>
-                <div class="product_price">
-                    <span class="current_price">R$<?php echo $precoFormatado; ?></span>
-                </div>
-                <div class="product_action">
-                    <ul>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <?php  
-                            if ($estoqueProduto > 0) {
-                                echo "<li class='product_cart'>
-                                    <a href='../product-details.php?id_prod=$idProduto' title='Adicionar ao carrinho'>Detalhes</a>
-                                </li>";
-                            } else {
-                                echo "<li class='product_cart'>
-                                    <button class='not' disabled title='Adicionar ao carrinho'>SEM ESTOQUE</button>
-                                </li>";
-                            }
-                            ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>    
+                    <div class="product_area product_four">
+    <div class="row">
+        <div class="col-12">
+            <div class="product_tab_button">
+                <ul class="nav" role="tablist">
+                    <li>
+                        <a class="active" data-toggle="tab" href="#Products" role="tab" aria-controls="Products" aria-selected="true">
+                            Produtos Novos
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <?php 
-}
-$consulta->close();
-?>
+    <!-- Swiper para dispositivos móveis -->
+    <div class="swiper-container mobile-product-slider">
+    <div class="swiper-wrapper">
+        <?php
+        $consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 1 ORDER BY `id` DESC LIMIT 4");
+        $consulta->execute();
+        $consulta->bind_result($idProduto, $imagemProduto, $nomeProduto, $precoProduto, $estoqueProduto);
 
-
-                
+        while ($consulta->fetch()) {
+            $imagemProduto = htmlspecialchars($imagemProduto);
+            $nomeProduto = htmlspecialchars($nomeProduto);
+            $precoFormatado = number_format($precoProduto, 2, ',', '.');
+            ?>
+            <div class="swiper-slide">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="../product-details.php?id_prod=<?php echo $idProduto; ?>">
+                            <img src="../uploads/<?php echo $imagemProduto; ?>" width="250px" height="250px" alt="">
+                        </a>
+                    </div> 
+                    <div class="product_content">
+                        <h3><a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><?php echo $nomeProduto; ?></a></h3>
+                        <div class="product_price">
+                            <span class="current_price">R$<?php echo $precoFormatado; ?></span>
+                        </div>
+                        <div class="product_action">
+                            <ul>
+                                <?php if(isset($_SESSION["usuario"])): ?>
+                                    <?php  
+                                    if ($estoqueProduto > 0) {
+                                        echo "<li class='product_cart'>
+                                            <a href='../product-details.php?id_prod=$idProduto' title='Adicionar ao carrinho'>Detalhes</a>
+                                        </li>";
+                                    } else {
+                                        echo "<li class='product_cart'>
+                                            <button class='not' disabled title='Sem estoque'>SEM ESTOQUE</button>
+                                        </li>";
+                                    }
+                                    ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-       </div> 
-   </div>   
+            <?php
+        }
+        $consulta->close();
+        ?>
+    </div>
+    <div class="swiper-pagination"></div>
+  
 </div>
 
-                                                    </div>
-                                                </div>    
-                                            </div>
-                                        </div>
-                  
-                    <!--product area end-->
-                    <!--home banner sction start-->
+    <!-- Grade de produtos para dispositivos maiores -->
+    <div class="tab-content desktop-product-grid" id="Products">
+    <div class="row">
+        <?php
+        $consulta = $mysqli->prepare("SELECT id, imagem, nome, preco, stock FROM `produto` WHERE tipe = 1 ORDER BY `id` DESC LIMIT 4");
+        $consulta->execute();
+        $consulta->bind_result($idProduto, $imagemProduto, $nomeProduto, $precoProduto, $estoqueProduto);
+
+        while ($consulta->fetch()) {
+            $imagemProduto = htmlspecialchars($imagemProduto);
+            $nomeProduto = htmlspecialchars($nomeProduto);
+            $precoFormatado = number_format($precoProduto, 2, ',', '.');
+            ?>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="../product-details.php?id_prod=<?php echo $idProduto; ?>">
+                            <img src="../uploads/<?php echo $imagemProduto; ?>" width="250px" height="250px" alt="">
+                        </a>
+                    </div>
+                    <div class="product_content">
+                        <h3><a href="../product-details.php?id_prod=<?php echo $idProduto; ?>"><?php echo $nomeProduto; ?></a></h3>
+                        <div class="product_price">
+                            <span class="current_price">R$<?php echo $precoFormatado; ?></span>
+                        </div>
+                        <div class="product_action">
+                            <ul>
+                                <?php if(isset($_SESSION["usuario"])): ?>
+                                    <?php  
+                                    if ($estoqueProduto > 0) {
+                                        echo "<li class='product_cart'>
+                                            <a href='../product-details.php?id_prod=$idProduto' title='Adicionar ao carrinho'>Detalhes</a>
+                                        </li>";
+                                    } else {
+                                        echo "<li class='product_cart'>
+                                            <button class='not' disabled title='Sem estoque'>SEM ESTOQUE</button>
+                                        </li>";
+                                    }
+                                    ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        $consulta->close();
+        ?>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
                  
                     <!--consoles product end-->
 
@@ -840,7 +911,7 @@ $consulta->close();
 
 		<!-- all js here -->
         <script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
-       
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <script src="../assets/js/bootstrap.min.js"></script>
         <script src="../assets/js/plugins.js"></script>
         <script src="../assets/js/main.js"></script>
@@ -854,9 +925,31 @@ window.location.href = "../shop.php";
 
 }
 
+if (window.innerWidth <= 767) {
+// Inicialização do Swiper
+var swiper = new Swiper('.mobile-product-slider', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+    // Assegure que slidesPerView seja 1 em todas as resoluções
+    breakpoints: {
+        // Quando a largura da janela for >=320px
+        320: {
+            slidesPerView: 1,
+            spaceBetween: 10
+        },
+        // Quando a largura da janela for >=640px
+        640: {
+            slidesPerView: 1,
+            spaceBetween: 10
+        }
+    }
+});
 
-
-
+}
         </script>
     </body>
 </html>

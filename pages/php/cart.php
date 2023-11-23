@@ -17,7 +17,8 @@ include("carrinho.php");
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 		<!-- all css here -->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="../assets/css/bundle.css">
@@ -73,6 +74,139 @@ border: none;
   .coupon p {
     margin: 5px 0;
   }   
+
+
+
+
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  .carrinho {
+    width: 60%;
+    background-color: #fff;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #e1e1e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .carrinho-header {
+    border-bottom: 2px solid #e1e1e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .carrinho-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5em;
+  }
+  .carrinho-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e1e1e1;
+  }
+  .carrinho-item img {
+    width: 100px;
+    margin-right: 15px;
+  }
+  .carrinho-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .carrinho-info h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  .carrinho-info p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+  }
+  .action-buttons {
+    display: flex;
+    align-items: center;
+  }
+  .action-buttons button {
+    background-color: #2971f5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .action-buttons button:first-child {
+    margin-left: 0;
+  }
+  .price {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.4em;
+    margin-right: 10px;
+  }
+  .subtotal {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+  }
+
+
+  .payment {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px; /* Espaço acima do subtotal e do botão */
+}
+
+.ppa{
+
+padding: 30px;
+background-color: white;
+border: 5px;
+}
+
+.subtotal {
+  font-size: 18px; /* Tamanho da fonte do subtotal */
+  margin-bottom: 10px; /* Espaço entre o subtotal e o botão */
+}
+
+.btn-payment {
+  background-color: #2971f5; /* Cor amarela do botão */
+  color: white; /* Cor do texto do botão */
+  border: none;
+  padding: 10px 50px; /* Padding para tornar o botão mais largo */
+  border-radius: 20px; /* Bordas arredondadas */
+  cursor: pointer;
+  font-size: 18px; /* Tamanho da fonte do botão */
+  text-transform: uppercase; /* Texto em maiúsculas */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra no botão */
+  /* Borda amarela para manter a forma do botão ao focar ou clicar */
+}
+
+.btn-payment:hover {
+  background-color: #2971f5; /* Cor do botão quando passa o mouse */
+}
+
+.btn-payment:focus {
+  outline: none; /* Remove o contorno que aparece ao focar o botão */
+}
+
+@media (max-width: 768px) {
+  .payment {
+    align-items: center; /* Centraliza o botão em telas menores */
+  }
+}
+
     </style>
     </head>
     <body>
@@ -219,136 +353,106 @@ echo "Fazer login";
                 </div>         
             </div>
             <!--breadcrumbs area end-->
-      
+       
              <!--shopping cart area start -->
-             <div class="shopping_cart_area">
-    <div class="container">  
-        <form action="#"> 
-            <div class="row">
-                <div class="col-12">
-                    <div class="table_desc">
-                        <div class="cart_page table-responsive">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="product_remove">Deletar</th>
-                                        <th class="product_thumb">Imagem</th>
-                                        <th class="product_name">Produto</th>
-                                        <th class="product-price">Preço</th>
-                                        <th class="product_quantity">Quantidade</th>
-                                        <th class="product_total">Total</th>
-                                        <th class="product_total">Melhor cupom</th>
-                                        <th class="product_total">Forma de pagamento</th>
-                                       
-                                    </tr>
-                                </thead>
-                                <?php
-$isEmpty = true;
-while ($row = $query->fetch_assoc()):
+             <div class="carrinho">
+  <div class="carrinho-header">
+    <h3>Carrinho de compras</h3>
+  </div>
+
+  <?php
+  $isEmpty = true;
+  $subtotal = 0;
+  while ($row = $query->fetch_assoc()):
     $isEmpty = false;
-    $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 0;
+    $quantidade = is_numeric($row['quantidade']) ? $row['quantidade'] : 1;
     $preco = is_numeric($row['preco']) ? $row['preco'] : 0;
     $total = $quantidade * $preco;
+    $subtotal += $total;
     $itemId = $row['id'];
 
-    // Tente encontrar um cupom de desconto aplicável
-    $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1";
-    $quer23 = $mysqli->query($sql23);
-    $descontoAplicado = false;
-    $valorComDesconto = $total;
+    $sql2 = "SELECT id_vendedor FROM produto WHERE id = $itemId";
+    $que = $mysqli -> query($sql2);
+    while( $row2 = $que -> fetch_assoc()){
 
-    if ($row22 = $quer23->fetch_assoc()) {
-        $porcentagemDesconto = $row22['porcentagem'] / 100;
-        $valorComDesconto = $total - ($total * $porcentagemDesconto);
-        $descontoAplicado = true;
-    } ?>
-<tr>
-    <td class="product_remove">
-        <form method="POST" action="cart.php">
-            <input type="hidden" name="id_cart" value="<?php echo $row['id']; ?>">
-            <button type="submit" class="Ola" name="delete_item"><i class="fa fa-trash-o"></i></button>
-        </form>
-    </td>
-    <td class="product_thumb">
-        <a href="#"><img src="../uploads/<?php echo $row['imagem']; ?>" width="250px" alt=""></a>
-    </td>
-    <td class="product_name">
-        <a href="#"><?php echo $row['produto_nome']; ?></a>
-    </td>
-    <td class="product-price">
-        <span class="current_price">R$<?php echo number_format($row['preco'], 2, ',', '.'); ?></span>
-    </td>
-    <td class="product_quantity">
-        <form method="POST" action="cart.php">
-            <input min="1" max="<?php echo $stock ?>" value="<?php echo $row['quantidade']; ?>" type="number" name="numero">
-            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
-            <button type="submit" class="submit-button">
-                <i class="bi bi-arrow-clockwise"></i>
-            </button>
-        </form>
-    </td>
-    <td class="product_total">
-    <span id="total-text-<?= $itemId; ?>"><?php echo number_format($total, 2, ',', '.'); ?></span>
-</td>
-    <td>
-    <?php  
-    $sql23 = "SELECT id, nome, porcentagem, valor_min FROM cupons WHERE valor_min <= $total ORDER BY porcentagem DESC LIMIT 1";
-    $quer23 = $mysqli->query($sql23);
-    if ($row22 = $quer23->fetch_assoc()):
-        $nome = $row22['nome'];
-        $porcentagem = $row22['porcentagem'];
-        $couponId = $row22['id'];
-    ?>
-    <div id="coupon-<?= $couponId ?>" class="coupon" onclick="applyDiscount(<?= $itemId ?>, <?= $couponId ?>, <?= $porcentagem ?>)">
-        <h2><?= htmlspecialchars($nome) ?></h2>
-        <p>Desconto: <?= htmlspecialchars($porcentagem) ?>%</p>
-        <p>Valor mínimo: <?= htmlspecialchars($row22['valor_min']) ?> $</p>
+$id_vendor = $row2['id_vendedor'];
+$sql3 = "SELECT nome FROM cliente WHERE id = $id_vendor";
+$que3 = $mysqli -> query($sql3);
+while($row3 = $que3 -> fetch_assoc()){
+
+$nome_vendor = $row3['nome'];
+
+}
+
+    }
+  ?>
+
+
+  <div class="carrinho-item">
+    <img src="../uploads/<?php echo $row['imagem']; ?>" alt="<?php echo htmlspecialchars($row['produto_nome']); ?>">
+    <div class="carrinho-info">
+      <h4><?php echo htmlspecialchars($row['produto_nome']); ?></h4>
+      <p>Em estoque</p>
+      <p>Vendido por: <?php echo $nome; ?></p>
     </div>
-    <?php endif; ?>
-</td>
-    <td class="product_total">
-    <form id="paymentForm" action="../mercado_pago.php" method="GET" onsubmit="return redirectPage(this);">
-
-    <input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
-    <input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
-    <input type="hidden" name="total_value" id="total-value-<?= $itemId; ?>" value="<?php echo $descontoAplicado ? $valorComDesconto : $total; ?>">
-    <select name="paymentMethod" id="paymentMethod">
-        <option id="nod" value="pix">Pix</option>
-        <option id="nod" value="cartao">Cartão</option>
-    </select>
-    <button type="submit" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Comprar</button>
+    <div class="price">
+      R$<?php echo number_format($preco, 2, ',', '.'); ?>
+    </div>
+    <div class="action-buttons">
+    <form method="POST" action="cart.php">
+  <input type="hidden" name="id_cart" value="<?php echo $row['id']; ?>">
+  <button type="submit" class="delete-item-btn" name="delete_item">
+    <i class="fa fa-trash-o"></i> 
+  </button>
 </form>
-    </td>
-</tr>
-<?php endwhile; ?>
-<?php if ($isEmpty): ?>
-<tr>
-    <td colspan="6" style="font-size: 20px; text-align: center; padding: 20px;">SEU CARRINHO AINDA ESTÁ VAZIO</td>
-</tr>
-<?php endif; ?>
-</tbody>
-
-
-                            </table>   
-                            
-                        </div>  
-                    </div>
-                    
-                    
-                    <div class="coupon-area">
-
-                    <div class="coupon-container">
-
-
-
-
-                </div>
-            </div>
-        </form>
+      <button type="button">Compartilhar</button>
     </div>
+  
+    <div class="quantity">
+  <form method="POST" action="cart.php">
+    <input class="quantity-input" min="1" max="99" value="<?php echo $quantidade; ?>" type="number" name="numero" data-prod-id="<?php echo $row['id_prod']; ?>">
+  </form>
+
+    </div>
+    <div class="total">
+      R$<?php echo number_format($total, 2, ',', '.'); ?>
+    </div>
+  </div>
+
+  <?php endwhile; ?>
+
+  <?php if ($isEmpty): ?>
+  <div class="carrinho-empty">
+    <p>SEU CARRINHO AINDA ESTÁ VAZIO</p>
+  </div>
+  <?php else: ?>
+  <div class="subtotal">
+<?php echo $query->num_rows; ?> produto(s)
+  </div>
+  <?php endif; ?>
 </div>
              
-                        <!--coupon code area end-->
+<div class="payment">
+    <div class="pa">
+        <div class="ppa">
+  <div class="subtotal"> Subtotal (<?php echo $query->num_rows; ?> produto(s)): R$<?php echo number_format($subtotal, 2, ',', '.'); ?></div>
+  <form action="qrcode_pix.php" method="GET" id="qr-code-form">
+  <?php
+  $query->data_seek(0); // Resetando o ponteiro do resultado se necessário
+  while ($row = $query->fetch_assoc()):
+  ?>
+
+<input type="hidden" id="total_value" name="total_value" value="<?php echo $subtotal ?>">
+<input type="hidden" name="id_prod" value="<?php echo $row['id_prod']; ?>">
+<input type="hidden" name="quantidade" value="<?php echo $row['quantidade']; ?>">
+
+ 
+  <?php endwhile; ?>
+  <button type="submit" class="btn-payment">Fechar pedido</button>
+  </form>
+</div>     
+</div>     
+</div>    <!--coupon code area end-->
                     </form> 
                 </div>     
             </div>
@@ -430,7 +534,38 @@ while ($row = $query->fetch_assoc()):
         <script src="../assets/js/plugins.js"></script>
         <script src="../assets/js/main.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
+
+<script>
+
+$(document).ready(function() {
+  $('.quantity-input').on('blur', function() {
+    console.log("Blur event triggered");
+    var productId = $(this).data('prod-id');
+    var newQuantity = $(this).val();
+    console.log(productId, newQuantity);
+    $.ajax({
+      url: 'updateCart.php',
+      type: 'POST',
+      data: { product_id: productId, quantity: newQuantity },
+      dataType: 'json',
+      success: function(response) {
+        if (response.success) {
+          $('.subtotal').text(`Subtotal (${response.num_items} produto(s)): R$${response.subtotal}`);
+          $('.total').text(`R$${response.subtotal}`);
+          
+          // Calcule o novo valor total e defina-o no campo oculto
+          $('#total_value').val(response.subtotal);
+
+        } else {
+          console.error("Erro ao atualizar o carrinho.");
+        }
+      },
+      error: function(request, status, error) {
+        console.error("Erro na requisição AJAX: ", request.responseText);
+      }
+    });
+  });
+});
 
 
 
@@ -520,41 +655,39 @@ function redirectPage(form) {
 }
 
 
-            
-  $(document).off('click', '.Ola').on('click', '.Ola', function(e) {
-    e.preventDefault();
+$(document).on('click', '.delete-item-btn', function(e) {
+  e.preventDefault();
 
-    var btn = $(this);  // Referência ao botão clicado
-    var parentRow = btn.closest('tr');
-    var formData = new FormData(btn.closest('form')[0]);
+  var btn = $(this);
+  var carrinhoItem = btn.closest('.carrinho-item');
+  var formData = new FormData(btn.closest('form')[0]);
 
-    // Desativa o botão
-    btn.prop('disabled', true);
+  btn.prop('disabled', true);
 
-    $.ajax({
-        type: "POST",
-        url: "remove_item.php",
-        data: formData,
-        processData: false,
-        contentType: false,
-        dataType: 'json',
-        success: function(response) {
-            if(response.status === "success") {
-                parentRow.fadeOut(300, function() {
-                    $(this).remove();
-                });
-            } else {
-                alert('Houve um erro ao remover o item.');
-            }
-        },
-        error: function() {
-            alert('Erro na chamada AJAX.');
-        },
-        complete: function() {
-            // Reativa apenas o botão que foi clicado
-            btn.prop('disabled', false);
-        }
-    });
+  $.ajax({
+      type: "POST",
+      url: "remove_item.php", // A URL do seu script de remoção
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function(response) {
+          if(response.status === "success") {
+              carrinhoItem.fadeOut(300, function() {
+                  $(this).remove();
+                  // Aqui você pode recalcular o subtotal, se necessário
+              });
+          } else {
+              alert('Houve um erro ao remover o item.');
+          }
+      },
+      error: function() {
+          alert('Erro na chamada AJAX.');
+      },
+      complete: function() {
+          btn.prop('disabled', false);
+      }
+  });
 });
 
 </script>

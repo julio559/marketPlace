@@ -29,42 +29,56 @@ if(isset($_SESSION["usuario"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados da Pesquisa</title>
     <style>
-        /* Reset básico para alguns elementos */
-        body, h2, h3, p {
+    * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, h2, h3, p {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Cores */
+        :root {
+            --primary-color: #2971f5;
+            --text-color: #333;
+            --background-color: #f6f6f6;
+            --button-hover-color: #165ad7;
+            --white: #fff;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f6f6f6;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
-        /* Estilo para o cabeçalho da página */
+        /* Estilo do cabeçalho */
         h2 {
-            background-color: #2971f5;
+            background-color: var(--primary-color);
             padding: 20px;
-            color: #fff;
+            color: var(--white);
             text-align: center;
             font-size: 28px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
+        /* Container Principal */
         .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 0 15px;
         }
 
+        /* Barra de Pesquisa */
         .search-bar {
             padding: 20px;
-            background-color: #fff;
+            background-color: var(--white);
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
         }
 
         .search-bar input[type="text"] {
@@ -78,44 +92,49 @@ if(isset($_SESSION["usuario"])) {
 
         .search-bar input[type="submit"] {
             padding: 10px 20px;
-            background-color: #2971f5;
+            background-color: var(--primary-color);
             border: none;
             border-radius: 5px;
-            color: #fff;
+            color: var(--white);
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         .search-bar input[type="submit"]:hover {
-            background-color: #165ad7;
+            background-color: var(--button-hover-color);
+            transform: translateY(-2px);
         }
 
-        /* Estilos para cada produto */
+        /* Estilos para produtos */
         .produto {
             display: flex;
-            background-color: #fff;
+            background-color: var(--white);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .produto:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
         }
 
         .produto-imagem img {
             max-width: 150px;
             border-radius: 10px;
+            display: block;
+            margin-right: 30px;
         }
 
         .produto-info {
             flex: 1;
-            margin-left: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         .preco {
-            color: #2971f5;
+            color: var(--primary-color);
             font-size: 1.5em;
             font-weight: bold;
         }
@@ -133,22 +152,24 @@ if(isset($_SESSION["usuario"])) {
 
         .back-btn {
             padding: 10px 20px;
-            background-color: #e0e0e0;
+            background-color: var(--primary-color);
             border-radius: 5px;
-            color: #333;
+            color: var(--white);
             font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none; /* Remover sublinhado */
             display: inline-block;
         }
 
         .back-btn:hover {
-            background-color: #c7c7c7;
+            background-color: var(--button-hover-color);
+            transform: translateY(-2px);
         }
 
         .product-link {
             text-decoration: none;
-            color: inherit; /* Mantém a cor do texto original */
+            color: inherit;
         }
 
     </style>

@@ -924,8 +924,16 @@ if ($query) {
     // Processa os resultados
     while ($row= $query->fetch_assoc()) {
         $meses[] = $row['mes']; // Armazena os meses
-        $faturamentos[] = $row['faturamento']; // Armazena os valores de faturamento
-        $metas[] = $row['valor_meta']; // Armazena os valores das metas
+        $faturamentos[] = $row['faturamento'];
+        
+        $id_usuario = $_SESSION['usuario'];     // Armazena os valores de faturamento
+$sql2 = "SELECT valor_meta FROM meta_venda WHERE id_usuario = $id";
+$query2 = $mysqli -> query($sql2);
+while( $row2 = $query2 -> fetch_assoc()){
+
+  $metas = $row['valor_meta']; 
+}
+        // Armazena os valores das metas
     }
 } else {
     echo "Erro ao realizar a consulta: " . $mysqli->error;

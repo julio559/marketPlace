@@ -38,7 +38,8 @@ $query = $mysqli -> query($sql);
 header("location: my-account.php");
 }
 
-$sql  = "SELECT id, data, status, total, id_prod FROM ordemcompra WHERE id_cliente = $id";
+$sql = "SELECT id, data, status, total, id_prod FROM ordemcompra WHERE id_cliente = $id ORDER BY data DESC";
+
 $query = $mysqli -> query($sql);  
 
 

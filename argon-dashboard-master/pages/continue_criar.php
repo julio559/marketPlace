@@ -92,7 +92,7 @@
                
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Criar conta</button>
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Continuar</button>
                 </div>
                 <a href="sign-in.php">
                 <p class="text-sm mt-3 mb-0">Ja tem conta? <a href="sign-in.php" class="text-dark font-weight-bolder">entre </p>
