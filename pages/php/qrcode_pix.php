@@ -1,26 +1,23 @@
 <?php
 include("conexao.php");
 session_start();
-$apiUrl = 'https://api.mercadopago.com/v1/payments';
-$accessToken = 'APP_USR-3786249808377944-102717-0761542ae1dd7c1769ec74fa4d8462da-1098015242'; // Substitua pelo seu token real, e mantenha-o seguro!
-if (!isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'],)) {
-header("location: cart.php");
+
+if (!isset($_SESSION['usuario'])) {
+    header("location: ../../argon-dashboard-master/pages/sign-in.php");
+    exit();
 }
-// Verificar se as variáveis necessárias estão definidas
-if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'])) {
-    $id_prod = $_GET['id_prod'];
-    $total = $_GET['total_value'];
-    $total = str_replace(',', '.', str_replace('.', '', $total));
 
-    // Converta a string em um número de ponto flutuante (float)
-    $total = (float) $total;
-    
-    // Agora você pode formatar o número usando number_format()
-    $totalFormatado = number_format($total, 2, ',', '.');
+$apiUrl = 'https://api.mercadopago.com/v1/payments';
+$accessToken = 'APP_USR-3786249808377944-102717-0761542ae1dd7c1769ec74fa4d8462da-1098015242'; // Substitua pelo seu token real.
+$id_client = $_SESSION['usuario'];
 
+// Verifique se 'id_prod' é um array e conte os elementos, caso contrário, defina como 1
+$total_itens = is_array($_GET['id_prod']) ? count($_GET['id_prod']) : 1;
 
-    $quantidade = $_GET['quantidade'];
-  
+for ($i = 0; $i < $total_itens; $i++) {
+    $id_prod = $_GET["id_prod_$i"];
+    $quantidade = $_GET["quantidade_$i"];
+    $endereco = $_GET["endereco"]; // Corrigido para usar o endereço correto para cada item
 
     $sql = "SELECT preco, nome FROM produto WHERE id = $id_prod";
     $result = $mysqli->query($sql);
@@ -30,98 +27,66 @@ if (isset($_GET['id_prod'], $_GET['total_value'], $_GET['quantidade'])) {
         $preco = $row['preco'];
         $nome = $row['nome'];
 
-        $id_client = $_SESSION['usuario'];
-$sql2 = "SELECT email FROM clientes WHERE id = $id_client";
-$q = $mysqli->query($sql2);
-while( $row2 = $q->fetch_assoc() ) {
-$email = $row2['email'];
+        $total = $_GET['total_value'];
+        $total = str_replace(',', '.', str_replace('.', '', $total));
+        $total = (float) $total;
+        $totalFormatado = number_format($total, 2, ',', '.');
+        $sql2 = "SELECT email FROM clientes WHERE id = $id_client";
+        $q = $mysqli->query($sql2);
+        $email = $q->fetch_assoc()['email'];
 
-}
+        $dadosPagamento = [
+            'transaction_amount' => floatval($total),
+            'description' => "Compra do produto $nome",
+            'payment_method_id' => 'pix',
+            'payer' => ['email' => $email]
+        ];
 
-        
-            // Dados para pagamento com Pix
-            $dadosPagamento = [
-                'transaction_amount' => floatval($total), // Converter para float
-                'description' => "Compra do produto $nome",
-                'payment_method_id' => 'pix',
-                'payer' => [
-                    'email' => "$email" // E-mail do comprador
-                ]
-            ];
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $accessToken
+        ]);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dadosPagamento));
 
-            // Iniciar cURL
-            $ch = curl_init($apiUrl);
+        $response = curl_exec($ch);
+        $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-            // Configurar cURL
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'Authorization: Bearer ' . $accessToken
-            ]);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dadosPagamento));
+        if ($response === false) {
+            die('Erro na chamada da API: ' . curl_error($ch));
+        }
 
-            // Executar chamada e obter resposta
-            $response = curl_exec($ch);
-            $httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        $data = json_decode($response, true);
 
-            if ($response === false) {
-                die('Erro na chamada da API: ' . curl_error($ch));
-            }
+        if ($httpStatusCode == 200 || $httpStatusCode == 201) {
+            if (isset($data['point_of_interaction']['transaction_data']['qr_code'])) {
+                $qrCodeUrl = $data['point_of_interaction']['transaction_data']['qr_code'];
+                $qrCodeBase64 = $data['point_of_interaction']['transaction_data']['qr_code_base64'];
 
-            curl_close($ch);
+                $statusPagamento = $mysqli->real_escape_string($data['status']);
+                $sql3 = "INSERT INTO ordemcompra (data, status, total, id_prod, id_cliente, quantidade, endereco_envio) 
+                        VALUES (NOW(), ?, ?, ?, ?, ?, ?)";
 
-            // Decodificar resposta
-            $data = json_decode($response, true);
-
-            // Verificar se a chamada foi bem-sucedida
-            if ($httpStatusCode == 200 || $httpStatusCode == 201) {
-                // Verificar e exibir QR Code (caso a resposta contenha um)
-                if (isset($data['point_of_interaction']['transaction_data']['qr_code'])) {
-                    $qrCodeUrl = $data['point_of_interaction']['transaction_data']['qr_code'];
-                    $qrCodeBase64 = $data['point_of_interaction']['transaction_data']['qr_code_base64'];
-            
-                    // Aqui você já tem o código para exibir o QR Code
-                    
-                    // Agora, vamos inserir a ordem de compra na base de dados
-                    $statusPagamento = $mysqli->real_escape_string($data['status']); // Sanitize a string for use in the SQL
-                    $sql = "INSERT INTO ordemcompra (data, status, total, id_prod, id_cliente, quantidade) 
-                            VALUES (NOW(), '$statusPagamento', $total, $id_prod, $id_client, $quantidade)";
-            
-                    if ($mysqli->query($sql) === TRUE) {
-                        // Redirecionar para uma página de confirmação ou exibir uma mensagem de sucesso
-                 
-                       // No ponto onde você tem o ID da ordem após inserir no banco de dados
-$orderId = $mysqli->insert_id; // Isso vai pegar o último ID inserido na conexão
-
-                    } else {
-                        echo 'Erro ao inserir ordem de compra: ' . $mysqli->error;
+                $stmt = $mysqli->prepare($sql3);
+                if ($stmt) {
+                    $stmt->bind_param("siiiss", $statusPagamento, $total, $id_prod, $id_client, $quantidade, $endereco);
+                    $stmt->execute();
+                    if ($stmt->error) {
+                        echo "Erro ao inserir ordem de compra: " . $stmt->error;
                     }
-            
+                    $stmt->close();
                 } else {
-                    echo 'QR Code não disponível na resposta da API.';
+                    echo "Erro na preparação da consulta: " . $mysqli->error;
                 }
-            } else {
-                // Houve um problema na chamada da API, exiba a mensagem de erro
-                echo 'Erro na API: ';
-                echo '<pre>';
-                print_r($data);
-                echo '</pre>';
             }
-        } 
-      }
-
-
-
-
-if($data['status'] == 'approved') {
-  $quantidade = $_GET['quantidade'];
-$sql = "UPDATE produto SET stock = stock - $quantidade WHERE id = $id_prod";
-$quer = $mysqli -> query($sql);
-
-
+        }
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

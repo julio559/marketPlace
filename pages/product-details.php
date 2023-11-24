@@ -577,7 +577,9 @@ echo $cor;
     <div class="product_active owl-carousel">
 
         <?php
-        $sqnew = "SELECT * FROM produto WHERE cartegoria = '$cartegoria' LIMIT 4";
+        
+        $sqnew = "SELECT * FROM produto WHERE cartegoria = '$cartegoria' ORDER BY id DESC LIMIT 4";
+
         $quet = $mysqli -> query($sqnew);
         while ($row = $quet->fetch_assoc()) {
             $nome = $row['nome'];

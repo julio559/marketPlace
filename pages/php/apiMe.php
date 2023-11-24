@@ -53,10 +53,15 @@ $id_prod = $_GET['id_prod'];
 
 if(isset($_GET["total_value"]) && isset($_GET['quantidade'])){
 $total = $_GET["total_value"];
+$total = str_replace(',', '.', str_replace('.', '', $total));
+$total = (float) $total;
+
 $id_client = $_SESSION['usuario'];
 $quantidade = $_GET['quantidade'];
 
-$sql2 = "INSERT INTO ordemcompra (total, status, id_prod, id_cliente, quantidade) VALUES('$total', 'pendente',  '$id_prod', '$id_client', '$quantidade')";
+$endereco = $_GET['endereco'];
+
+$sql2 = "INSERT INTO ordemcompra (total, status, id_prod, id_cliente, quantidade, endereco_envio) VALUES('$total', 'pendente',  '$id_prod', '$id_client', '$quantidade', '$endereco')";
     $query = $mysqli->query($sql2);
 $data = 'approved';
     if($data == 'approved') {

@@ -207,6 +207,21 @@ border: 5px;
   }
 }
 
+@media screen and (max-width: 768px) {
+    .carrinho {
+      flex-direction: column;
+    }
+
+    .carrinho-item {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .carrinho-item img {
+      max-width: 100%;
+    }
+  }
+
     </style>
     </head>
     <body>
@@ -376,7 +391,7 @@ echo "Fazer login";
     while( $row2 = $que -> fetch_assoc()){
 
 $id_vendor = $row2['id_vendedor'];
-$sql3 = "SELECT nome FROM cliente WHERE id = $id_vendor";
+$sql3 = "SELECT nome FROM clientes WHERE id = $id_vendor";
 $que3 = $mysqli -> query($sql3);
 while($row3 = $que3 -> fetch_assoc()){
 
@@ -436,7 +451,7 @@ $nome_vendor = $row3['nome'];
     <div class="pa">
         <div class="ppa">
   <div class="subtotal"> Subtotal (<?php echo $query->num_rows; ?> produto(s)): R$<?php echo number_format($subtotal, 2, ',', '.'); ?></div>
-  <form action="qrcode_pix.php" method="GET" id="qr-code-form">
+  <form action="confirm_payment.php" method="GET" id="qr-code-form">
   <?php
   $query->data_seek(0); // Resetando o ponteiro do resultado se necessário
   while ($row = $query->fetch_assoc()):

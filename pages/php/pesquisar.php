@@ -222,7 +222,7 @@ if (isset($_GET['pesquisa'])) {
                     <h3><?php echo htmlspecialchars($nome); ?></h3>
                     <p><strong>Tipo:</strong> <?php echo htmlspecialchars($categoria); ?></p>
                     <p><strong>Descrição:</strong> <?php echo htmlspecialchars($subDescricao); ?></p>
-                    <p class="preco"><?php echo number_format($preco, 2, ',', '.'); ?> R$</p>
+                    <p class="preco">R$:<?php echo number_format($preco, 2, ',', '.'); ?> </p>
                 </div>
             </div>
         </a>
